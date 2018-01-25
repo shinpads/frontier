@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour {
-    bool Player_Spawned = false;
+    bool playerSpawned = false;
 	const float TIC_RATE = 64f;
 	const string ip = "127.0.0.1";
 	const int port = 25002;
@@ -29,7 +29,7 @@ public class NetworkManager : MonoBehaviour {
 				JoinServer ();
 			}
 		}
-		if (Network.isClient && Player_Spawned == false) {
+		if (Network.isClient && playerSpawned == false) {
 			if (GUI.Button(new Rect(10,10,100,40), "Spawn")) {
 				SpawnPlayer();
 			}
@@ -38,10 +38,10 @@ public class NetworkManager : MonoBehaviour {
 
 	//SPAWN PLAYER
 	private void SpawnPlayer(){
-        if (Player_Spawned == false)
+        if (playerSpawned == false)
         {
             Network.Instantiate(Resources.Load("Prefabs/Player"), new Vector3(0, 30, 0), Quaternion.identity, 0);
-            Player_Spawned = true;
+            playerSpawned = true;
         }
 	}
 	void OnPlayerConnected(){
