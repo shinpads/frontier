@@ -6,7 +6,6 @@ public class JoinSetup : MonoBehaviour {
 	//Array of things we dont want to be enabled for some arbitary player
 	[SerializeField] Behaviour[] thingsToDisable;
 	NetworkView networkView;
-
 	void Start () {
 		disableThings();
 	}
