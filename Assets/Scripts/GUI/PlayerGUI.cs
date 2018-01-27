@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerGUI : MonoBehaviour {
 	Text healthText;
-	public static int health;
+	int health;
 	void Start() {
-		healthText = GetComponent <Text> ();
-		healthText.text = "Health: " + health;
+		healthText = GetComponentInChildren<Text> ();
 	}
 	void Update() {
-		health = Character.characterHealth;
+		health = gameObject.GetComponentInParent<Character> ().characterHealth;
 		healthText.text = "Health: " + health;
 	}
 }

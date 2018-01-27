@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
-	public static int characterHealth;
+	public int characterHealth = 100;
 	// Use this for initialization
 	void Start () {
-		characterHealth = 100;
 	}
 	
 	// Update is called once per frame
 	void Update(){
-		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+	}
+
+	void OnCollisionEnter (Collision collision){
+		if (collision.gameObject.name == "Bullet(Clone)") {
 			characterHealth--;
 		}
 	}
-
 }
