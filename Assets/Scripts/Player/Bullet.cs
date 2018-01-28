@@ -12,7 +12,8 @@ public class Bullet : MonoBehaviour {
 	void OnCollisionEnter (Collision collision) {
 	if (!Network.isServer){ return; }
 	if (collision.gameObject.name == "Player(Clone)"){
-			Debug.Log("You hit a heck boi");
+			if (!collision.gameObject.GetComponent<NetworkView> ().isMine) {return;}
+			collision.gameObject.GetComponent<Character> ().healthLoss (2);
 	}
 	Network.Destroy(gameObject);
 	}

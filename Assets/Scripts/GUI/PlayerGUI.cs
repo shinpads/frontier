@@ -11,8 +11,7 @@ public class PlayerGUI : MonoBehaviour {
 	}
 	void Update() {
 	}
-	void setHealth(){
-		health = gameObject.GetComponentInParent<Character> ().characterHealth;
+	public void setHealth(int health){
 		healthText.text = "Health: " + health;
 	}
 }
