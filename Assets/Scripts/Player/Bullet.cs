@@ -10,11 +10,11 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision collision) {
-	if (!Network.isServer){ return; }
-	if (collision.gameObject.name == "Player(Clone)"){
-			Debug.Log("You hit a heck boi");
-	}
-	Network.Destroy(gameObject);
+		if (!Network.isServer){ return; }
+		Network.Destroy(gameObject);
+		if (collision.gameObject.name == "Player(Clone)"){
+				collision.gameObject.GetComponent<NetworkView> ().RPC("healthLoss", RPCMode.All, 5);
+		}
 	}
 
 	private IEnumerator setTimeOutDestroy () {

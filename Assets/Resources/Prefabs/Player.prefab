@@ -361,6 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fb904ea7b8a6f43b7313989fb337d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthText: {fileID: 114790775072689224}
 --- !u!114 &114128083704397132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,6 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterHealth: 100
+  gui: {fileID: 114045121328038538}
 --- !u!114 &114190642310961142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -672,6 +674,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 34.359985, y: -13.099976}
-  m_SizeDelta: {x: 68.72, y: 16}
+  m_AnchoredPosition: {x: 56.669983, y: -14.390015}
+  m_SizeDelta: {x: 113.34, y: 18.57}
   m_Pivot: {x: 0.5, y: 0.5}
