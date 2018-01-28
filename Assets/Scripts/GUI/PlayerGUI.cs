@@ -10,6 +10,8 @@ public class PlayerGUI : MonoBehaviour {
 		healthText = GetComponentInChildren<Text> ();
 	}
 	void Update() {
+	}
+	void setHealth(){
 		health = gameObject.GetComponentInParent<Character> ().characterHealth;
 		healthText.text = "Health: " + health;
 	}
