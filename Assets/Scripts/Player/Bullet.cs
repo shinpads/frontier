@@ -31,14 +31,6 @@ public class Bullet : MonoBehaviour {
 			lastPosition = currentPosition;
 		}
 	}
-	/*
-	void OnCollisionEnter (Collision collision) {
-		Network.Destroy(gameObject);
-		if (collision.gameObject.name == "Player(Clone)"){
-			bulletHit(collision.gameObject);
-		}
-	}*/
-
 	private IEnumerator setTimeOutDestroy () {
 		yield return new WaitForSeconds(LIFE_SPAN);
 		Network.Destroy(gameObject);
