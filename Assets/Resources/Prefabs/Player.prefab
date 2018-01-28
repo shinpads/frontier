@@ -29,6 +29,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1101868461818158
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4979785552591230}
+  m_Layer: 0
+  m_Name: TipOfGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1268521342589776
 GameObject:
   m_ObjectHideFlags: 1
@@ -61,7 +76,6 @@ GameObject:
   - component: {fileID: 114967433565265692}
   - component: {fileID: 114327232578068408}
   - component: {fileID: 148515862603714060}
-  - component: {fileID: 114401261439910882}
   - component: {fileID: 143728943183149564}
   - component: {fileID: 114190642310961142}
   m_Layer: 0
@@ -120,7 +134,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1777259067864928}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.71572876, y: 1, z: 3.8546753}
+  m_LocalPosition: {x: 5.809189, y: 1, z: 7.160568}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4452269662111686}
@@ -138,9 +152,23 @@ Transform:
   m_LocalScale: {x: 0.014000008, y: 0.014, z: 0.014000008}
   m_Children:
   - {fileID: 4129790158426046}
+  - {fileID: 4979785552591230}
   m_Father: {fileID: 4452269662111686}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!4 &4979785552591230
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101868461818158}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 21.6, y: 6.43, z: 0.02}
+  m_LocalScale: {x: 71.42855, y: 71.42857, z: 71.42855}
+  m_Children: []
+  m_Father: {fileID: 4946519244027986}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20985261905291790
 Camera:
   m_ObjectHideFlags: 1
@@ -277,7 +305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905264296f8109f4182785b7c19edf5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tipOfGun: {fileID: 1101868461818158}
   bullet: {fileID: 1890593835515380, guid: d22d2fa4b8a41d04382e9e471c2f038f, type: 2}
+  testPrefab: {fileID: 1031616974355412, guid: 29f9affdf560b1e45995ce8ad38752a8, type: 2}
 --- !u!114 &114327232578068408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -287,17 +317,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb7778cdb6dd7fc4aa7c380d469c1e60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114401261439910882
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1777259067864928}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4fb904ea7b8a6f43b7313989fb337d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114740973943770330
@@ -327,7 +346,7 @@ MonoBehaviour:
   - {fileID: 114740973943770330}
   - {fileID: 81780155022471248}
   - {fileID: 20985261905291790}
-  - {fileID: 114401261439910882}
+  - {fileID: 0}
   - {fileID: 114190642310961142}
 --- !u!124 &124616784745881966
 Behaviour:
