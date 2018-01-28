@@ -10,12 +10,11 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision collision) {
-	if (!Network.isServer){ return; }
-	if (collision.gameObject.name == "Player(Clone)"){
-			if (!collision.gameObject.GetComponent<NetworkView> ().isMine) {return;}
-			collision.gameObject.GetComponent<Character> ().healthLoss (2);
-	}
-	Network.Destroy(gameObject);
+		if (!Network.isServer){ return; }
+		Network.Destroy(gameObject);
+		if (collision.gameObject.name == "Player(Clone)"){
+				collision.gameObject.GetComponent<NetworkView> ().RPC("healthLoss", RPCMode.All, 5);
+		}
 	}
 
 	private IEnumerator setTimeOutDestroy () {

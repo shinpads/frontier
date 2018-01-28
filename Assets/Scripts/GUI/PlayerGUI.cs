@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerGUI : MonoBehaviour {
-	Text healthText;
-	int health;
+	[SerializeField] Text healthText;
 	void Start() {
-		healthText = GetComponentInChildren<Text> ();
 	}
 	void Update() {
 	}
 	public void setHealth(int health){
+		if (health < 0) {
+			health = 0;
+		}
 		healthText.text = "Health: " + health;
 	}
 }
