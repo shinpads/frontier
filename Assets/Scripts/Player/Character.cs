@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 	public int characterHealth = 100;
+	PlayerGUI playerGUI;
 	// Use this for initialization
 	void Start () {
+		playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();
 	}
 	
 	// Update is called once per frame
 	void Update(){
+		
 	}
 
-	void OnCollisionEnter (Collision collision){
-		if (collision.gameObject.name == "Bullet(Clone)") {
-			characterHealth--;
-		}
+	public void healthLoss(){
+		characterHealth--;
+		playerGUI.setHealth();
 	}
+
 }

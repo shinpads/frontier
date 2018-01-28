@@ -79,10 +79,11 @@ GameObject:
   - component: {fileID: 114740973943770330}
   - component: {fileID: 114967433565265692}
   - component: {fileID: 114327232578068408}
+  - component: {fileID: 114351602580714650}
   - component: {fileID: 148515862603714060}
   - component: {fileID: 143728943183149564}
   - component: {fileID: 114190642310961142}
-  - component: {fileID: 114176748031375962}
+  - component: {fileID: 114728299570693274}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -348,18 +349,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114176748031375962
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1777259067864928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 607da99b54f72334c94e063733945c3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterHealth: 100
 --- !u!114 &114190642310961142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -383,6 +372,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7778cdb6dd7fc4aa7c380d469c1e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114351602580714650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1777259067864928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607da99b54f72334c94e063733945c3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterHealth: 0
 --- !u!114 &114565796968109052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -444,6 +445,38 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114728299570693274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1777259067864928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 75
+    i1: 213
+    i2: 150
+    i3: 138
+    i4: 120
+    i5: 123
+    i6: 40
+    i7: 180
+    i8: 235
+    i9: 128
+    i10: 100
+    i11: 4
+    i12: 235
+    i13: 212
+    i14: 75
+    i15: 126
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114740973943770330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -641,6 +674,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 34.359985, y: -13.099976}
-  m_SizeDelta: {x: 68.72, y: 16}
+  m_AnchoredPosition: {x: 46.77, y: -13.099976}
+  m_SizeDelta: {x: 93.54, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
