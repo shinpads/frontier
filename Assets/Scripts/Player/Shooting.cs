@@ -31,7 +31,7 @@ public class Shooting : MonoBehaviour {
 			}
 			//create the bullet at tip of gun
 			GameObject shot = (GameObject) Network.Instantiate (bullet, tipOfGun.transform.position,Quaternion.LookRotation(Vector3.Normalize(endpoint-tipOfGun.transform.position)), 0);
-			shot.GetComponent<Rigidbody>().AddForce(Vector3.Normalize(endpoint-tipOfGun.transform.position)*1000);	
+			shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(endpoint-tipOfGun.transform.position)*100;
 		}
 	}
 }
