@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour {
 			if (Physics.Raycast(lastPosition,rigidbod.velocity.normalized, out hit, positionDifference)) {
 				Network.Destroy(gameObject);
 				if (hit.collider.gameObject.name == "Player(Clone)") {
-					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("healthLoss", RPCMode.All, 5);
+					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("healthLoss", RPCMode.All, 25);
 				}
 			}
 			lastPosition = currentPosition;
