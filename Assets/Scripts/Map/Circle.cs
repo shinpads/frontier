@@ -9,7 +9,7 @@ public class Circle : MonoBehaviour {
 	}
 
 	Vector3 newOrigin(Vector3 origin, float oldRadius, float newRadius){
-		if (newRadius > oldRadius) { return; }
+		if (newRadius > oldRadius) { return origin; }
 		float tempRadius = Random.Range (0f, (oldRadius - newRadius));
 		float angle = Random.Range (0f, 2f * Mathf.PI);
 		origin.x += Mathf.Sqrt(tempRadius) * Mathf.Cos (angle);
