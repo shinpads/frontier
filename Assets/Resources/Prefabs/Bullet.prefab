@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3bdbd29afa20949aa2c338e1372cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testPrefab: {fileID: 1031616974355412, guid: 29f9affdf560b1e45995ce8ad38752a8, type: 2}
 --- !u!135 &135138690836405010
 SphereCollider:
   m_ObjectHideFlags: 1

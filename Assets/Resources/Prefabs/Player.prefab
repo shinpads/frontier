@@ -403,8 +403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tipOfGun: {fileID: 1101868461818158}
-  bullet: {fileID: 1890593835515380, guid: d22d2fa4b8a41d04382e9e471c2f038f, type: 2}
-  testPrefab: {fileID: 1031616974355412, guid: 29f9affdf560b1e45995ce8ad38752a8, type: 2}
 --- !u!114 &114327232578068408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -537,8 +535,8 @@ MonoBehaviour:
   - {fileID: 114740973943770330}
   - {fileID: 81780155022471248}
   - {fileID: 20985261905291790}
+  - {fileID: 114176748031375962}
   - {fileID: 0}
-  - {fileID: 114190642310961142}
   - {fileID: 223460329955368086}
 --- !u!124 &124616784745881966
 Behaviour:
@@ -674,6 +672,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 56.669983, y: -14.390015}
+  m_AnchoredPosition: {x: 56.66992, y: -14.390015}
   m_SizeDelta: {x: 113.34, y: 18.57}
   m_Pivot: {x: 0.5, y: 0.5}

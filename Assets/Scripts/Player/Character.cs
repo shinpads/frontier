@@ -16,7 +16,7 @@ public class Character : MonoBehaviour {
 		
 	[RPC]
 	void healthLoss(int damage){
-		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
+			if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
 		characterHealth -= damage;
 		gui.setHealth (characterHealth);
 		if (characterHealth <= 0) {
@@ -27,4 +27,5 @@ public class Character : MonoBehaviour {
 		Network.Destroy(gameObject);
 		Network.Instantiate(Resources.Load("Prefabs/Player"), new Vector3(0, 30, 0), Quaternion.identity, 0);
 	}
+
 }

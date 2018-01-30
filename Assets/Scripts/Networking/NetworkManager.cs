@@ -5,7 +5,7 @@ using UnityEngine;
 public class NetworkManager : MonoBehaviour {
     bool playerSpawned = false;
 	const float TIC_RATE = 64f;
-	const string ip = "130.15.220.142";
+	const string ip = "127.0.0.1";
 	const int port = 25002;
 	void Start () {
 		Application.runInBackground = true;

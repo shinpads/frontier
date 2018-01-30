@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour {
 		rigidbod = gameObject.GetComponent<Rigidbody>();
 		rigidbod.detectCollisions = false;
 		StartCoroutine(setTimeOutDestroy());
+
 	}
 	void FixedUpdate() {
 		gameObject.transform.rotation = Quaternion.LookRotation(rigidbod.velocity.normalized);
@@ -22,11 +23,11 @@ public class Bullet : MonoBehaviour {
 		positionDifference = (currentPosition - lastPosition).magnitude;
 		// check if there was a collision in the last 0.1 units
 		if (positionDifference > 0.1f) {
-			if (Physics.Raycast(lastPosition,rigidbod.velocity.normalized, out hit, positionDifference)) {
-				Network.Destroy(gameObject);
+			if (Physics.Raycast(lastPosition,rigidbod.velocity.normalized, out hit, positionDifference)) {		
 				if (hit.collider.gameObject.name == "Player(Clone)") {
 					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("healthLoss", RPCMode.All, 25);
 				}
+				Network.Destroy(gameObject);
 			}
 			lastPosition = currentPosition;
 		}
