@@ -12,12 +12,18 @@ public class Shooting : MonoBehaviour {
 	float distance;
     bool canshoot = true;
 	[SerializeField] GameObject tipOfGun;
+	[SerializeField] GameObject armPivot;
+	[SerializeField] AudioSource audioSource;
+	[Header("Sounds")]
+	[SerializeField] AudioClip revolverSound;
+	Animator armPivotAnimator;
 	NetworkView networkview;
 	void Start () {
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
 		endpoint = new Vector3(0,0,0);
 		distance = 0;
 		networkview = gameObject.GetComponent<NetworkView>();
+		armPivotAnimator = armPivot.GetComponent<Animator>();
 	}	
 
 	void Update () {
@@ -25,6 +31,7 @@ public class Shooting : MonoBehaviour {
 		if (Input.GetButtonDown ("Fire1") && canshoot == true) {
             //Get Point where bullet will hit
             StartCoroutine(delayedShooting());
+            armPivotAnimator.SetTrigger("shooting");
 			ray = new Ray(playerCamera.transform.position,playerCamera.transform.forward*100);
 			if (Physics.Raycast(ray ,out hit)) {
 				endpoint = ray.GetPoint(hit.distance);
@@ -37,7 +44,7 @@ public class Shooting : MonoBehaviour {
 	}
 	[RPC]
 	private void shoot(Vector3 start, Vector3 end) {
-		Debug.Log("calling shoot RPC");
+		audioSource.PlayOneShot(revolverSound);
 		if(!Network.isServer) { return; }
 		//create the bullet at tip of gun
 		GameObject shot = (GameObject) Network.Instantiate ((GameObject)Resources.Load("Prefabs/Bullet"), start,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0);
