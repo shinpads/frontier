@@ -411,6 +411,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36df29b47682f640b7508f9240858d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTank: {fileID: 1777259067864928, guid: 4bd5968a787b28b4eb806404ebd44b7e, type: 2}
+  playerAssualt: {fileID: 1446854802263044, guid: cfd207221bc200e438740de552034000,
+    type: 2}
+  playerScout: {fileID: 1259908831262170, guid: 2dc349e5d6679ee4585e0b95e7acad36,
+    type: 2}
+  playerThief: {fileID: 1192647942562838, guid: c6b40bff87012cc4f95af85d479de54a,
+    type: 2}
+  playerOther: {fileID: 1206097315984476, guid: 03b7c0fcff568b646ba569a38424e1ad,
+    type: 2}
 --- !u!4 &557610206
 Transform:
   m_ObjectHideFlags: 0

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerGUI : MonoBehaviour {
 	[SerializeField] private Text healthText;
 	void Start() {
-		healthText.text = "Health: ";
 	}
 	public void setHealth(int health){
 		if (health < 0) {
