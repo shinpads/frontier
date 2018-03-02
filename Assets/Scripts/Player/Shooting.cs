@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooting : MonoBehaviour {
-<<<<<<< HEAD
-	private Camera playerCamera;
+	public Camera playerCamera;
 	private float shootTime = 10f;
   private const float SHOT_DELAY = 0.5f;
 	private RaycastHit hit;
@@ -15,19 +14,6 @@ public class Shooting : MonoBehaviour {
 	[SerializeField] private GameObject tipOfGun;
 	[SerializeField] private GameObject armPivot;
 	[SerializeField] private AudioSource audioSource;
-=======
-	Camera playerCamera;
-	float shootTime = 10f;
-  public const float SHOT_DELAY = 0.5f;
-	RaycastHit hit;
-	Ray ray;
-	Vector3 endpoint;
-	float distance;
-  bool canshoot = true;
-	[SerializeField] GameObject tipOfGun;
-	[SerializeField] GameObject armPivot;
-	[SerializeField] AudioSource audioSource;
->>>>>>> 256b405209718f2bb3af1bbafe994d3d94d4879e
 	[Header("Sounds")]
 	[SerializeField] private AudioClip revolverSound;
 	private Animator armPivotAnimator;
@@ -61,7 +47,7 @@ public class Shooting : MonoBehaviour {
 		audioSource.PlayOneShot(revolverSound);
 		if(!Network.isServer) { return; }
 		//create the bullet at tip of gun
-		GameObject shot = (GameObject) Network.Instantiate ((GameObject)Resources.Load("Prefabs/Bullet"), start,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0);
+		GameObject shot = (GameObject) Network.Instantiate ((GameObject)Resources.Load("Prefabs/Bullet"), start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0);
 		shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
 	}
     private IEnumerator delayedShooting(){

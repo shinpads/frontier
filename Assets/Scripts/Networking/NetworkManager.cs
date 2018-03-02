@@ -3,17 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour {
-<<<<<<< HEAD
   private bool playerSpawned = false;
 	private const float TIC_RATE = 64f;
 	private const string ip = "130.15.220.142";
 	private const int port = 25002;
-=======
-    bool playerSpawned = false;
-	const float TIC_RATE = 64f;
-	const string ip = "130.15.220.142";
-	const int port = 25002;
->>>>>>> 256b405209718f2bb3af1bbafe994d3d94d4879e
 	void Start () {
 		Application.runInBackground = true;
 	}
