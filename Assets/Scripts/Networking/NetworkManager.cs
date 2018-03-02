@@ -5,7 +5,7 @@ using UnityEngine;
 public class NetworkManager : MonoBehaviour {
   private bool playerSpawned = false;
 	private const float TIC_RATE = 64f;
-	private const string ip = "127.0.0.1";
+	private const string ip = "130.15.220.142";
 	private const int port = 25002;
   [SerializeField] private GameObject playerTank;
   [SerializeField] private GameObject playerAssualt;
