@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 114642738348622500}
   m_Layer: 0
   m_Name: PlayerTank
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -621,7 +621,8 @@ MonoBehaviour:
   characterSpeed: 1
   characterGoldCapacity: 5
   gui: {fileID: 114269963767788738}
-  bloodObject: {fileID: 0}
+  bloodObject: {fileID: 1913480498854834, guid: 264a1c0272015e84ea39f8e24e93283b,
+    type: 2}
 --- !u!114 &114700143232587294
 MonoBehaviour:
   m_ObjectHideFlags: 1
