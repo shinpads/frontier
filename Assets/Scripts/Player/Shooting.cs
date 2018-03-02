@@ -5,12 +5,12 @@ using UnityEngine;
 public class Shooting : MonoBehaviour {
 	Camera playerCamera;
 	float shootTime = 10f;
-    public const float SHOT_DELAY = 0.5f;
+  public const float SHOT_DELAY = 0.5f;
 	RaycastHit hit;
 	Ray ray;
 	Vector3 endpoint;
 	float distance;
-    bool canshoot = true;
+  bool canshoot = true;
 	[SerializeField] GameObject tipOfGun;
 	[SerializeField] GameObject armPivot;
 	[SerializeField] AudioSource audioSource;
@@ -24,7 +24,7 @@ public class Shooting : MonoBehaviour {
 		distance = 0;
 		networkview = gameObject.GetComponent<NetworkView>();
 		armPivotAnimator = armPivot.GetComponent<Animator>();
-	}	
+	}
 
 	void Update () {
 		if (!networkview.isMine) { return; }
