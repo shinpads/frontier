@@ -207,7 +207,6 @@ Transform:
   m_GameObject: {fileID: 1777259067864928}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -40.24144, y: 1, z: 39.07686}
-  m_LocalPosition: {x: -118, y: 63, z: -104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4452269662111686}
@@ -518,8 +517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607da99b54f72334c94e063733945c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterHealth: 100
   gui: {fileID: 114045121328038538}
+  bloodObject: {fileID: 1913480498854834, guid: 264a1c0272015e84ea39f8e24e93283b,
+    type: 2}
 --- !u!114 &114190642310961142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -531,6 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905264296f8109f4182785b7c19edf5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
   tipOfGun: {fileID: 1101868461818158}
   armPivot: {fileID: 1390914443633384}
   audioSource: {fileID: 82684600732063588}
