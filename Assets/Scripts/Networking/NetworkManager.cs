@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour {
-    bool playerSpawned = false;
-	const float TIC_RATE = 64f;
-	const string ip = "127.0.0.1";
-	const int port = 25565;
+  private bool playerSpawned = false;
+	private const float TIC_RATE = 64f;
+	private const string ip = "130.15.220.142";
+	private const int port = 25002;
 	void Start () {
 		Application.runInBackground = true;
-	}	
+	}
 	private void JoinServer (){
 		Network.Connect(ip,port);
 	}
 	private void CreateServer(int port) {
 		Network.InitializeServer (10, port, false);
 		Network.sendRate = TIC_RATE;
-		SpawnPlayer();	
+		SpawnPlayer();
 	}
 
 	private void OnGUI ()

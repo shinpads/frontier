@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerGUI : MonoBehaviour {
-	[SerializeField] Text healthText;
+	[SerializeField] private Text healthText;
 	void Start() {
-	}
-	void Update() {
+		healthText.text = "Health: ";
 	}
 	public void setHealth(int health){
 		if (health < 0) {

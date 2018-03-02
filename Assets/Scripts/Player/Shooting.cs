@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooting : MonoBehaviour {
-	Camera playerCamera;
-	float shootTime = 10f;
-    public const float SHOT_DELAY = 0.5f;
-	RaycastHit hit;
-	Ray ray;
-	Vector3 endpoint;
-	float distance;
-    bool canshoot = true;
-	[SerializeField] GameObject tipOfGun;
-	[SerializeField] GameObject armPivot;
-	[SerializeField] AudioSource audioSource;
+	private Camera playerCamera;
+	private float shootTime = 10f;
+  private const float SHOT_DELAY = 0.5f;
+	private RaycastHit hit;
+	private Ray ray;
+	private Vector3 endpoint;
+	private float distance;
+  private bool canshoot = true;
+	[SerializeField] private GameObject tipOfGun;
+	[SerializeField] private GameObject armPivot;
+	[SerializeField] private AudioSource audioSource;
 	[Header("Sounds")]
-	[SerializeField] AudioClip revolverSound;
-	Animator armPivotAnimator;
-	NetworkView networkview;
+	[SerializeField] private AudioClip revolverSound;
+	private Animator armPivotAnimator;
+	private NetworkView networkview;
 	void Start () {
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
 		endpoint = new Vector3(0,0,0);
 		distance = 0;
 		networkview = gameObject.GetComponent<NetworkView>();
 		armPivotAnimator = armPivot.GetComponent<Animator>();
-	}	
+	}
 
 	void Update () {
 		if (!networkview.isMine) { return; }

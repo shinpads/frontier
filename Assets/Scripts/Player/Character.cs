@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
-	public int characterHealth = 100;
-	[SerializeField] PlayerGUI gui;
+	private int characterHealth = 100;
+	[SerializeField] private PlayerGUI gui;
 
 	void Start () {
-
 		gui.setHealth (characterHealth);
 	}	
-
-	void Update(){
-	}
 		
 	[RPC]
-	void healthLoss(int damage){
-			if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
-		characterHealth -= damage;
-		gui.setHealth (characterHealth);
+	void setHealth(int damage){
+		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
+		characterHealth += damage;
+		gui.setHealth(characterHealth);
 		if (characterHealth <= 0) {
 			getDead ();
 		}

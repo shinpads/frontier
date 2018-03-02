@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 	private const int LIFE_SPAN = 3;
-	Vector3 currentPosition, lastPosition;
-	float positionDifference;
-	RaycastHit hit;
-	Rigidbody rigidbod;
+	private Vector3 currentPosition, lastPosition;
+	private float positionDifference;
+	private RaycastHit hit;
+	private Rigidbody rigidbod;
 	void Start () {
 		if(!Network.isServer) { enabled = false; }
 		currentPosition = gameObject.transform.position;
