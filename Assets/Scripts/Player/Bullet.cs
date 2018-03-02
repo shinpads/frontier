@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour {
 		// check if there was a collision in the last 0.1 units
 		if (positionDifference > 0.1f) {
 			if (Physics.Raycast(lastPosition,rigidbod.velocity.normalized, out hit, positionDifference)) {
-				if (hit.collider.gameObject.name == "Player(Clone)") {
+				if (hit.collider.gameObject.tag == "Player") {
 					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("setHealth", RPCMode.All, -25);
 				}
 				Network.Destroy(gameObject);
