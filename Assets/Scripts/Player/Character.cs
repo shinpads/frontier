@@ -12,12 +12,14 @@ public class Character : MonoBehaviour {
 	private PlayerGUI gui;
 	[Header("Effects")]
 	[SerializeField] private GameObject bloodObject;
+	private GameObject gameController;
 	void Start () {
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
 		gui.setGold (0, goldCapacity);
 		hasGold = false;
+		gameController = GameObject.FindWithTag("Control");
 	}
 
 	[RPC]
@@ -29,7 +31,7 @@ public class Character : MonoBehaviour {
 		characterHealth += damage;
 		if (characterHealth > maxHealth) {
 			characterHealth = maxHealth;
-		} 
+		}
 		else if (characterHealth < 0) {
 			characterHealth = 0;
 		}
@@ -40,7 +42,7 @@ public class Character : MonoBehaviour {
 	}
 	void getDead(){
 		Network.Destroy(gameObject);
-		Network.Instantiate(gameObject, new Vector3(0, 30, 0), Quaternion.identity, 0);
+		gameController.GetComponent<GameController>().spawnPlayer();
 	}
 
 	public float getSpeed(){
@@ -58,11 +60,11 @@ public class Character : MonoBehaviour {
 	public void setTeamId(int id){
 		teamId = id;
 	}
-	public void setHasGold(bool goldCarry) { 
+	public void setHasGold(bool goldCarry) {
 		hasGold = goldCarry;
 		if (hasGold) {
 			gui.setGold (goldCapacity, goldCapacity);
-		} 
+		}
 		else {
 			gui.setGold (0, goldCapacity);
 		}

@@ -5,12 +5,27 @@ using UnityEngine;
 public class NetworkManager : MonoBehaviour {
 	private bool playerSpawned = false;
 	private const float TIC_RATE = 64f;
-	private const string ip = "130.15.220.142";
+	private const string ip = "127.0.0.1";
 	private const int port = 25002;
 	[SerializeField] private GameObject player;
+	[SerializeField] private GameObject gameControl;
+	private bool gameControlSpawned = false;
 	void Start () {
 		Application.runInBackground = true;
 	}
+  void Update () {
+    if (!Network.isClient && !Network.isServer) {
+			if (Input.GetKeyDown(KeyCode.H)) {
+				CreateServer (port);
+			}
+			if (Input.GetKeyDown(KeyCode.J)) {
+				JoinServer ();
+			}
+		} else if (Network.isServer && !gameControlSpawned) {
+			Network.Instantiate(gameControl, new Vector3(0, 0, 0), Quaternion.identity, 0);
+			gameControlSpawned = true;
+		}
+  }
 	private void JoinServer (){
 		Network.Connect(ip,port);
 	}
@@ -18,44 +33,11 @@ public class NetworkManager : MonoBehaviour {
 		Network.InitializeServer (10, port, false);
 		Network.sendRate = TIC_RATE;
 	}
-
-	private void OnGUI ()
-	{
-		if (!Network.isClient && !Network.isServer) {
-			if (GUI.Button (new Rect (10, 10, 100, 40), "Host")) {
-				CreateServer (port);
-			}
-			if (GUI.Button (new Rect (10, 60, 100, 40), "Join")) {
-				JoinServer ();
-			}
+	void OnGUI () {
+		if (!Network.isServer && !Network.isClient) {
+			GUI.Label(new Rect(10, 10, 100, 20), "[H] to Host");
+			GUI.Label(new Rect(10, 40, 100, 20), "[J] to Join");
 		}
-			
-		if (Network.isClient || Network.isServer && playerSpawned == false) {
-			if (GUI.Button(new Rect(10,10,100,40), "Tank")) {
-				SpawnPlayer();
-			}
-			else if (GUI.Button(new Rect(10,60,100,40), "Assualt")) {
-				SpawnPlayer();
-			}
-			else if (GUI.Button(new Rect(10,110,100,40), "Scout")) {
-				SpawnPlayer();
-			}
-			else if (GUI.Button(new Rect(10,160,100,40), "Thief")) {
-				SpawnPlayer();
-			}
-			else if (GUI.Button(new Rect(10,210,100,40), "Other")) {
-				SpawnPlayer();
-			}
-		}
-	}
-
-	//SPAWN PLAYER
-	private void SpawnPlayer(){
-        if (playerSpawned == false)
-        {
-            Network.Instantiate(player, new Vector3(0, 30, 0), Quaternion.identity, 0);
-            playerSpawned = true;
-        }
 	}
 	void OnPlayerConnected(){
 		Debug.Log("PLAYER CONNECTED");
