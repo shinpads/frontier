@@ -18,12 +18,16 @@ public class Shooting : MonoBehaviour {
 	[SerializeField] private AudioClip revolverSound;
 	private Animator armPivotAnimator;
 	private NetworkView networkview;
+	LayerMask ignoreRayCastLayer;
 	void Start () {
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
 		endpoint = new Vector3(0,0,0);
 		distance = 0;
 		networkview = gameObject.GetComponent<NetworkView>();
 		armPivotAnimator = armPivot.GetComponent<Animator>();
+
+		// all layers except 2nd which is Ignore Raycast
+		ignoreRayCastLayer = ~(1 << 2);
 	}
 
 	void Update () {
@@ -33,10 +37,10 @@ public class Shooting : MonoBehaviour {
             StartCoroutine(delayedShooting());
             armPivotAnimator.SetTrigger("shooting");
 			ray = new Ray(playerCamera.transform.position,playerCamera.transform.forward*100);
-			if (Physics.Raycast(ray ,out hit)) {
+			if (Physics.Raycast(ray ,out hit, Mathf.Infinity, ignoreRayCastLayer)) {
 				endpoint = ray.GetPoint(hit.distance);
 			} else {
-			endpoint = ray.GetPoint(100);
+			endpoint = ray.GetPoint(1000);
 			}
 
 			gameObject.GetComponent<NetworkView>().RPC("shoot",RPCMode.All, tipOfGun.transform.position,endpoint);

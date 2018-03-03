@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerGUI : MonoBehaviour {
+	[SerializeField] private Text interactText;
 	[SerializeField] private Text healthText;
 	[SerializeField] private Text goldText;
 	void Start() {
@@ -15,6 +16,10 @@ public class PlayerGUI : MonoBehaviour {
 
 	public void setGold(int gold, int max) {
 		goldText.text = "Gold: " + gold + "/" + max;
+	}
+
+	public void setInteract(string message) {
+		interactText.text = message;
 	}
 
 }
