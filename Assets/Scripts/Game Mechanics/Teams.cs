@@ -8,6 +8,13 @@ public class Teams : MonoBehaviour {
 	private int teamId;
 	private int playerCount;
 	private int goldCount;
+	private string[] playerNames = new string[5];
+	// [Tank, Scout, Thief, Other, Assualt]
+	private bool[] rolesFilled = { false, false, false, false, false };
+
+	public Teams (int id) {
+		teamId = id;
+	}
 
 	void Start () {
 		playerCount = 0;
@@ -22,9 +29,15 @@ public class Teams : MonoBehaviour {
 		return playerCount;
 	}
 
-	public void addPlayer() {
+	public bool addPlayer(string username, int characterType) {
 		if (playerCount < PLAYERS_PER_TEAM) {
+			playerNames [playerCount] = username;
+			rolesFilled [characterType] = true;
 			playerCount++;
+			return true;
+		} 
+		else {
+			return false;
 		}
 	}
 		
@@ -45,9 +58,5 @@ public class Teams : MonoBehaviour {
 
 	public int getGold(){
 		return goldCount;
-	}
-
-	public void setTeamId(int id){
-		teamId = id;
 	}
 }
