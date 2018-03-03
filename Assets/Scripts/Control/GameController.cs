@@ -19,8 +19,8 @@ public class GameController : MonoBehaviour {
 		thisUsername = "Player";
 		networkView = gameObject.GetComponent<NetworkView>();
 		// GUI things
-		pixelColor = Color.blackl
-		pixelColor.a = 0.5;
+		pixelColor = Color.black;
+		pixelColor.a = 0.5f;
 		pixel = new Texture2D (1, 1);
 		pixel.SetPixel (0, 0, pixelColor);
 		pixel.Apply ();
