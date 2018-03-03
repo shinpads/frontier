@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField] GameObject playerPrefab;
 	private NetworkView networkView;
 	private ArrayList[] teams = new ArrayList[4] {new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList()};
+	private Teams[] fuckingTeams = { new Teams (1), new Teams (2), new Teams (3), new Teams (4) };
 	private string[] usernames = new string[MAX_PLAYERS];
 	private string thisUsername;
 	bool usernameSet = false;

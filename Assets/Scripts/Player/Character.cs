@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
-	[SerializeField] private int characterHealth;
-	[SerializeField] private float characterSpeed;
-	[SerializeField] private int goldCapacity;
+	// [Tank, Scout, Thief, Other, Assualt] x [Health, Speed, Gold Carry]
+	private const int[][] characterStats = { {200, 1, 5}, {75, 2, 4}, {100, 5, 3}, {150, 3, 2}, {125, 4, 1} };
+	private int characterHealth;
+	private int characterSpeed;
+	private int goldCapacity;
 	private int goldCarry;
 	private int teamId;
 	private int maxHealth;
@@ -13,6 +15,7 @@ public class Character : MonoBehaviour {
 	[Header("Effects")]
 	[SerializeField] private GameObject bloodObject;
 	private GameObject gameController;
+
 	void Start () {
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
@@ -20,7 +23,12 @@ public class Character : MonoBehaviour {
 		gameController = GameObject.FindWithTag("Control");
 		goldCarry = 0;
 		gui.setGold (goldCarry, goldCapacity);
+	}
 
+	public void setClass (int characterType) {
+		characterHealth = maxHealth = characterStats [characterType] [0];
+		characterSpeed = characterStats [characterType] [1];
+		goldCapacity = characterStats [characterType] [2];
 	}
 
 	[RPC]
@@ -81,7 +89,6 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnTriggerExit (Collider col) {
-		Debug.Log ("bitch");
 		if (col.gameObject.name == "cartCollider") {
 			gui.setInteract ("");
 		}
