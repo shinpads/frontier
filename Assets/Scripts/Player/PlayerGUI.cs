@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class PlayerGUI : MonoBehaviour {
 	[SerializeField] private Text healthText;
+	[SerializeField] private Text goldText;
 	void Start() {
 	}
+
 	public void setHealth(int health){
-		if (health < 0) {
-			health = 0;
-		}
 		healthText.text = "Health: " + health;
 	}
+
+	public void setGold(int gold, int max) {
+		goldText.text = "Gold: " + gold + "/" + max;
+	}
+
 }
