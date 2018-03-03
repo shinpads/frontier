@@ -139,6 +139,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1776762243453980
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224589005366261200}
+  - component: {fileID: 222762259218065706}
+  - component: {fileID: 114690696834088616}
+  - component: {fileID: 114524140568171154}
+  m_Layer: 5
+  m_Name: interactText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1811969582917722
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +629,20 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Fuck Gold
+--- !u!114 &114524140568171154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1776762243453980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 0.3, y: 0.3}
+  m_UseGraphicAlpha: 0
 --- !u!114 &114526979504346800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -659,6 +691,39 @@ MonoBehaviour:
   armPivot: {fileID: 1575471919955330}
   audioSource: {fileID: 82523526476792996}
   revolverSound: {fileID: 8300000, guid: 275b771c779a9354bbcdda8f2993a73b, type: 3}
+--- !u!114 &114690696834088616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1776762243453980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 
 --- !u!114 &114784713323985410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -670,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fb904ea7b8a6f43b7313989fb337d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactText: {fileID: 114690696834088616}
   healthText: {fileID: 114790490630106780}
   goldText: {fileID: 114438361985499452}
 --- !u!114 &114790490630106780
@@ -815,6 +881,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1978677579449360}
+--- !u!222 &222762259218065706
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1776762243453980}
 --- !u!223 &223687488926014846
 Canvas:
   m_ObjectHideFlags: 1
@@ -848,6 +920,7 @@ RectTransform:
   - {fileID: 224660547470053834}
   - {fileID: 224810163109411962}
   - {fileID: 224435780929649306}
+  - {fileID: 224589005366261200}
   m_Father: {fileID: 4128103019909916}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -874,6 +947,24 @@ RectTransform:
   m_AnchoredPosition: {x: 329, y: -22}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224589005366261200
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1776762243453980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224336037007894448}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000040053972, y: -155.8583}
+  m_SizeDelta: {x: 295.29, y: 30}
+  m_Pivot: {x: 0.5000001, y: 0.5}
 --- !u!224 &224660547470053834
 RectTransform:
   m_ObjectHideFlags: 1

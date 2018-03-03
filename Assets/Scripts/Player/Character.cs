@@ -6,7 +6,7 @@ public class Character : MonoBehaviour {
 	[SerializeField] private int characterHealth;
 	[SerializeField] private float characterSpeed;
 	[SerializeField] private int goldCapacity;
-	private bool hasGold;
+	private int goldCarry;
 	private int teamId;
 	private int maxHealth;
 	private PlayerGUI gui;
@@ -16,8 +16,8 @@ public class Character : MonoBehaviour {
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
-		gui.setGold (0, goldCapacity);
-		hasGold = false;
+		goldCarry = 0;
+		gui.setGold (goldCarry, goldCapacity);
 	}
 
 	[RPC]
@@ -58,14 +58,29 @@ public class Character : MonoBehaviour {
 	public void setTeamId(int id){
 		teamId = id;
 	}
-	public void setHasGold(bool goldCarry) { 
-		hasGold = goldCarry;
-		if (hasGold) {
-			gui.setGold (goldCapacity, goldCapacity);
-		} 
-		else {
-			gui.setGold (0, goldCapacity);
-		}
+	public void setgoldCarry(int gold) { 
+		goldCarry = gold;
+		gui.setGold (goldCarry, goldCapacity);
 	}
 
+	public int getGoldCarry(){
+		return goldCarry;
+	}
+
+	void OnTriggerStay (Collider col) {
+		if (col.gameObject.name == "cartCollider" && goldCarry != goldCapacity) {
+			gui.setInteract ("Press F to Steal Gold");
+			if (Input.GetKey (KeyCode.F)) {
+				setgoldCarry (goldCapacity);
+				gui.setInteract ("");
+			}
+		} 
+	}
+
+	void OnTriggerExit (Collider col) {
+		Debug.Log ("bitch");
+		if (col.gameObject.name == "cartCollider") {
+			gui.setInteract ("");
+		}
+	}
 }
