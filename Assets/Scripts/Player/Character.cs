@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
-	// [Tank, Scout, Thief, Other, Assualt] x [Health, Speed, Gold Carry]
+	private const int HEALTH_INDEX = 0;
+	private const int SPEED_INDEX = 1;
+	private const int GOLD_CARRY_INDEX = 2;
 	private const int[][] characterStats = { {200, 1, 5}, {75, 2, 4}, {100, 5, 3}, {150, 3, 2}, {125, 4, 1} };
 	private int characterHealth;
 	private int characterSpeed;
@@ -12,11 +14,13 @@ public class Character : MonoBehaviour {
 	private int teamId;
 	private int maxHealth;
 	private PlayerGUI gui;
+	private Global earth;
 	[Header("Effects")]
 	[SerializeField] private GameObject bloodObject;
 	private GameObject gameController;
 
 	void Start () {
+		earth = new Global ();
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
@@ -25,10 +29,30 @@ public class Character : MonoBehaviour {
 		gui.setGold (goldCarry, goldCapacity);
 	}
 
-	public void setClass (int characterType) {
-		characterHealth = maxHealth = characterStats [characterType] [0];
-		characterSpeed = characterStats [characterType] [1];
-		goldCapacity = characterStats [characterType] [2];
+	public void setClass (string characterType) {
+		int reference;
+		switch (characterType) {
+		case "tank":
+			reference = earth.CHARACTER_TANK;
+			break;
+		case "scout":
+			reference = earth.CHARACTER_SCOUT;
+			break;
+		case "thief":
+			reference = earth.CHARACTER_THIEF;
+			break;
+		case "other":
+			reference = earth.CHARACTER_OTHER;
+			break;
+		case "assualt":
+			reference = earth.CHARACTER_ASSUALT;
+			break;
+		default:
+			return;
+		}
+		characterHealth = characterStats [reference] [HEALTH_INDEX];
+		characterSpeed = characterStats [reference] [SPEED_INDEX];
+		goldCapacity = characterStats [reference] [GOLD_CARRY_INDEX];
 	}
 
 	[RPC]
