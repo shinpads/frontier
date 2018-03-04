@@ -6,10 +6,10 @@ public class GameController : MonoBehaviour {
 	const int MAX_PLAYERS = 25;
 	[SerializeField] GameObject playerPrefab;
 	private NetworkView networkView;
-	private ArrayList[] teams = new ArrayList[4] {new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList()};
-	private Teams[] fuckingTeams = { new Teams (1), new Teams (2), new Teams (3), new Teams (4) };
+	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
 	private string[] usernames = new string[MAX_PLAYERS];
 	private string thisUsername;
+	private int thisTeam;
 	bool usernameSet = false;
 	bool connected = false;
 	bool gameStarted = false;
@@ -63,20 +63,20 @@ public class GameController : MonoBehaviour {
 					return;
 				}
 				GUI.Label(new Rect(10, 10, 100, 20), "TEAM 1");
-				for (int i = 0; i < teams[0].Count; i++) {
-					GUI.Label(new Rect(10, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[0][i].ToString())]);
+				for (int i = 0; i < teams[0].getPlayerCount(); i++) {
+					GUI.Label(new Rect(10, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[0].playerIds[i].ToString())]);
 				}
 				GUI.Label(new Rect(120, 10, 100, 20), "TEAM 2");
-				for (int i = 0; i < teams[1].Count; i++) {
-					GUI.Label(new Rect(120, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[1][i].ToString())]);
+				for (int i = 0; i < teams[1].getPlayerCount(); i++) {
+					GUI.Label(new Rect(120, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[1].playerIds[i].ToString())]);
 				}
 				GUI.Label(new Rect(230, 10, 100, 20), "TEAM 3");
-				for (int i = 0; i < teams[2].Count; i++) {
-					GUI.Label(new Rect(230, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[2][i].ToString())]);
+				for (int i = 0; i < teams[2].getPlayerCount(); i++) {
+					GUI.Label(new Rect(230, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[2].playerIds[i].ToString())]);
 				}
 				GUI.Label(new Rect(340, 10, 100, 20), "TEAM 4");
-				for (int i = 0; i < teams[3].Count; i++) {
-					GUI.Label(new Rect(340, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[3][i].ToString())]);
+				for (int i = 0; i < teams[3].getPlayerCount(); i++) {
+					GUI.Label(new Rect(340, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[3].playerIds[i].ToString())]);
 				}
 				if (Network.isServer) {
 					if (GUI.Button(new Rect(500, 10, 100, 20), "Start Game")) {
@@ -117,7 +117,10 @@ public class GameController : MonoBehaviour {
 			Debug.Log("Invalid team on addToTeam");
 			return;
 		}
-		teams[team].Add(userId);
+		teams[team].addPlayer(userId);
+		if (userId.ToString() == Network.player.ToString()) {
+			thisTeam = team;
+		}
 	}
 
 	// SERVER ONLY

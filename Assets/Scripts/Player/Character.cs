@@ -6,7 +6,7 @@ public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
-	private const int[][] characterStats = { {200, 1, 5}, {75, 2, 4}, {100, 5, 3}, {150, 3, 2}, {125, 4, 1} };
+	private int[,] characterStats = new int[,] { {200, 1, 5}, {75, 2, 4}, {100, 5, 3}, {150, 3, 2}, {125, 4, 1} };
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
@@ -20,7 +20,6 @@ public class Character : MonoBehaviour {
 	private GameObject gameController;
 
 	void Start () {
-		earth = new Global ();
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
@@ -33,26 +32,26 @@ public class Character : MonoBehaviour {
 		int reference;
 		switch (characterType) {
 		case "tank":
-			reference = earth.CHARACTER_TANK;
+			reference = Global.CHARACTER_TANK;
 			break;
 		case "scout":
-			reference = earth.CHARACTER_SCOUT;
+			reference = Global.CHARACTER_SCOUT;
 			break;
 		case "thief":
-			reference = earth.CHARACTER_THIEF;
+			reference = Global.CHARACTER_THIEF;
 			break;
 		case "other":
-			reference = earth.CHARACTER_OTHER;
+			reference = Global.CHARACTER_OTHER;
 			break;
 		case "assualt":
-			reference = earth.CHARACTER_ASSUALT;
+			reference = Global.CHARACTER_ASSUALT;
 			break;
 		default:
 			return;
 		}
-		characterHealth = characterStats [reference] [HEALTH_INDEX];
-		characterSpeed = characterStats [reference] [SPEED_INDEX];
-		goldCapacity = characterStats [reference] [GOLD_CARRY_INDEX];
+		characterHealth = characterStats [reference, HEALTH_INDEX];
+		characterSpeed = characterStats [reference, SPEED_INDEX];
+		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
 	}
 
 	[RPC]
