@@ -6,7 +6,7 @@ public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
-	private int[,] characterStats = { {200, 1, 5}, {75, 2, 4}, {100, 5, 3}, {150, 3, 2}, {125, 4, 1} };
+	private int[,] characterStats = new int[,] { {200, 1, 5}, {75, 2, 4}, {100, 5, 3}, {150, 3, 2}, {125, 4, 1} };
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
@@ -28,27 +28,7 @@ public class Character : MonoBehaviour {
 		gui.setGold (goldCarry, goldCapacity);
 	}
 
-	public void setClass (string characterType) {
-		int reference;
-		switch (characterType) {
-		case "tank":
-			reference = Global.CHARACTER_TANK;
-			break;
-		case "scout":
-			reference = Global.CHARACTER_SCOUT;
-			break;
-		case "thief":
-			reference = Global.CHARACTER_THIEF;
-			break;
-		case "other":
-			reference = Global.CHARACTER_OTHER;
-			break;
-		case "assualt":
-			reference = Global.CHARACTER_ASSUALT;
-			break;
-		default:
-			return;
-		}
+	public void setClass (int reference) {
 		characterHealth = characterStats [reference, HEALTH_INDEX];
 		characterSpeed = characterStats [reference, SPEED_INDEX];
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
