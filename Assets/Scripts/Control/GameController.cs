@@ -70,14 +70,14 @@ public class GameController : MonoBehaviour {
 				// Teams
 				GUI.DrawTexture(new Rect(0, 0, 850, 220), pixel);
 				for (int curTeam = 0; curTeam < 4; curTeam ++) {
-					GUI.Label(new Rect(10 + (210 * curTeam), 10, 200, 20), "TEAM " + curTeam.ToString());
+					GUI.Label(new Rect(10 + (210 * curTeam), 10, 200, 20), "TEAM " + (curTeam + 1).ToString());
 					for (int i = 0; i < teams[curTeam].getPlayerCount(); i++) {
 						Player curPlayer = teams[curTeam].players[i];
 						string lab = curPlayer.getUsername() + " [Choosing...]";
 						if (curPlayer.getClassType() != -1) {
 							lab = curPlayer.getUsername() + " [" + Global.CHARACTER_NAMES[curPlayer.getClassType()] + "]";
 						}
-						GUI.Label(new Rect(10 + (210 * curTeam), 30 + (10 * i), 200, 20), lab);
+						GUI.Label(new Rect(10 + (210 * curTeam), 30 + (20 * i), 200, 20), lab);
 					}
 				}
 				// Class Selection
