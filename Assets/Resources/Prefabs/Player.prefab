@@ -467,7 +467,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -782,9 +782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607da99b54f72334c94e063733945c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterHealth: 100
-  characterSpeed: 5
-  goldCapacity: 3
   bloodObject: {fileID: 1913480498854834, guid: 264a1c0272015e84ea39f8e24e93283b,
     type: 2}
 --- !u!114 &114901104300622076
