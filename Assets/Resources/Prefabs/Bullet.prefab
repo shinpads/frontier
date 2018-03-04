@@ -112,8 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3bdbd29afa20949aa2c338e1372cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dirtImpactParticles: {fileID: 1871029486403918, guid: 94c1ffde6cf8f9b43ada8647df03eed5,
-    type: 2}
+  dirtImpactParticles: {fileID: 100002, guid: 56bfc2f4b4a0c534c8ef3d0fd1124c44, type: 2}
 --- !u!135 &135138690836405010
 SphereCollider:
   m_ObjectHideFlags: 1

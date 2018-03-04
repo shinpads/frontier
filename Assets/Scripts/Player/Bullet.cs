@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour {
 				if (hit.collider.gameObject.tag == "Player") {
 					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("setHealth", RPCMode.All, -25);
 				} else {
-					Network.Instantiate (dirtImpactParticles, ray.GetPoint(hit.distance), Quaternion.EulerAngles(gameObject.transform.forward), 0);
+					Network.Instantiate (dirtImpactParticles, ray.GetPoint(hit.distance), Quaternion.EulerAngles(new Vector3(-90, 0, 0)), 0);
 				}
 				Network.Destroy(gameObject);
 			}
