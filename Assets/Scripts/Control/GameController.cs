@@ -57,6 +57,7 @@ public class GameController : MonoBehaviour {
 	}
 	private void onConnected() {
 		thisUserId = int.Parse(Network.player.ToString());
+		classTypeSet = false;
 		connected = true;
 	}
 	private void OnGUI() {
