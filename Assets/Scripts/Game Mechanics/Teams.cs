@@ -6,9 +6,9 @@ public class Teams {
 	private int teamId;
 	private int playerCount;
 	private int goldCount;
-	public int[] playerIds = new int[5];
 	// [Tank, Scout, Thief, Other, Assualt]
 	private bool[] rolesFilled = { false, false, false, false, false };
+	public Player[] players = new Player[PLAYERS_PER_TEAM];
 
 	public Teams (int id) {
 		teamId = id;
@@ -24,15 +24,13 @@ public class Teams {
 		return playerCount;
 	}
 
-	public bool addPlayer(int userId) {
+	public Player addPlayer(int userId, string username) {
 		if (playerCount < PLAYERS_PER_TEAM) {
-			playerIds [playerCount] = userId;
+			players [playerCount] = new Player(userId, username);
 			playerCount++;
-			return true;
+			return players[playerCount-1];
 		}
-		else {
-			return false;
-		}
+		return null;
 	}
 
 	public void removePlayer() {
@@ -52,5 +50,14 @@ public class Teams {
 
 	public int getGold(){
 		return goldCount;
+	}
+
+	public Player findPlayerByUserId (int userId) {
+		for (int i = 0; i < playerCount; i++) {
+			if (players[i].getUserId() == userId) {
+				return players[i];
+			}
+		}
+		return null;
 	}
 }

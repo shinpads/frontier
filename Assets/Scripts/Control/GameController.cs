@@ -7,10 +7,13 @@ public class GameController : MonoBehaviour {
 	[SerializeField] GameObject playerPrefab;
 	private NetworkView networkView;
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
-	private string[] usernames = new string[MAX_PLAYERS];
+	private Dictionary<int, int> userTeam = new Dictionary<int, int>();
 	private string thisUsername;
 	private int thisTeam;
+	private int thisUserId;
+	private Player thisPlayer;
 	bool usernameSet = false;
+	bool classTypeSet = false;
 	bool connected = false;
 	bool gameStarted = false;
 	int nextTeam = -1;
@@ -36,14 +39,14 @@ public class GameController : MonoBehaviour {
 					if (thisUsername.Length > 0) {
 						usernameSet = true;
 						// send username to all and all who will join
-						networkView.RPC("setUsername", RPCMode.AllBuffered, int.Parse(Network.player.ToString()), thisUsername);
+						// networkView.RPC("setUsername", RPCMode.AllBuffered, thisUserId, thisUsername);
 						// if server add to next team (no need to call RPC to itself)
 						if (Network.isServer) {
 							nextTeam = (nextTeam+1)%4;
-							networkView.RPC("addToTeam", RPCMode.AllBuffered, int.Parse(Network.player.ToString()), nextTeam);
+							networkView.RPC("addToTeam", RPCMode.AllBuffered, thisUserId, nextTeam, thisUsername);
 						} else {
 							// get server to setup team
-							networkView.RPC("setupTeam", RPCMode.Server, int.Parse(Network.player.ToString()));
+							networkView.RPC("setupTeam", RPCMode.Server, thisUserId, thisUsername);
 						}
 					} else {
 						thisUsername = "Too Short";
@@ -53,6 +56,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 	private void onConnected() {
+		thisUserId = int.Parse(Network.player.ToString());
 		connected = true;
 	}
 	private void OnGUI() {
@@ -62,24 +66,40 @@ public class GameController : MonoBehaviour {
 					thisUsername = GUI.TextField(new Rect(10,10, 200, 30), thisUsername, 15);
 					return;
 				}
-				GUI.Label(new Rect(10, 10, 100, 20), "TEAM 1");
-				for (int i = 0; i < teams[0].getPlayerCount(); i++) {
-					GUI.Label(new Rect(10, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[0].playerIds[i].ToString())]);
+				// Teams
+				GUI.DrawTexture(new Rect(0, 0, 850, 220), pixel);
+				for (int curTeam = 0; curTeam < 4; curTeam ++) {
+					GUI.Label(new Rect(10 + (210 * curTeam), 10, 200, 20), "TEAM " + curTeam.ToString());
+					for (int i = 0; i < teams[curTeam].getPlayerCount(); i++) {
+						Player curPlayer = teams[curTeam].players[i];
+						string lab = curPlayer.getUsername() + " [Choosing...]";
+						if (curPlayer.getClassType() != -1) {
+							lab = curPlayer.getUsername() + " [" + Global.CHARACTER_NAMES[curPlayer.getClassType()] + "]";
+						}
+						GUI.Label(new Rect(10 + (210 * curTeam), 30 + (10 * i), 200, 20), lab);
+					}
 				}
-				GUI.Label(new Rect(120, 10, 100, 20), "TEAM 2");
-				for (int i = 0; i < teams[1].getPlayerCount(); i++) {
-					GUI.Label(new Rect(120, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[1].playerIds[i].ToString())]);
-				}
-				GUI.Label(new Rect(230, 10, 100, 20), "TEAM 3");
-				for (int i = 0; i < teams[2].getPlayerCount(); i++) {
-					GUI.Label(new Rect(230, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[2].playerIds[i].ToString())]);
-				}
-				GUI.Label(new Rect(340, 10, 100, 20), "TEAM 4");
-				for (int i = 0; i < teams[3].getPlayerCount(); i++) {
-					GUI.Label(new Rect(340, 30 + (10 * i), 100, 20), usernames[int.Parse(teams[3].playerIds[i].ToString())]);
+				// Class Selection
+				if (!classTypeSet) {
+					GUI.DrawTexture(new Rect(0, Screen.height - 100, Screen.width, Screen.height), pixel);
+					if (GUI.Button(new Rect(10, Screen.height - 90, 150, 80), "Tank")) {
+						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_TANK);
+					}
+					if (GUI.Button(new Rect(170, Screen.height - 90, 150, 80), "Scout")) {
+						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_SCOUT);
+					}
+					if (GUI.Button(new Rect(330, Screen.height - 90, 150, 80), "Theif")) {
+						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_THIEF);
+					}
+					if (GUI.Button(new Rect(490, Screen.height - 90, 150, 80), "Other")) {
+						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_OTHER);
+					}
+					if (GUI.Button(new Rect(650, Screen.height - 90, 150, 80), "Assualt")) {
+						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_ASSUALT);
+					}
 				}
 				if (Network.isServer) {
-					if (GUI.Button(new Rect(500, 10, 100, 20), "Start Game")) {
+					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game")) {
 						networkView.RPC("startGame", RPCMode.All);
 					}
 				}
@@ -88,7 +108,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spawnPlayer() {
-		Network.Instantiate(playerPrefab, new Vector3(0, 30, 0), Quaternion.identity, 1);
+		GameObject playerObject = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0, 30, 0), Quaternion.identity, 1);
+		playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
 	}
 
 	[RPC]
@@ -99,6 +120,7 @@ public class GameController : MonoBehaviour {
 
 		gameStarted = true;
 	}
+	/* I EXPRESS DISAPPROVAL
 	[RPC]
 	public void setUsername (int userId, string username) {
 		if (userId >= MAX_PLAYERS) {
@@ -107,8 +129,9 @@ public class GameController : MonoBehaviour {
 		}
 		usernames[userId] = username;
 	}
+	*/
 	[RPC]
-	public void addToTeam (int userId, int team) {
+	public void addToTeam (int userId, int team, string username) {
 		if (userId >= MAX_PLAYERS) {
 			Debug.Log("Invalid userId on addToTeam");
 			return;
@@ -117,22 +140,34 @@ public class GameController : MonoBehaviour {
 			Debug.Log("Invalid team on addToTeam");
 			return;
 		}
-		teams[team].addPlayer(userId);
+		Player newPlayer = teams[team].addPlayer(userId, username);
+		userTeam[userId] = team;
 		if (userId.ToString() == Network.player.ToString()) {
 			thisTeam = team;
+			thisPlayer = newPlayer;
 		}
 	}
 
 	// SERVER ONLY
 	[RPC]
-	public void setupTeam (int userId) {
+	public void setupTeam (int userId, string username) {
 		if (userId >= MAX_PLAYERS) {
 			Debug.Log("Invalid userId on setupTeam");
 			return;
 		}
 		if (Network.isServer) {
 			nextTeam = (nextTeam+1)%4;
-			networkView.RPC("addToTeam", RPCMode.AllBuffered, userId, nextTeam);
+			networkView.RPC("addToTeam", RPCMode.AllBuffered, userId, nextTeam, username);
+		}
+	}
+
+	[RPC]
+	public void setClassType (int userId, int teamId, int classType) {
+		Player player = teams[teamId].findPlayerByUserId (userId);
+		if (player == null) { return; }
+		player.setClassType (classType);
+		if (userId == thisUserId) {
+			classTypeSet = true;
 		}
 	}
 }
