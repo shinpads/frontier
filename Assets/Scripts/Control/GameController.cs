@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
 		pixel.SetPixel (0, 0, pixelColor);
 		pixel.Apply ();
 	}
+
 	void Update () {
 		if (Network.isServer || Network.isClient) {
 			if (!connected) { onConnected(); }
@@ -110,6 +111,7 @@ public class GameController : MonoBehaviour {
 	public void spawnPlayer() {
 		GameObject playerObject = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0, 30, 0), Quaternion.identity, 1);
 		playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
+		playerObject.GetComponent<Character> ().setTeamId (thisTeam);
 	}
 
 	[RPC]

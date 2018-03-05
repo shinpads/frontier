@@ -6,7 +6,7 @@ public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
-	private int[,] characterStats = new int[,] { {200, 1, 5}, {75, 2, 4}, {100, 5, 3}, {150, 3, 2}, {125, 4, 1} };
+	private int[,] characterStats = new int[,] { {200, 1, 5}, {75, 2, 4}, {100, 5, 600}, {150, 3, 2}, {125, 4, 1} };
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
@@ -82,17 +82,29 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnTriggerStay (Collider col) {
-		if (col.gameObject.name == "cartCollider" && goldCarry != goldCapacity) {
-			gui.setInteract ("Press F to Steal Gold");
-			if (Input.GetKey (KeyCode.F)) {
-				setgoldCarry (goldCapacity);
-				gui.setInteract ("");
+		if (col.gameObject.tag == "Mine Cart") {
+			Minecart cart = col.gameObject.GetComponentInParent<Minecart> ();
+			int cartId = cart.getTeamId();
+			if (cartId != teamId && goldCarry != goldCapacity && cart.getGold() != 0) {
+				gui.setInteract ("Press F to Steal Gold");
+				if (Input.GetKey (KeyCode.F)) {
+					setgoldCarry (cart.loseGold (goldCapacity));
+					gui.setInteract ("");
+				}
+			} 
+			else if (cartId == teamId && goldCarry != 0) {
+				gui.setInteract ("Press F to Place Gold");
+				if (Input.GetKey (KeyCode.F)) {
+					cart.setCartGold (goldCarry);
+					setgoldCarry (0);
+					gui.setInteract ("");
+				}
 			}
 		}
 	}
 
 	void OnTriggerExit (Collider col) {
-		if (col.gameObject.name == "cartCollider") {
+		if (col.gameObject.tag == "Mine Cart") {
 			gui.setInteract ("");
 		}
 	}

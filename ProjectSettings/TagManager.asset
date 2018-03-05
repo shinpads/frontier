@@ -7,6 +7,8 @@ TagManager:
   - TipOfGun
   - MenuCamera
   - Control
+  - Mine Cart
+  - End Block
   layers:
   - Default
   - TransparentFX
