@@ -75,7 +75,7 @@ public class Character : MonoBehaviour {
 	public void setTeamId(int id){
 		teamId = id;
 		networkView = gameObject.GetComponent<NetworkView> ();
-		networkView.RPC ("setCharacterMaterial", RPCMode.All);
+		networkView.RPC ("setCharacterMaterial", RPCMode.All, id);
 	}
 	public void setgoldCarry(int gold) {
 		goldCarry = gold;
@@ -96,7 +96,7 @@ public class Character : MonoBehaviour {
 					setgoldCarry (cart.loseGold (goldCapacity));
 					gui.setInteract ("");
 				}
-			} 
+			}
 			else if (cartId == teamId && goldCarry != 0) {
 				gui.setInteract ("Press F to Place Gold");
 				if (Input.GetKey (KeyCode.F)) {
@@ -114,9 +114,9 @@ public class Character : MonoBehaviour {
 		}
 	}
 	[RPC]
-	void setCharacterMaterial() {
+	void setCharacterMaterial(int id) {
 		renderer = gameObject.GetComponent<MeshRenderer> ();
-		switch (teamId) {
+		switch (id) {
 		case(0):
 			renderer.material = mat0;
 			break;
