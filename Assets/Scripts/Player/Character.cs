@@ -73,9 +73,9 @@ public class Character : MonoBehaviour {
 	}
 
 	public void setTeamId(int id){
+		teamId = id;
 		networkView = gameObject.GetComponent<NetworkView> ();
 		networkView.RPC ("setCharacterMaterial", RPCMode.All);
-		teamId = id;
 	}
 	public void setgoldCarry(int gold) {
 		goldCarry = gold;
