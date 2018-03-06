@@ -23,7 +23,6 @@ public class Character : MonoBehaviour {
 	NetworkView networkView;
 
 	void Start () {
-		networkView = gameObject.GetComponent<NetworkView> ();
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
@@ -74,6 +73,7 @@ public class Character : MonoBehaviour {
 	}
 
 	public void setTeamId(int id){
+		networkView = gameObject.GetComponent<NetworkView> ();
 		networkView.RPC ("setCharacterMaterial", RPCMode.All);
 		teamId = id;
 	}
