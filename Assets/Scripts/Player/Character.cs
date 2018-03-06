@@ -20,8 +20,10 @@ public class Character : MonoBehaviour {
 	[SerializeField] private GameObject bloodObject;
 	private GameObject gameController;
 	private MeshRenderer renderer;
+	private NetworkView networkView;
 
 	void Start () {
+		networkView = gameObject.GetComponent<NetworkView> ();
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
@@ -71,7 +73,7 @@ public class Character : MonoBehaviour {
 		return teamId;
 	}
 
-	public void setTeamId(int id, NetworkView networkView){
+	public void setTeamId(int id){
 		networkView.RPC ("setCharacterMaterial", RPCMode.All);
 		teamId = id;
 	}
