@@ -20,7 +20,7 @@ public class Character : MonoBehaviour {
 	[SerializeField] private GameObject bloodObject;
 	private GameObject gameController;
 	private MeshRenderer renderer;
-	private NetworkView networkView;
+	NetworkView networkView;
 
 	void Start () {
 		networkView = gameObject.GetComponent<NetworkView> ();
