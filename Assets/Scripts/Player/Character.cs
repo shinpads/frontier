@@ -71,7 +71,8 @@ public class Character : MonoBehaviour {
 		return teamId;
 	}
 
-	public void setTeamId(int id){
+	public void setTeamId(int id, NetworkView networkView){
+		networkView.RPC ("setCharacterMaterial", RPCMode.All);
 		teamId = id;
 	}
 	public void setgoldCarry(int gold) {
