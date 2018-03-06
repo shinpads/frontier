@@ -73,7 +73,6 @@ public class Character : MonoBehaviour {
 
 	public void setTeamId(int id){
 		teamId = id;
-		setMaterial ();
 	}
 	public void setgoldCarry(int gold) {
 		goldCarry = gold;
@@ -111,8 +110,8 @@ public class Character : MonoBehaviour {
 			gui.setInteract ("");
 		}
 	}
-
-	void setMaterial() {
+	[RPC]
+	void setCharacterMaterial() {
 		renderer = gameObject.GetComponent<MeshRenderer> ();
 		switch (teamId) {
 		case(0):
