@@ -15,9 +15,11 @@ public class Character : MonoBehaviour {
 	private int maxHealth;
 	private PlayerGUI gui;
 	private Global earth;
+	[SerializeField] private Material mat0, mat1, mat2, mat3;
 	[Header("Effects")]
 	[SerializeField] private GameObject bloodObject;
 	private GameObject gameController;
+	private MeshRenderer renderer;
 
 	void Start () {
 		maxHealth = characterHealth;
@@ -71,6 +73,7 @@ public class Character : MonoBehaviour {
 
 	public void setTeamId(int id){
 		teamId = id;
+		setMaterial ();
 	}
 	public void setgoldCarry(int gold) {
 		goldCarry = gold;
@@ -106,6 +109,26 @@ public class Character : MonoBehaviour {
 	void OnTriggerExit (Collider col) {
 		if (col.gameObject.tag == "Mine Cart") {
 			gui.setInteract ("");
+		}
+	}
+
+	void setMaterial() {
+		renderer = gameObject.GetComponent<MeshRenderer> ();
+		switch (teamId) {
+		case(0):
+			renderer.material = mat0;
+			break;
+		case(1):
+			renderer.material = mat1;
+			break;
+		case(2):
+			renderer.material = mat2;
+			break;
+		case(3):
+			renderer.material = mat3;
+			break;
+		default:
+			break;
 		}
 	}
 }

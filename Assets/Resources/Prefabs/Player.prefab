@@ -782,6 +782,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607da99b54f72334c94e063733945c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mat0: {fileID: 2100000, guid: 7578a453bb4dc224780f0ecc32e36ec3, type: 2}
+  mat1: {fileID: 2100000, guid: 8280732fc78173446b8b3e7e4216a405, type: 2}
+  mat2: {fileID: 2100000, guid: a2119c0744b02b04a83b65cbe03a1909, type: 2}
+  mat3: {fileID: 2100000, guid: 6efe28cc09758a34eae40e128f27d39c, type: 2}
   bloodObject: {fileID: 1913480498854834, guid: 264a1c0272015e84ea39f8e24e93283b,
     type: 2}
 --- !u!114 &114901104300622076
