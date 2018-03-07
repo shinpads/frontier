@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour {
 	const int MAX_PLAYERS = 25;
 	[SerializeField] GameObject playerPrefab;
 	private NetworkView networkView;
-	private ArrayList scores = new ArrayList ();
+	private ArrayList scores = new ArrayList();
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
 	private Dictionary<int, Teams> userTeam = new Dictionary<int, Teams>();
@@ -214,7 +214,9 @@ public class GameController : MonoBehaviour {
 	public ArrayList getScores() {
 		scores.Clear();
 		foreach (Teams t in teams) {
-			scores.Add(t.getScore());
+			List<KeyValuePair<int, Teams.Stats>> tempStats = t.getScoreList ();
+			tempStats = sortTeamScore (tempStats);
+			scores.Add(tempStats);
 		}
 		return scores;
 	}
@@ -222,5 +224,28 @@ public class GameController : MonoBehaviour {
 	public Dictionary<int, Teams> getUserTeamDict() {
 		return userTeam;
 
+	}
+
+	public List<KeyValuePair<int, Teams.Stats>> sortTeamScore(List<KeyValuePair<int, Teams.Stats>> lst) {
+		int i, j;
+		for (i = 1; i < lst.Count - 1; i++) {
+			j = i;
+			while ((j >= 0) && (lst[j - 1].Value.kills >= lst[i].Value.kills)) {
+				if (lst[j - 1].Value.kills == lst[i].Value.kills) {
+					if (lst[j - 1].Value.deaths > lst[i].Value.deaths) {
+						j--;
+						continue;
+					}
+					else if (lst[j - 1].Value.deaths == lst[i].Value.deaths && lst[j - 1].Value.assists < lst[i].Value.assists) {
+						j--;
+						continue;
+					}
+				}
+				lst[j] = lst[j-1];
+				j--;
+			}
+			lst[j] = lst[i];		
+		}
+		return lst;
 	}
 }

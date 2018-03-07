@@ -66,4 +66,12 @@ public class Teams {
 	public Dictionary<int, Stats> getScore() {
 		return teamStats;
 	}
+
+	public List<KeyValuePair<int, Teams.Stats>> getScoreList() {
+		List<KeyValuePair<int, Teams.Stats>> statsList = new List<KeyValuePair<int, Teams.Stats>>();
+		foreach (KeyValuePair<int, Teams.Stats> playerEntry in teamStats) {
+			statsList.Add(new KeyValuePair<int, Teams.Stats>(playerEntry.Key, playerEntry.Value));
+		}
+		return statsList;
+	}
 }

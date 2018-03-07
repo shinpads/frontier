@@ -47,8 +47,8 @@ public class Character : MonoBehaviour {
 	void setHealth(int dHealth, int enemyId) {
 		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
 		if (dHealth < 0) {
-			Network.Instantiate (bloodObject, gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
 			setDamagers (enemyId, dHealth);
+			Network.Instantiate (bloodObject, gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
 		} else if (dHealth > 0) {
 			removeDamagers (dHealth);
 		}
@@ -67,13 +67,7 @@ public class Character : MonoBehaviour {
 
 	void setDamagers(int enemyId, int damage) {
 		int[] assistData = { enemyId, damage };
-		foreach (int[] enemy in damagers) {
-			if (enemy [0] == enemyId) {
-				assistData[1] += enemy[1];
-				damagers.Remove (enemy);
-			}
-		}
-		damagers.AddFirst(assistData);
+		damagers.AddLast(assistData);
 	}
 
 	void removeDamagers(int healed) {
@@ -91,10 +85,11 @@ public class Character : MonoBehaviour {
 
 	void getDead(int enemyId) {
 		Network.Destroy(gameObject);
+		HashSet<int> assistSet = new HashSet<int> ();
 		gameController.sendPlayerDeathRPC(userId);
 		gameController.sendPlayerKillRPC(enemyId);
 		foreach (int[] enemy in damagers) {
-			if (enemy [0] != enemyId) {
+			if (assistSet.Add (enemy [0]) && enemy[0] != enemyId) {
 				gameController.sendPlayerAssistRPC (enemy [0]);
 			}
 		}
