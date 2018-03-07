@@ -6,8 +6,9 @@ public class GameController : MonoBehaviour {
 	const int MAX_PLAYERS = 25;
 	[SerializeField] GameObject playerPrefab;
 	private NetworkView networkView;
+	private ArrayList scores = new ArrayList ();
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
-	private Dictionary<int, int> userTeam = new Dictionary<int, int>();
+	private Dictionary<int, Teams> userTeam = new Dictionary<int, Teams>();
 	private string thisUsername;
 	private int thisTeam;
 	private int thisUserId;
@@ -112,6 +113,7 @@ public class GameController : MonoBehaviour {
 	public void spawnPlayer() {
 		GameObject playerObject = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0, 30, 0), Quaternion.identity, 1);
 		playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
+		playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
 		playerObject.GetComponent<Character> ().setTeamId (thisTeam);
 	}
 
@@ -144,7 +146,7 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 		Player newPlayer = teams[team].addPlayer(userId, username);
-		userTeam[userId] = team;
+		userTeam[userId] = teams[team];
 		if (userId.ToString() == Network.player.ToString()) {
 			thisTeam = team;
 			thisPlayer = newPlayer;
@@ -172,5 +174,32 @@ public class GameController : MonoBehaviour {
 		if (userId == thisUserId) {
 			classTypeSet = true;
 		}
+	}
+
+	[RPC]
+	public void addPlayerDeath(int userId) {
+		userTeam [userId].addPlayerDeath(userId);
+	}
+
+	[RPC]
+	public void addPlayerKill(int userId) {
+		userTeam [userId].addPlayerDeath (userId);
+	}
+
+	[RPC]
+	public void addPlayerAssist(int userId) {
+		userTeam [userId].addPlayerAssist (userId);
+	}
+
+	public ArrayList getScores() {
+		scores.Clear();
+		foreach (Teams t in teams) {
+			scores.Add(t.getScore());
+		}
+		return scores;
+	}
+
+	public Dictionary<int, Teams> getUserTeamDict() {
+		return userTeam;
 	}
 }
