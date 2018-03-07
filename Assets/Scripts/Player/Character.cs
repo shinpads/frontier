@@ -6,7 +6,7 @@ public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
-	private int[,] characterStats = new int[,] { {200, 1, 5}, {75, 2, 4}, {100, 5, 600}, {150, 3, 2}, {125, 4, 1} };
+	private int[,] characterStats = new int[,] { {200, 1, 5}, {75, 2, 4}, {100, 5, 300}, {150, 3, 2}, {125, 4, 1} };
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
@@ -18,7 +18,7 @@ public class Character : MonoBehaviour {
 	[SerializeField] private Material mat0, mat1, mat2, mat3;
 	[Header("Effects")]
 	[SerializeField] private GameObject bloodObject;
-	private GameObject gameController;
+	private GameController gameController;
 	private MeshRenderer renderer;
 	NetworkView networkView;
 
@@ -26,7 +26,7 @@ public class Character : MonoBehaviour {
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
-		gameController = GameObject.FindWithTag("Control");
+		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		goldCarry = 0;
 		gui.setGold (goldCarry, goldCapacity);
 	}
@@ -55,20 +55,20 @@ public class Character : MonoBehaviour {
 			getDead ();
 		}
 	}
-	void getDead(){
+	void getDead() {
 		Network.Destroy(gameObject);
-		gameController.GetComponent<GameController>().spawnPlayer();
+		gameController.spawnPlayer();
 	}
 
-	public float getSpeed(){
+	public float getSpeed() {
 		return characterSpeed;
 	}
 
-	public int getGoldCap(){
+	public int getGoldCapacity() {
 		return goldCapacity;
 	}
 
-	public int getTeamId(){
+	public int getTeamId() {
 		return teamId;
 	}
 
@@ -77,12 +77,12 @@ public class Character : MonoBehaviour {
 		networkView = gameObject.GetComponent<NetworkView> ();
 		networkView.RPC ("setCharacterMaterial", RPCMode.All, id);
 	}
-	public void setgoldCarry(int gold) {
+	public void setGoldCarry(int gold) {
 		goldCarry = gold;
 		gui.setGold (goldCarry, goldCapacity);
 	}
 
-	public int getGoldCarry(){
+	public int getGoldCarry() {
 		return goldCarry;
 	}
 
@@ -90,18 +90,20 @@ public class Character : MonoBehaviour {
 		if (col.gameObject.tag == "Mine Cart") {
 			Minecart cart = col.gameObject.GetComponentInParent<Minecart> ();
 			int cartId = cart.getTeamId();
-			if (cartId != teamId && goldCarry != goldCapacity && cart.getGold() != 0) {
+			if (cartId != teamId && goldCarry < goldCapacity && cart.getGold() > 0) {
 				gui.setInteract ("Press F to Steal Gold");
 				if (Input.GetKey (KeyCode.F)) {
-					setgoldCarry (cart.loseGold (goldCapacity));
+					int amount = Mathf.Min(goldCapacity - goldCarry, cart.getGold());
+					gameController.sendCartGoldRPC(cartId, -amount);
+					networkView.RPC("setGoldCarryRPC", RPCMode.All, amount);
 					gui.setInteract ("");
 				}
 			}
-			else if (cartId == teamId && goldCarry != 0) {
+			else if (cartId == teamId && goldCarry > 0) {
 				gui.setInteract ("Press F to Place Gold");
 				if (Input.GetKey (KeyCode.F)) {
-					cart.setCartGold (goldCarry);
-					setgoldCarry (0);
+					gameController.sendCartGoldRPC(cartId, goldCarry);
+					networkView.RPC("setGoldCarryRPC", RPCMode.All, -goldCarry);
 					gui.setInteract ("");
 				}
 			}
@@ -132,5 +134,9 @@ public class Character : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+	[RPC]
+	void setGoldCarryRPC (int amount) {
+		setGoldCarry(goldCarry + amount);
 	}
 }

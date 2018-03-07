@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField] GameObject playerPrefab;
 	private NetworkView networkView;
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
+	[SerializeField]private GameObject[] minecarts = new GameObject[4];
 	private Dictionary<int, int> userTeam = new Dictionary<int, int>();
 	private string thisUsername;
 	private int thisTeam;
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour {
 		pixel = new Texture2D (1, 1);
 		pixel.SetPixel (0, 0, pixelColor);
 		pixel.Apply ();
+		loadMineCartObjects();
 	}
 
 	void Update () {
@@ -39,8 +41,6 @@ public class GameController : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Return)) {
 					if (thisUsername.Length > 0) {
 						usernameSet = true;
-						// send username to all and all who will join
-						// networkView.RPC("setUsername", RPCMode.AllBuffered, thisUserId, thisUsername);
 						// if server add to next team (no need to call RPC to itself)
 						if (Network.isServer) {
 							nextTeam = (nextTeam+1)%4;
@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour {
 		thisUserId = int.Parse(Network.player.ToString());
 		classTypeSet = false;
 		connected = true;
+		loadMineCartObjects();
 	}
 	private void OnGUI() {
 		if (connected) {
@@ -105,6 +106,10 @@ public class GameController : MonoBehaviour {
 						networkView.RPC("startGame", RPCMode.All);
 					}
 				}
+			} else {
+				GUI.DrawTexture(new Rect(0, Screen.height-40, 450, Screen.height), pixel);
+				for (int curTeam = 0; curTeam < 4; curTeam ++)
+					GUI.Label(new Rect(10 + (110 * curTeam), Screen.height - 30, 200, 20), "TEAM " + (curTeam + 1).ToString() + " $" + minecarts[curTeam].GetComponent<Minecart>().getGold());
 			}
 		}
 	}
@@ -114,7 +119,14 @@ public class GameController : MonoBehaviour {
 		playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
 		playerObject.GetComponent<Character> ().setTeamId (thisTeam);
 	}
-
+	private void loadMineCartObjects () {
+		for (int i = 0; i < 4; i++) {
+			minecarts[i] = GameObject.Find("Mine Cart" + i);
+		}
+	}
+	public void sendCartGoldRPC (int teamId, int amount) {
+		networkView.RPC("setCartGold", RPCMode.All, teamId, amount);
+	}
 	[RPC]
 	public void startGame () {
 		spawnPlayer();
@@ -123,16 +135,6 @@ public class GameController : MonoBehaviour {
 
 		gameStarted = true;
 	}
-	/* I EXPRESS DISAPPROVAL
-	[RPC]
-	public void setUsername (int userId, string username) {
-		if (userId >= MAX_PLAYERS) {
-			Debug.Log("Invalid userId on setUsername");
-			return;
-		}
-		usernames[userId] = username;
-	}
-	*/
 	[RPC]
 	public void addToTeam (int userId, int team, string username) {
 		if (userId >= MAX_PLAYERS) {
@@ -172,5 +174,10 @@ public class GameController : MonoBehaviour {
 		if (userId == thisUserId) {
 			classTypeSet = true;
 		}
+	}
+
+	[RPC]
+	public void setCartGold (int teamId, int gold) {
+		minecarts[teamId].GetComponent<Minecart>().setCartGold(gold);
 	}
 }

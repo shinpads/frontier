@@ -24,20 +24,9 @@ public class Minecart : MonoBehaviour {
 	public int getGold(){
 		return goldCount;
 	}
-		
+
 	public void setCartGold(int gold) {
 		goldCount += gold;
 	}
-		
-	public int loseGold(int playerCarry){
-		int lostGold;
-		if (playerCarry > goldCount) {
-			lostGold = goldCount;
-		} 
-		else {
-			lostGold = playerCarry;
-		}
-		setCartGold (-lostGold);
-		return lostGold;
-	}
+
 }

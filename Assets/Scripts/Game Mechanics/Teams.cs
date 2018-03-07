@@ -36,7 +36,7 @@ public class Teams {
 			playerCount--;
 		}
 	}
-		
+
 	public Player findPlayerByUserId (int userId) {
 		for (int i = 0; i < playerCount; i++) {
 			if (players[i].getUserId() == userId) {
