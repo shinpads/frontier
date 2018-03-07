@@ -246,6 +246,10 @@ Prefab:
       propertyPath: teamid
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1573085015422186, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
+      propertyPath: m_Name
+      value: Mine Cart3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
   m_IsPrefabParent: 0
@@ -389,8 +393,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c36df29b47682f640b7508f9240858d6, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   player: {fileID: 1192647942562838, guid: c6b40bff87012cc4f95af85d479de54a, type: 2}
   gameControl: {fileID: 1450809718846432, guid: fdd0f8f5afe452f4bbeb952773bce8ca,
     type: 2}
@@ -524,7 +528,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage:
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &933128870
@@ -660,6 +664,10 @@ Prefab:
       propertyPath: teamid
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1573085015422186, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
+      propertyPath: m_Name
+      value: Mine Cart1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
   m_IsPrefabParent: 0
@@ -710,6 +718,10 @@ Prefab:
         type: 2}
       propertyPath: teamid
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573085015422186, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
+      propertyPath: m_Name
+      value: Mine Cart2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
@@ -1072,6 +1084,10 @@ Prefab:
     - target: {fileID: 1728773198137866, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
       propertyPath: m_Name
       value: Rail 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573085015422186, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
+      propertyPath: m_Name
+      value: Mine Cart0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
