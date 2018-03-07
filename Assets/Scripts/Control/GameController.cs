@@ -110,7 +110,7 @@ public class GameController : MonoBehaviour {
 			} else {
 				GUI.DrawTexture(new Rect(0, Screen.height-40, 450, Screen.height), pixel);
 				for (int curTeam = 0; curTeam < 4; curTeam ++)
-					GUI.Label(new Rect(10 + (110 * curTeam), Screen.height - 30, 200, 20), "TEAM " + (curTeam + 1).ToString() + " $" + minecarts[curTeam].GetComponent<Minecart>().getGold());
+					GUI.Label(new Rect(10 + (110 * curTeam), Screen.height - 30, 200, 20), "TEAM " + (curTeam + 1).ToString() + " $" + minecarts[curTeam].GetComponent<Minecart>().getGold()*/);
 			}
 		}
 	}
@@ -186,6 +186,8 @@ public class GameController : MonoBehaviour {
 	public void setCartGold (int teamId, int gold) {
 		minecarts[teamId].GetComponent<Minecart>().setCartGold(gold);
 	}
+
+	[RPC]
 	public void addPlayerDeath(int userId) {
 		userTeam [userId].addPlayerDeath(userId);
 	}
