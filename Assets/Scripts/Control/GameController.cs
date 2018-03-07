@@ -198,7 +198,7 @@ public class GameController : MonoBehaviour {
 
 	[RPC]
 	public void addPlayerKill(int userId) {
-		userTeam [userId].addPlayerDeath (userId);
+		userTeam [userId].addPlayerKill (userId);
 	}
 
 	[RPC]
