@@ -13,6 +13,7 @@ public class Character : MonoBehaviour {
 	private int goldCarry;
 	private int teamId;
 	private int maxHealth;
+	private int userId;
 	private PlayerGUI gui;
 	private Global earth;
 	[SerializeField] private Material mat0, mat1, mat2, mat3;
@@ -29,6 +30,10 @@ public class Character : MonoBehaviour {
 		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		goldCarry = 0;
 		gui.setGold (goldCarry, goldCapacity);
+	}
+
+	public void setUserId(int id) {
+		userId = id;
 	}
 
 	public void setClass (int reference) {
@@ -57,6 +62,7 @@ public class Character : MonoBehaviour {
 	}
 	void getDead() {
 		Network.Destroy(gameObject);
+		gameController.sendPlayerDeathRPC(userId);
 		gameController.spawnPlayer();
 	}
 
