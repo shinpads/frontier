@@ -27,7 +27,7 @@ public class Shooting : MonoBehaviour {
 		distance = 0;
 		networkview = gameObject.GetComponent<NetworkView>();
 		armPivotAnimator = armPivot.GetComponent<Animator>();
-		player = player.GetComponent<Character> ();
+		player = gameObject.GetComponent<Character> ();
 
 		// all layers except 2nd which is Ignore Raycast
 		ignoreRayCastLayer = ~(1 << 2);
@@ -46,17 +46,17 @@ public class Shooting : MonoBehaviour {
 			endpoint = ray.GetPoint(1000);
 			}
 
-			gameObject.GetComponent<NetworkView>().RPC("shoot",RPCMode.All, tipOfGun.transform.position,endpoint);
+			gameObject.GetComponent<NetworkView>().RPC("shoot",RPCMode.All, tipOfGun.transform.position,endpoint, player.getUserId());
 		}
 	}
 	[RPC]
-	private void shoot(Vector3 start, Vector3 end) {
+	private void shoot(Vector3 start, Vector3 end, int userId) {
 		audioSource.PlayOneShot(revolverSound);
 		if(!Network.isServer) { return; }
 		//create the bullet at tip of gun
 		GameObject shot = (GameObject) Network.Instantiate ((GameObject)Resources.Load("Prefabs/Bullet"), start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0);
-		shot.GetComponent<Bullet> ().setUserId (player.getUserId());
 		shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
+		shot.GetComponent<Bullet> ().setUserId (userId);
 	}
 
     private IEnumerator delayedShooting(){
