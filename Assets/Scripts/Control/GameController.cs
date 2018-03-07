@@ -132,6 +132,10 @@ public class GameController : MonoBehaviour {
 	public void sendPlayerDeathRPC (int userId) {
 		networkView.RPC("addPlayerDeath", RPCMode.All, userId);
 	}
+
+	public void sendPlayerKillRPC (int userId) {
+		networkView.RPC("addPlayerKill", RPCMode.All, userId);
+	}
 	[RPC]
 	public void startGame () {
 		spawnPlayer();

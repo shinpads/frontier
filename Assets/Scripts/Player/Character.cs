@@ -14,6 +14,7 @@ public class Character : MonoBehaviour {
 	private int teamId;
 	private int maxHealth;
 	private int userId;
+	private Queue damagers = new Queue();
 	private PlayerGUI gui;
 	private Global earth;
 	[SerializeField] private Material mat0, mat1, mat2, mat3;
@@ -43,7 +44,7 @@ public class Character : MonoBehaviour {
 	}
 
 	[RPC]
-	void setHealth(int damage) {
+	void setHealth(int damage, int enemyId) {
 		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
 		if (damage < 0) {
 			Network.Instantiate(bloodObject, gameObject.transform.position, Quaternion.Euler(gameObject.transform.forward), 0);
@@ -57,13 +58,24 @@ public class Character : MonoBehaviour {
 		}
 		gui.setHealth(characterHealth);
 		if (characterHealth == 0) {
-			getDead ();
+			getDead (enemyId);
 		}
 	}
-	void getDead() {
+
+	void setDamagers(int userId) {
+		damagers.Enqueue (userId);
+	}
+
+	void setDamagers() {
+		damagers.Dequeue();
+	}
+
+	void getDead(int enemyId) {
 		Network.Destroy(gameObject);
 		gameController.sendPlayerDeathRPC(userId);
+		gameController.sendPlayerKillRPC(enemyId);
 		gameController.spawnPlayer();
+		damagers.Clear ();
 	}
 
 	public float getSpeed() {
@@ -76,6 +88,10 @@ public class Character : MonoBehaviour {
 
 	public int getTeamId() {
 		return teamId;
+	}
+
+	public int getUserId() {
+		return userId;
 	}
 
 	public void setTeamId(int id){

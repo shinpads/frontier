@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour {
 	private RaycastHit hit;
 	private Ray ray;
 	private Rigidbody rigidbod;
+	private int userId;
 	[SerializeField] GameObject dirtImpactParticles;
 	void Start () {
 		if(!Network.isServer) { enabled = false; }
@@ -19,6 +20,11 @@ public class Bullet : MonoBehaviour {
 		StartCoroutine(setTimeOutDestroy());
 
 	}
+
+	public void setUserId(int id) {
+		userId = id;
+	}
+
 	void FixedUpdate() {
 		gameObject.transform.rotation = Quaternion.LookRotation(rigidbod.velocity.normalized);
 		currentPosition = gameObject.transform.position;
@@ -28,7 +34,7 @@ public class Bullet : MonoBehaviour {
 			ray = new Ray(lastPosition,rigidbod.velocity.normalized);
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
-					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("setHealth", RPCMode.All, -25);
+					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("setHealth", RPCMode.All, -25, userId);
 				} else {
 					Network.Instantiate (dirtImpactParticles, ray.GetPoint(hit.distance), Quaternion.EulerAngles(new Vector3(-90, 0, 0)), 0);
 				}
