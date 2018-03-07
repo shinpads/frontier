@@ -14,7 +14,7 @@ public class Character : MonoBehaviour {
 	private int teamId;
 	private int maxHealth;
 	private int userId;
-	private Queue damagers = new Queue();
+	private LinkedList<int[]> damagers = new LinkedList<int[]>();
 	private PlayerGUI gui;
 	private Global earth;
 	[SerializeField] private Material mat0, mat1, mat2, mat3;
@@ -44,12 +44,15 @@ public class Character : MonoBehaviour {
 	}
 
 	[RPC]
-	void setHealth(int damage, int enemyId) {
+	void setHealth(int dHealth, int enemyId) {
 		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
-		if (damage < 0) {
-			Network.Instantiate(bloodObject, gameObject.transform.position, Quaternion.Euler(gameObject.transform.forward), 0);
+		if (dHealth < 0) {
+			Network.Instantiate (bloodObject, gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
+			setDamagers (enemyId, dHealth);
+		} else if (dHealth > 0) {
+			removeDamagers (dHealth);
 		}
-		characterHealth += damage;
+		characterHealth += dHealth;
 		if (characterHealth > maxHealth) {
 			characterHealth = maxHealth;
 		}
@@ -62,20 +65,41 @@ public class Character : MonoBehaviour {
 		}
 	}
 
-	void setDamagers(int userId) {
-		damagers.Enqueue (userId);
+	void setDamagers(int enemyId, int damage) {
+		int[] assistData = { enemyId, damage };
+		foreach (int[] enemy in damagers) {
+			if (enemy [0] == enemyId) {
+				assistData[1] += enemy[1];
+				damagers.Remove (enemy);
+			}
+		}
+		damagers.AddFirst(assistData);
 	}
 
-	void setDamagers() {
-		damagers.Dequeue();
+	void removeDamagers(int healed) {
+		if (healed == damagers.Last.Value [1] * -1) {
+			damagers.RemoveFirst ();
+		} else if (healed > damagers.Last.Value [1] * -1) {
+			healed += damagers.First.Value [1];
+			damagers.RemoveFirst ();
+			removeDamagers (healed);
+		}
+		else {
+			damagers.First.Value [1] += healed;
+		}
 	}
 
 	void getDead(int enemyId) {
 		Network.Destroy(gameObject);
 		gameController.sendPlayerDeathRPC(userId);
 		gameController.sendPlayerKillRPC(enemyId);
-		gameController.spawnPlayer();
+		foreach (int[] enemy in damagers) {
+			if (enemy [0] != enemyId) {
+				gameController.sendPlayerAssistRPC (enemy [0]);
+			}
+		}
 		damagers.Clear ();
+		gameController.spawnPlayer();
 	}
 
 	public float getSpeed() {

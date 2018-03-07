@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour {
 					if (GUI.Button(new Rect(170, Screen.height - 90, 150, 80), "Scout")) {
 						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_SCOUT);
 					}
-					if (GUI.Button(new Rect(330, Screen.height - 90, 150, 80), "Theif")) {
+					if (GUI.Button(new Rect(330, Screen.height - 90, 150, 80), "Thief")) {
 						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_THIEF);
 					}
 					if (GUI.Button(new Rect(490, Screen.height - 90, 150, 80), "Other")) {
@@ -136,6 +136,11 @@ public class GameController : MonoBehaviour {
 	public void sendPlayerKillRPC (int userId) {
 		networkView.RPC("addPlayerKill", RPCMode.All, userId);
 	}
+
+	public void sendPlayerAssistRPC (int userId) {
+		networkView.RPC("addPlayerAssist", RPCMode.All, userId);
+	}
+
 	[RPC]
 	public void startGame () {
 		spawnPlayer();
