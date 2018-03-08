@@ -214,9 +214,7 @@ public class GameController : MonoBehaviour {
 	public ArrayList getScores() {
 		scores.Clear();
 		foreach (Teams t in teams) {
-			List<KeyValuePair<int, Teams.Stats>> tempStats = t.getScoreList ();
-			tempStats = sortTeamScore (tempStats);
-			scores.Add(tempStats);
+			scores.Add(sortTeamScore(t.getScoreList()));
 		}
 		return scores;
 	}
