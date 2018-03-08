@@ -15,6 +15,7 @@ public class Teams {
 		public int kills;
 		public int deaths;
 		public int assists;
+		public int goldStolen;
 	}
 
 	public Teams (int id) {
@@ -34,7 +35,7 @@ public class Teams {
 		if (playerCount < PLAYERS_PER_TEAM) {
 			players [playerCount] = new Player(userId, username);
 			Stats playerStats = new Stats ();
-			playerStats.kills = playerStats.deaths = playerStats.assists = 0;
+			playerStats.kills = playerStats.deaths = playerStats.assists = playerStats.goldStolen = 0;
 			teamStats.Add (userId, playerStats);
 			playerCount++;
 			return players[playerCount-1];
@@ -61,6 +62,10 @@ public class Teams {
 
 	public void addPlayerAssist(int userId) {
 		teamStats [userId].assists++;
+	}
+
+	public void addPlayerGoldStolen(int userId, int gold) {
+		teamStats [userId].goldStolen += gold;
 	}
 
 	public Dictionary<int, Stats> getScore() {

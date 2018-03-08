@@ -148,6 +148,7 @@ public class Character : MonoBehaviour {
 			else if (cartId == teamId && goldCarry > 0) {
 				gui.setInteract ("Press F to Place Gold");
 				if (Input.GetKey (KeyCode.F)) {
+					gameController.sendPlayerGoldStolenRPC (userId, goldCarry);
 					gameController.sendCartGoldRPC(cartId, goldCarry);
 					networkView.RPC("setGoldCarryRPC", RPCMode.All, -goldCarry);
 					gui.setInteract ("");

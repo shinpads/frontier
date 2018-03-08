@@ -141,6 +141,10 @@ public class GameController : MonoBehaviour {
 		networkView.RPC("addPlayerAssist", RPCMode.All, userId);
 	}
 
+	public void sendPlayerGoldStolenRPC (int userId, int gold) {
+		networkView.RPC ("addPlayerGoldStolen", RPCMode.All, userId, gold);
+	}
+
 	[RPC]
 	public void startGame () {
 		spawnPlayer();
@@ -207,6 +211,11 @@ public class GameController : MonoBehaviour {
 	}
 
 	[RPC]
+	public void addPlayerGoldStolen(int userId, int gold) {
+		userTeam [userId].addPlayerGoldStolen (userId, gold);
+	}
+
+	[RPC]
 	public void addPlayerAssist(int userId) {
 		userTeam [userId].addPlayerAssist (userId);
 	}
@@ -222,26 +231,4 @@ public class GameController : MonoBehaviour {
 		return userTeam;
 
 	}
-
-	/*public void sortTeamScore(List<KeyValuePair<int, Teams.Stats>> lst) {
-		int i, j;
-		for (i = 1; i < lst.Count - 1; i++) {
-			j = i;
-			while ((j >= 0) && (lst[j - 1].Value.kills >= lst[i].Value.kills)) {
-				if (lst[j - 1].Value.kills == lst[i].Value.kills) {
-					if (lst[j - 1].Value.deaths > lst[i].Value.deaths) {
-						j--;
-						continue;
-					}
-					else if (lst[j - 1].Value.deaths == lst[i].Value.deaths && lst[j - 1].Value.assists < lst[i].Value.assists) {
-						j--;
-						continue;
-					}
-				}
-				lst[j] = lst[j-1];
-				j--;
-			}
-			lst[j] = lst[i];		
-		}
-	}*/
 }
