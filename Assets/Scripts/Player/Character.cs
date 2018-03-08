@@ -71,9 +71,12 @@ public class Character : MonoBehaviour {
 	}
 
 	void removeDamagers(int healed) {
-		if (healed == damagers.Last.Value [1] * -1) {
+		if (damagers.First == null) { 
+			return; 
+			}
+		else if (healed == damagers.First.Value [1] * -1) {
 			damagers.RemoveFirst ();
-		} else if (healed > damagers.Last.Value [1] * -1) {
+		} else if (healed > damagers.First.Value [1] * -1) {
 			healed += damagers.First.Value [1];
 			damagers.RemoveFirst ();
 			removeDamagers (healed);

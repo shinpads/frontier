@@ -212,9 +212,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	public ArrayList getScores() {
-		scores.Clear();
 		foreach (Teams t in teams) {
-			scores.Add(sortTeamScore(t.getScoreList()));
+			scores.Add(t.getScoreList());
 		}
 		return scores;
 	}
@@ -224,7 +223,7 @@ public class GameController : MonoBehaviour {
 
 	}
 
-	public List<KeyValuePair<int, Teams.Stats>> sortTeamScore(List<KeyValuePair<int, Teams.Stats>> lst) {
+	/*public void sortTeamScore(List<KeyValuePair<int, Teams.Stats>> lst) {
 		int i, j;
 		for (i = 1; i < lst.Count - 1; i++) {
 			j = i;
@@ -244,6 +243,5 @@ public class GameController : MonoBehaviour {
 			}
 			lst[j] = lst[i];		
 		}
-		return lst;
-	}
+	}*/
 }
