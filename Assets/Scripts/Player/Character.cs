@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,7 +43,7 @@ public class Character : MonoBehaviour {
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
 	}
 
-	[RPC]
+	[PunRPC]
 	void setHealth(int dHealth, int enemyId) {
 		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
 		if (dHealth < 0) {
@@ -160,7 +160,7 @@ public class Character : MonoBehaviour {
 			gui.setInteract ("");
 		}
 	}
-	[RPC]
+	[PunRPC]
 	void setCharacterMaterial(int id) {
 		renderer = gameObject.GetComponent<MeshRenderer> ();
 		switch (id) {
@@ -180,7 +180,7 @@ public class Character : MonoBehaviour {
 			break;
 		}
 	}
-	[RPC]
+	[PunRPC]
 	void setGoldCarryRPC (int amount) {
 		setGoldCarry(goldCarry + amount);
 	}

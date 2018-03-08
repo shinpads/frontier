@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,7 +49,7 @@ public class Shooting : MonoBehaviour {
 			gameObject.GetComponent<NetworkView>().RPC("shoot",RPCMode.All, tipOfGun.transform.position,endpoint, player.getUserId());
 		}
 	}
-	[RPC]
+	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId) {
 		audioSource.PlayOneShot(revolverSound);
 		if(!Network.isServer) { return; }

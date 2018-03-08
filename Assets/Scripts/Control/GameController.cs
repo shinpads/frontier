@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -145,7 +145,7 @@ public class GameController : MonoBehaviour {
 		networkView.RPC ("addPlayerGoldStolen", RPCMode.All, userId, gold);
 	}
 
-	[RPC]
+	[PunRPC]
 	public void startGame () {
 		spawnPlayer();
 
@@ -153,7 +153,7 @@ public class GameController : MonoBehaviour {
 
 		gameStarted = true;
 	}
-	[RPC]
+	[PunRPC]
 	public void addToTeam (int userId, int team, string username) {
 		if (userId >= MAX_PLAYERS) {
 			Debug.Log("Invalid userId on addToTeam");
@@ -172,7 +172,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	// SERVER ONLY
-	[RPC]
+	[PunRPC]
 	public void setupTeam (int userId, string username) {
 		if (userId >= MAX_PLAYERS) {
 			Debug.Log("Invalid userId on setupTeam");
@@ -184,7 +184,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	[RPC]
+	[PunRPC]
 	public void setClassType (int userId, int teamId, int classType) {
 		Player player = teams[teamId].findPlayerByUserId (userId);
 		if (player == null) { return; }
@@ -194,28 +194,28 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	[RPC]
+	[PunRPC]
 
 	public void setCartGold (int teamId, int gold) {
 		minecarts[teamId].GetComponent<Minecart>().setCartGold(gold);
 	}
 
-	[RPC]
+	[PunRPC]
 	public void addPlayerDeath(int userId) {
 		userTeam [userId].addPlayerDeath(userId);
 	}
 
-	[RPC]
+	[PunRPC]
 	public void addPlayerKill(int userId) {
 		userTeam [userId].addPlayerKill (userId);
 	}
 
-	[RPC]
+	[PunRPC]
 	public void addPlayerGoldStolen(int userId, int gold) {
 		userTeam [userId].addPlayerGoldStolen (userId, gold);
 	}
 
-	[RPC]
+	[PunRPC]
 	public void addPlayerAssist(int userId) {
 		userTeam [userId].addPlayerAssist (userId);
 	}
