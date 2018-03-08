@@ -87,19 +87,17 @@ public class Character : MonoBehaviour {
 	}
 
 	void getDead(int enemyId) {
-		if (this.enabled) {
-			Network.Destroy (gameObject);
-			HashSet<int> assistSet = new HashSet<int> ();
-			gameController.sendPlayerDeathRPC (userId);
-			gameController.sendPlayerKillRPC (enemyId);
-			foreach (int[] enemy in damagers) {
-				if (assistSet.Add (enemy [0]) && enemy [0] != enemyId) {
-					gameController.sendPlayerAssistRPC (enemy [0]);
-				}
+		Network.Destroy (gameObject);
+		HashSet<int> assistSet = new HashSet<int> ();
+		gameController.sendPlayerDeathRPC (userId);
+		gameController.sendPlayerKillRPC (enemyId);
+		foreach (int[] enemy in damagers) {
+			if (assistSet.Add (enemy [0]) && enemy [0] != enemyId) {
+				gameController.sendPlayerAssistRPC (enemy [0]);
 			}
-			damagers.Clear ();
-			gameController.spawnPlayer ();
 		}
+		damagers.Clear ();
+		gameController.spawnPlayer ();
 	}
 
 	public float getSpeed() {
