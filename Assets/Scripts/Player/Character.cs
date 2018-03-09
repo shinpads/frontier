@@ -43,7 +43,7 @@ public class Character : MonoBehaviour {
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
 	}
 
-	[PunRPC]
+	[RPC]
 	void setHealth(int dHealth, int enemyId) {
 		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
 		if (dHealth < 0) {
@@ -160,7 +160,7 @@ public class Character : MonoBehaviour {
 			gui.setInteract ("");
 		}
 	}
-	[PunRPC]
+	[RPC]
 	void setCharacterMaterial(int id) {
 		renderer = gameObject.GetComponent<MeshRenderer> ();
 		switch (id) {
@@ -180,7 +180,7 @@ public class Character : MonoBehaviour {
 			break;
 		}
 	}
-	[PunRPC]
+	[RPC]
 	void setGoldCarryRPC (int amount) {
 		setGoldCarry(goldCarry + amount);
 	}

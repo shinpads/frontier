@@ -49,14 +49,14 @@ public class Shooting : MonoBehaviour {
 			gameObject.GetComponent<NetworkView>().RPC("shoot",RPCMode.All, tipOfGun.transform.position,endpoint, player.getUserId());
 		}
 	}
-	[PunRPC]
+	[RPC]
 	private void shoot(Vector3 start, Vector3 end, int userId) {
 		audioSource.PlayOneShot(revolverSound);
 		if(!Network.isServer) { return; }
 		//create the bullet at tip of gun
 		GameObject shot = (GameObject) Network.Instantiate ((GameObject)Resources.Load("Prefabs/Bullet"), start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0);
 		shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
-		shot.GetComponent<Bullet> ().setUserId (userId);
+		shot.GetComponent<Bullet> ().setUser (userId, player);
 	}
 
     private IEnumerator delayedShooting(){

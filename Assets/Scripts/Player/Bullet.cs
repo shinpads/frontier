@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour {
 	private Ray ray;
 	private Rigidbody rigidbod;
 	private int userId;
+	private Character userPlayer;
+	private int healScore;
 	[SerializeField] GameObject dirtImpactParticles;
 	void Start () {
 		if(!Network.isServer) { enabled = false; }
@@ -21,8 +23,9 @@ public class Bullet : MonoBehaviour {
 
 	}
 
-	public void setUserId(int id) {
+	public void setUser(int id, Character player) {
 		userId = id;
+		userPlayer = player;
 	}
 
 	void FixedUpdate() {
@@ -34,8 +37,14 @@ public class Bullet : MonoBehaviour {
 			ray = new Ray(lastPosition,rigidbod.velocity.normalized);
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
-					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("setHealth", RPCMode.All, -25, userId);
-				} else {
+					hit.collider.gameObject.GetComponent<NetworkView> ().RPC ("setHealth", RPCMode.All, -25, userId);
+				} else if (hit.collider.gameObject.tag == "TargerCircle") {
+					healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
+					if (healScore > 0) {
+						userPlayer.GetComponent<NetworkView> ().RPC ("setHealth", RPCMode.All, healScore, -1);
+					}
+				}
+				else {
 					Network.Instantiate (dirtImpactParticles, ray.GetPoint(hit.distance), Quaternion.EulerAngles(new Vector3(-90, 0, 0)), 0);
 				}
 				Network.Destroy(gameObject);
