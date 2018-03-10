@@ -7,45 +7,69 @@ public class NetworkManager : MonoBehaviour {
 	private const float TIC_RATE = 64f;
 	private const string ip = "127.0.0.1";
 	private const int port = 25002;
+	private string username;
+	private bool usernameSet = false;
 	[SerializeField] private GameObject player;
 	[SerializeField] private GameObject gameControl;
 	private bool gameControlSpawned = false;
 	void Start () {
+		PhotonNetwork.sendRate = 50;
+		PhotonNetwork.sendRateOnSerialize = 50;
 		Application.runInBackground = true;
+		username = "";
 	}
   void Update () {
-    if (!Network.isClient && !Network.isServer) {
+    if (!PhotonNetwork.connected) {
 			if (Input.GetKeyDown(KeyCode.H)) {
-				CreateServer (port);
+				// CreateServer (port);
 			}
 			if (Input.GetKeyDown(KeyCode.J)) {
-				JoinServer ();
+				if (username.Length > 0) {
+					usernameSet = true;
+					Global.username = username;
+					JoinServer();
+				}
 			}
-		} else if (Network.isServer && !gameControlSpawned) {
-			Network.Instantiate(gameControl, new Vector3(0, 0, 0), Quaternion.identity, 0);
-			gameControlSpawned = true;
 		}
   }
-	private void JoinServer (){
-		Network.Connect(ip,port);
+	void OnJoinedRoom () {
+		Debug.Log("Joined Room");
+		if (!gameControlSpawned && PhotonNetwork.isMasterClient) {
+			PhotonNetwork.Instantiate("GameController", new Vector3(0, 0, 0), Quaternion.identity, 0);
+			gameControlSpawned = true;
+		}
+	}
+	private void JoinServer () {
+		PhotonNetwork.AuthValues = new AuthenticationValues(Global.username);
+		PhotonNetwork.ConnectUsingSettings ("v1.0.0");
+		// Network.Connect(ip,port);
 	}
 	private void CreateServer(int port) {
 		Network.InitializeServer (10, port, false);
 		Network.sendRate = TIC_RATE;
 	}
 	void OnGUI () {
-		if (!Network.isServer && !Network.isClient) {
-			GUI.Label(new Rect(10, 10, 100, 20), "[H] to Host");
+		if (!PhotonNetwork.connected) {
+			if (!usernameSet) {
+				username = GUI.TextField(new Rect(10,10, 200, 30), username, 15);
+			}
 			GUI.Label(new Rect(10, 40, 100, 20), "[J] to Join");
 		}
+		// GUI.Label(new Rect(10, 70, 150, 20), PhotonNetwork.connectionStateDetailed.ToString());
 	}
-	void OnPlayerConnected(){
-		Debug.Log("PLAYER CONNECTED");
+
+	void OnJoinedLobby() {
+		Debug.Log("Joined Lobby");
+		RoomOptions roomOptions = new RoomOptions();
+		roomOptions.isVisible = true;
+		roomOptions.isOpen = true;
+		roomOptions.maxPlayers = 21;
+		roomOptions.PublishUserId = true;
+		TypedLobby typedLobby = new TypedLobby("lobby", LobbyType.SqlLobby);
+		PhotonNetwork.JoinOrCreateRoom ("CoolRoom123", roomOptions, typedLobby);
 	}
 
 	void OnApplicationQuit(){
 		Network.Disconnect(200);
 	}
-
-
 }

@@ -5,12 +5,11 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 	const int MAX_PLAYERS = 25;
 	[SerializeField] GameObject playerPrefab;
-	private NetworkView networkView;
+	private PhotonView photonView;
 	private ArrayList scores = new ArrayList();
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
 	private Dictionary<int, Teams> userTeam = new Dictionary<int, Teams>();
-	private string thisUsername;
 	private int thisTeam;
 	private int thisUserId;
 	private Player thisPlayer;
@@ -22,8 +21,7 @@ public class GameController : MonoBehaviour {
 	Texture2D pixel;
 	Color pixelColor;
 	void Start () {
-		thisUsername = "Player";
-		networkView = gameObject.GetComponent<NetworkView>();
+		photonView = gameObject.GetComponent<PhotonView>();
 		// GUI things
 		pixelColor = Color.black;
 		pixelColor.a = 0.5f;
@@ -34,42 +32,30 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Network.isServer || Network.isClient) {
+		if (PhotonNetwork.connected) {
 			if (!connected) { onConnected(); }
 		}
 		if (connected) {
-			if (!usernameSet) {
-				if (Input.GetKeyDown(KeyCode.Return)) {
-					if (thisUsername.Length > 0) {
-						usernameSet = true;
-						// if server add to next team (no need to call RPC to itself)
-						if (Network.isServer) {
-							nextTeam = (nextTeam+1)%4;
-							networkView.RPC("addToTeam", RPCMode.AllBuffered, thisUserId, nextTeam, thisUsername);
-						} else {
-							// get server to setup team
-							networkView.RPC("setupTeam", RPCMode.Server, thisUserId, thisUsername);
-						}
-					} else {
-						thisUsername = "Too Short";
-					}
-				}
-			}
+			// if server add to next team (no need to call RPC to itself)
+			/*
+			if (Network.) {
+				nextTeam = (nextTeam+1)%4;
+				photonView.RPC("addToTeam", PhotonTargetss.AllBuffered, thisUserId, nextTeam, thisUsername);
+			} else {
+				// get server to setup team
+			} */
 		}
 	}
 	private void onConnected() {
-		thisUserId = int.Parse(Network.player.ToString());
+		thisUserId = PhotonNetwork.player.ID;
 		classTypeSet = false;
 		connected = true;
 		loadMineCartObjects();
+		photonView.RPC("setupTeam", PhotonTargets.AllBuffered, thisUserId, Global.username);
 	}
 	private void OnGUI() {
 		if (connected) {
 			if (!gameStarted) {
-				if (!usernameSet) {
-					thisUsername = GUI.TextField(new Rect(10,10, 200, 30), thisUsername, 15);
-					return;
-				}
 				// Teams
 				GUI.DrawTexture(new Rect(0, 0, 850, 220), pixel);
 				for (int curTeam = 0; curTeam < 4; curTeam ++) {
@@ -87,24 +73,24 @@ public class GameController : MonoBehaviour {
 				if (!classTypeSet) {
 					GUI.DrawTexture(new Rect(0, Screen.height - 100, Screen.width, Screen.height), pixel);
 					if (GUI.Button(new Rect(10, Screen.height - 90, 150, 80), "Tank")) {
-						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_TANK);
+						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_TANK);
 					}
 					if (GUI.Button(new Rect(170, Screen.height - 90, 150, 80), "Scout")) {
-						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_SCOUT);
+						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_SCOUT);
 					}
 					if (GUI.Button(new Rect(330, Screen.height - 90, 150, 80), "Thief")) {
-						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_THIEF);
+						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_THIEF);
 					}
 					if (GUI.Button(new Rect(490, Screen.height - 90, 150, 80), "Other")) {
-						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_OTHER);
+						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_OTHER);
 					}
 					if (GUI.Button(new Rect(650, Screen.height - 90, 150, 80), "Assualt")) {
-						networkView.RPC("setClassType", RPCMode.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_ASSUALT);
+						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_ASSUALT);
 					}
 				}
-				if (Network.isServer) {
+				if (PhotonNetwork.isMasterClient) {
 					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game")) {
-						networkView.RPC("startGame", RPCMode.All);
+						photonView.RPC("startGame", PhotonTargets.All);
 					}
 				}
 			} else {
@@ -116,10 +102,10 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spawnPlayer() {
-		GameObject playerObject = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0, 30, 0), Quaternion.identity, 1);
-		playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
-		playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
-		playerObject.GetComponent<Character> ().setTeamId (thisTeam);
+		PhotonNetwork.Instantiate("Player", new Vector3(0, 30, 0), Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
+		//playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
+		//playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
+		//playerObject.GetComponent<Character> ().setTeamId (thisTeam);
 	}
 	private void loadMineCartObjects () {
 		for (int i = 0; i < 4; i++) {
@@ -127,45 +113,39 @@ public class GameController : MonoBehaviour {
 		}
 	}
 	public void sendCartGoldRPC (int teamId, int amount) {
-		networkView.RPC("setCartGold", RPCMode.All, teamId, amount);
+		photonView.RPC("setCartGold", PhotonTargets.All, teamId, amount);
 	}
 	public void sendPlayerDeathRPC (int userId) {
-		networkView.RPC("addPlayerDeath", RPCMode.All, userId);
+		photonView.RPC("addPlayerDeath", PhotonTargets.All, userId);
 	}
 
 	public void sendPlayerKillRPC (int userId) {
-		networkView.RPC("addPlayerKill", RPCMode.All, userId);
+		photonView.RPC("addPlayerKill", PhotonTargets.All, userId);
 	}
 
 	public void sendPlayerAssistRPC (int userId) {
-		networkView.RPC("addPlayerAssist", RPCMode.All, userId);
+		photonView.RPC("addPlayerAssist", PhotonTargets.All, userId);
 	}
 
 	public void sendPlayerGoldStolenRPC (int userId, int gold) {
-		networkView.RPC ("addPlayerGoldStolen", RPCMode.All, userId, gold);
+		photonView.RPC ("addPlayerGoldStolen", PhotonTargets.All, userId, gold);
 	}
 
 	[PunRPC]
 	public void startGame () {
-		spawnPlayer();
-
 		GameObject.FindWithTag("MenuCamera").SetActive(false);
-
+		spawnPlayer();
 		gameStarted = true;
 	}
 	[PunRPC]
 	public void addToTeam (int userId, int team, string username) {
-		if (userId >= MAX_PLAYERS) {
-			Debug.Log("Invalid userId on addToTeam");
-			return;
-		}
 		if (team < 0 || team > 3) {
 			Debug.Log("Invalid team on addToTeam");
 			return;
 		}
 		Player newPlayer = teams[team].addPlayer(userId, username);
 		userTeam[userId] = teams[team];
-		if (userId.ToString() == Network.player.ToString()) {
+		if (userId == PhotonNetwork.player.ID) {
 			thisTeam = team;
 			thisPlayer = newPlayer;
 		}
@@ -174,14 +154,15 @@ public class GameController : MonoBehaviour {
 	// SERVER ONLY
 	[PunRPC]
 	public void setupTeam (int userId, string username) {
+		if (!PhotonNetwork.isMasterClient) { return; }
 		if (userId >= MAX_PLAYERS) {
 			Debug.Log("Invalid userId on setupTeam");
 			return;
 		}
-		if (Network.isServer) {
-			nextTeam = (nextTeam+1)%4;
-			networkView.RPC("addToTeam", RPCMode.AllBuffered, userId, nextTeam, username);
-		}
+
+		nextTeam = (nextTeam+1)%4;
+		photonView.RPC("addToTeam", PhotonTargets.AllBuffered, userId, nextTeam, username);
+
 	}
 
 	[PunRPC]
@@ -195,7 +176,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	[PunRPC]
-
 	public void setCartGold (int teamId, int gold) {
 		minecarts[teamId].GetComponent<Minecart>().setCartGold(gold);
 	}

@@ -9,4 +9,5 @@ public class Global {
 	public const int CHARACTER_OTHER = 3;
 	public const int CHARACTER_ASSUALT = 4;
 	public static string[] CHARACTER_NAMES = new string[] {"Tank", "Scout", "Thief", "Other", "Assualt"};
+	public static string username = "";
 }

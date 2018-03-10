@@ -5,7 +5,7 @@ using UnityEngine;
 public class JoinSetup : MonoBehaviour {
 	//Array of things we dont want to be enabled for some arbitary player
 	[SerializeField] private Behaviour[] thingsToDisable;
-	private NetworkView networkView;
+	private PhotonView photonView;
 	void Start () {
 		disableThings();
 	}
@@ -14,9 +14,9 @@ public class JoinSetup : MonoBehaviour {
 		disableThings();
 	}
 	private void disableThings() {
-		networkView = GetComponent<NetworkView>();
+		photonView = GetComponent<PhotonView>();
 		// Grab
-		if (!networkView.isMine) {
+		if (!photonView.isMine) {
 			for (int i = 0; i < thingsToDisable.Length; i++) {
 				if(thingsToDisable[i] != null)
 					thingsToDisable[i].enabled = false;

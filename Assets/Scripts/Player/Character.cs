@@ -22,9 +22,14 @@ public class Character : MonoBehaviour {
 	[SerializeField] private GameObject bloodObject;
 	private GameController gameController;
 	private MeshRenderer renderer;
-	NetworkView networkView;
+	PhotonView photonView;
 
 	void Start () {
+		photonView = gameObject.GetComponent<PhotonView>();
+		object[] data = photonView.instantiationData;
+		setClass((int)data[0]);
+		setUserId((int)data[1]);
+		setTeamId((int)data[2]);
 		maxHealth = characterHealth;
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
@@ -45,10 +50,10 @@ public class Character : MonoBehaviour {
 
 	[PunRPC]
 	void setHealth(int dHealth, int enemyId) {
-		if (!gameObject.GetComponent<NetworkView> ().isMine) {return;}
+		if (!gameObject.GetComponent<PhotonView> ().isMine) {return;}
 		if (dHealth < 0) {
 			setDamagers (enemyId, dHealth);
-			Network.Instantiate (bloodObject, gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
+			PhotonNetwork.Instantiate ("BloodParticles", gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
 		} else if (dHealth > 0) {
 			removeDamagers (dHealth);
 		}
@@ -71,8 +76,8 @@ public class Character : MonoBehaviour {
 	}
 
 	void removeDamagers(int healed) {
-		if (damagers.First == null) { 
-			return; 
+		if (damagers.First == null) {
+			return;
 		}
 		else if (healed == damagers.First.Value [1] * -1) {
 			damagers.RemoveFirst ();
@@ -87,7 +92,7 @@ public class Character : MonoBehaviour {
 	}
 
 	void getDead(int enemyId) {
-		Network.Destroy (gameObject);
+		PhotonNetwork.Destroy (gameObject);
 		HashSet<int> assistSet = new HashSet<int> ();
 		gameController.sendPlayerDeathRPC (userId);
 		gameController.sendPlayerKillRPC (enemyId);
@@ -118,8 +123,8 @@ public class Character : MonoBehaviour {
 
 	public void setTeamId(int id){
 		teamId = id;
-		networkView = gameObject.GetComponent<NetworkView> ();
-		networkView.RPC ("setCharacterMaterial", RPCMode.All, id);
+		photonView = gameObject.GetComponent<PhotonView> ();
+		photonView.RPC ("setCharacterMaterial", PhotonTargets.All, id);
 	}
 	public void setGoldCarry(int gold) {
 		goldCarry = gold;
@@ -139,7 +144,7 @@ public class Character : MonoBehaviour {
 				if (Input.GetKey (KeyCode.F)) {
 					int amount = Mathf.Min(goldCapacity - goldCarry, cart.getGold());
 					gameController.sendCartGoldRPC(cartId, -amount);
-					networkView.RPC("setGoldCarryRPC", RPCMode.All, amount);
+					photonView.RPC("setGoldCarryRPC", PhotonTargets.All, amount);
 					gui.setInteract ("");
 				}
 			}
@@ -148,7 +153,7 @@ public class Character : MonoBehaviour {
 				if (Input.GetKey (KeyCode.F)) {
 					gameController.sendPlayerGoldStolenRPC (userId, goldCarry);
 					gameController.sendCartGoldRPC(cartId, goldCarry);
-					networkView.RPC("setGoldCarryRPC", RPCMode.All, -goldCarry);
+					photonView.RPC("setGoldCarryRPC", PhotonTargets.All, -goldCarry);
 					gui.setInteract ("");
 				}
 			}

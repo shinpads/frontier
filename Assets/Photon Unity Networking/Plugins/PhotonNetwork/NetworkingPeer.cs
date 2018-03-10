@@ -1840,10 +1840,10 @@ internal class NetworkingPeer : LoadBalancingPeer, IPhotonPeerListener
                 // PUN assumes you fetch the name-server's list of regions to ping them
                 if (PhotonNetwork.PhotonServerSettings.HostType == ServerSettings.HostingOption.BestRegion)
                 {
-					
+
 			        CloudRegionCode bestFromPrefs = PhotonHandler.BestRegionCodeInPreferences;
-					if (bestFromPrefs != CloudRegionCode.none && 
-				    this.AvailableRegions.Exists(x => x.Code == bestFromPrefs) 
+					if (bestFromPrefs != CloudRegionCode.none &&
+				    this.AvailableRegions.Exists(x => x.Code == bestFromPrefs)
 				    )
 			        {
 						Debug.Log("Best region found in PlayerPrefs. Connecting to: " + bestFromPrefs);

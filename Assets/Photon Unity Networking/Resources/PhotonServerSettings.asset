@@ -11,20 +11,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3758f8f58fdef43803eb9be1df0608, type: 3}
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
-  AppID: 
+  AppID: ead09041-0d2f-49e3-bc5f-e554150af15c
   VoiceAppID: 
   ChatAppID: 
-  HostType: 0
+  HostType: 2
   PreferredRegion: 0
   EnabledRegions: -1
   Protocol: 0
-  ServerAddress: 
+  ServerAddress: 130.15.220.142
   ServerPort: 5055
   VoiceServerPort: 5055
-  JoinLobby: 0
-  EnableLobbyStatistics: 0
-  PunLogging: 0
+  JoinLobby: 1
+  EnableLobbyStatistics: 1
+  PunLogging: 1
   NetworkLogging: 1
   RunInBackground: 1
-  RpcList: []
-  DisableAutoOpenWizard: 0
+  RpcList:
+  - addPlayerAssist
+  - addPlayerDeath
+  - addPlayerGoldStolen
+  - addPlayerKill
+  - addToTeam
+  - Chat
+  - ColorRpc
+  - DestroyRpc
+  - DoJump
+  - Flash
+  - InstantiateRpc
+  - Marco
+  - PickupItemInit
+  - Polo
+  - PunPickup
+  - PunPickupSimple
+  - PunRespawn
+  - RequestForPickupItems
+  - RequestForPickupTimes
+  - setCartGold
+  - setCharacterMaterial
+  - setClassType
+  - setGoldCarryRPC
+  - setHealth
+  - setupTeam
+  - shoot
+  - startGame
+  - TaggedPlayer
+  DisableAutoOpenWizard: 1

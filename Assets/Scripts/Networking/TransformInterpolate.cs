@@ -2,7 +2,7 @@
 using System.Collections;
 public class TransformInterpolate : MonoBehaviour {
 	private Vector3 realPos = Vector3.zero;
-	private Quaternion realRot = Quaternion.identity; 
+	private Quaternion realRot = Quaternion.identity;
 	//Send & Read over Network
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
 		if (stream.isWriting) {
@@ -21,7 +21,7 @@ public class TransformInterpolate : MonoBehaviour {
 
 	void Update(){
 
-		if (GetComponent<NetworkView> ().isMine)
+		if (GetComponent<PhotonView> ().isMine)
 			return;
 		transform.rotation = Quaternion.Lerp (transform.rotation, realRot, Time.deltaTime * 15f);
 		transform.position = Vector3.Lerp (transform.position,realPos, Time.deltaTime*15f);

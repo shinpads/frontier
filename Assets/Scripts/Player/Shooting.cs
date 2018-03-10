@@ -17,7 +17,7 @@ public class Shooting : MonoBehaviour {
 	[Header("Sounds")]
 	[SerializeField] private AudioClip revolverSound;
 	private Animator armPivotAnimator;
-	private NetworkView networkview;
+	private PhotonView photonView;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 
@@ -25,7 +25,7 @@ public class Shooting : MonoBehaviour {
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
 		endpoint = new Vector3(0,0,0);
 		distance = 0;
-		networkview = gameObject.GetComponent<NetworkView>();
+		photonView = gameObject.GetComponent<PhotonView>();
 		armPivotAnimator = armPivot.GetComponent<Animator>();
 		player = gameObject.GetComponent<Character> ();
 
@@ -34,7 +34,7 @@ public class Shooting : MonoBehaviour {
 	}
 
 	void Update () {
-		if (!networkview.isMine) { return; }
+		if (!photonView.isMine) { return; }
 		if (Input.GetButtonDown ("Fire1") && canshoot == true) {
             //Get Point where bullet will hit
             StartCoroutine(delayedShooting());
@@ -46,17 +46,17 @@ public class Shooting : MonoBehaviour {
 			endpoint = ray.GetPoint(1000);
 			}
 
-			gameObject.GetComponent<NetworkView>().RPC("shoot",RPCMode.All, tipOfGun.transform.position,endpoint, player.getUserId());
+			gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, tipOfGun.transform.position,endpoint, player.getUserId());
 		}
 	}
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId) {
 		audioSource.PlayOneShot(revolverSound);
-		if(!Network.isServer) { return; }
+		if(!PhotonNetwork.isMasterClient) { return; }
 		//create the bullet at tip of gun
-		GameObject shot = (GameObject) Network.Instantiate ((GameObject)Resources.Load("Prefabs/Bullet"), start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0);
-		shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
-		shot.GetComponent<Bullet> ().setUserId (userId);
+		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*300});
+		//shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
+		//shot.GetComponent<Bullet> ().setUserId (userId);
 	}
 
     private IEnumerator delayedShooting(){

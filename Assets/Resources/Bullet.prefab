@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33167670977118170}
   - component: {fileID: 135138690836405010}
   - component: {fileID: 23305167746647348}
+  - component: {fileID: 114728373231884436}
   - component: {fileID: 54002454808661360}
-  - component: {fileID: 148238955436927876}
   - component: {fileID: 114406485482665484}
   m_Layer: 0
   m_Name: Bullet
@@ -113,6 +113,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dirtImpactParticles: {fileID: 100002, guid: 56bfc2f4b4a0c534c8ef3d0fd1124c44, type: 2}
+--- !u!114 &114728373231884436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1890593835515380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 4581285332056296}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!135 &135138690836405010
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -125,15 +151,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.12
   m_Center: {x: 0, y: 0, z: 0.3}
---- !u!148 &148238955436927876
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1890593835515380}
-  m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 4581285332056296}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0

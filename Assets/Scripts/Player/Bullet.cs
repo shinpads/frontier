@@ -12,11 +12,14 @@ public class Bullet : MonoBehaviour {
 	private int userId;
 	[SerializeField] GameObject dirtImpactParticles;
 	void Start () {
-		if(!Network.isServer) { enabled = false; }
+		if(!PhotonNetwork.isMasterClient) { enabled = false; }
+		object[] data = GetComponent<PhotonView>().instantiationData;
+		setUserId ((int)data[0]);
 		currentPosition = gameObject.transform.position;
 		lastPosition = gameObject.transform.position;
 		rigidbod = gameObject.GetComponent<Rigidbody>();
 		rigidbod.detectCollisions = false;
+		rigidbod.velocity = (Vector3)data[1];
 		StartCoroutine(setTimeOutDestroy());
 
 	}
@@ -34,18 +37,18 @@ public class Bullet : MonoBehaviour {
 			ray = new Ray(lastPosition,rigidbod.velocity.normalized);
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
-					hit.collider.gameObject.GetComponent<NetworkView> ().RPC("setHealth", RPCMode.All, -25, userId);
+					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -25, userId);
 				} else {
-					Network.Instantiate (dirtImpactParticles, ray.GetPoint(hit.distance), Quaternion.EulerAngles(new Vector3(-90, 0, 0)), 0);
+					PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.EulerAngles(new Vector3(-90, 0, 0)), 0);
 				}
-				Network.Destroy(gameObject);
+				PhotonNetwork.Destroy(gameObject);
 			}
 			lastPosition = currentPosition;
 		}
 	}
 	private IEnumerator setTimeOutDestroy () {
 		yield return new WaitForSeconds(LIFE_SPAN);
-		Network.Destroy(gameObject);
+		PhotonNetwork.Destroy(gameObject);
 	}
 
 }
