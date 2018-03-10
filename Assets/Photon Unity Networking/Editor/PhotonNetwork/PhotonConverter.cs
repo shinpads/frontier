@@ -55,7 +55,7 @@ public class PhotonConverter : Photon.MonoBehaviour
                 continue;
             }
 
-            text = text.Replace("[RPC]", "[PunRPC]");
+            text = text.Replace("[PunRPC]", "[PunRPC]");
             text = text.Replace("@RPC", "@PunRPC");
 
             if (!text.Equals(textCopy))

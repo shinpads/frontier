@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour {
 	private Ray ray;
 	private Rigidbody rigidbod;
 	private int userId;
+	private Character userPlayer;
+	private int healScore;
 	[SerializeField] GameObject dirtImpactParticles;
 	void Start () {
 		if(!PhotonNetwork.isMasterClient) { enabled = false; }
@@ -38,6 +40,11 @@ public class Bullet : MonoBehaviour {
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
 					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -25, userId);
+				} else if (hit.collider.gameObject.tag == "TargerCircle") {
+					healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
+					if (healScore > 0) {
+						// gameObject.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
+					}
 				} else {
 					PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.EulerAngles(new Vector3(-90, 0, 0)), 0);
 				}

@@ -201,6 +201,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public ArrayList getScores() {
+		scores.Clear();
 		foreach (Teams t in teams) {
 			scores.Add(t.getScoreList());
 		}

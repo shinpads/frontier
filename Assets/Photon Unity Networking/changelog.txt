@@ -202,7 +202,7 @@ Changed: Some variable and field names. PeerState is now ClientState.
 Renamed: mAppId is now simply AppId. mAppVersion is now AppVersion.
 Renamed: networkingPeer.server is now networkingPeer.Server (uppercase, being public).
 Replaced: Most checks of PhotonNetwork.connectionStateDetailed being PeerState.Joined (or not) with checking PhotonNetwork.inRoom.
-Added: Regions to the PhotonServerSettings: "sa" South America (Sao Paulo), "usw" USA West (San José) and "cae" Canada East (Montreal). If you're using the "Best Region" setting, make sure to include/exclude them as needed.
+Added: Regions to the PhotonServerSettings: "sa" South America (Sao Paulo), "usw" USA West (San Josï¿½) and "cae" Canada East (Montreal). If you're using the "Best Region" setting, make sure to include/exclude them as needed.
 Fixed: NetworkingPeer:SendMonoMessage() null check before sendmessage to a GameObject that could be null.
 PunTurnManager API:
     Changed: GetRemainingSeconds() becomes .RemainingSecondsInTurn
@@ -371,14 +371,14 @@ Removed: Native socket libs from Unity 5 PUN+ package. The native libraries are 
 
 v1.57 (22. June 2015)
 Fixed: An issue with the RPC list update, which was still looking for the old RPC attribute. So when you switched over to PunRPC, the list was empty.
-Added: Automatic check if the obsolete RPC attribute is in source, to offer an automatic conversion to the new PunRPC attribute. Conversion uses search and replace for [RPC] to [PunRPC] and @RPC to @PunRPC.
+Added: Automatic check if the obsolete RPC attribute is in source, to offer an automatic conversion to the new PunRPC attribute. Conversion uses search and replace for [PunRPC] to [PunRPC] and @RPC to @PunRPC.
 Added: PhotonNetwork.ConnectToRegion(), which enables you to connect to a specific region easily. This can be useful when you do your own region selection.
 Note: Best Region selection won't work in WebGL exports currently. A fix needs updates on the server side and is in work.
 Note: Chat API won't work in WebGL exports at the moment. Delete it from a project which targets WebGL.
 Note: PUN+ does not support WebGL at the moment. It requires an update of the lower level APIs which we work on. Unity 5 can export PUN Free to all platforms, so use this as workaround.
 
 v1.56 (16. June 2015)
-Changed: The RPC attribute is now replaced by PunRPC and no longer supported. Search and replace your code for [RPC] and replace it with [PunRPC]. The change is necessary, because the RPC attribute is obsolete in Unity 5.1 (which causes a large amount of warnings at compile time).
+Changed: The RPC attribute is now replaced by PunRPC and no longer supported. Search and replace your code for [PunRPC] and replace it with [PunRPC]. The change is necessary, because the RPC attribute is obsolete in Unity 5.1 (which causes a large amount of warnings at compile time).
 
 v1.55 (12. June 2015)
 Changed: PhotonNetwork.time so that it's always positive, even on iOS 64bit exports. Note: this time value does not start at 0 and it will "wrap around" from 4294967.295 to 0! Use with care - we will implement a better soltion asap.
