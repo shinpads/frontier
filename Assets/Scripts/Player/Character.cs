@@ -46,6 +46,7 @@ public class Character : MonoBehaviour {
 		characterHealth = characterStats [reference, HEALTH_INDEX];
 		characterSpeed = characterStats [reference, SPEED_INDEX];
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
+		gameObject.GetComponent<PlayerController>().setSpeed(characterSpeed);
 	}
 
 	[PunRPC]
