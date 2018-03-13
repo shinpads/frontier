@@ -54,7 +54,7 @@ public class Shooting : MonoBehaviour {
 		audioSource.PlayOneShot(revolverSound);
 		if(!PhotonNetwork.isMasterClient) { return; }
 		//create the bullet at tip of gun
-		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*300});
+		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*300, photonView.viewID});
 		//shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
 		//shot.GetComponent<Bullet> ().setUserId (userId);
 	}

@@ -18,7 +18,7 @@ MonoBehaviour:
   PreferredRegion: 0
   EnabledRegions: -1
   Protocol: 0
-  ServerAddress: 130.15.220.142
+  ServerAddress: 127.0.0.1
   ServerPort: 5055
   VoiceServerPort: 5055
   JoinLobby: 1
@@ -55,4 +55,6 @@ MonoBehaviour:
   - shoot
   - startGame
   - TaggedPlayer
+  - animateTarget
+  - playTargetPing
   DisableAutoOpenWizard: 1
