@@ -70,8 +70,8 @@ public class GameController : MonoBehaviour {
 					}
 				}
 				// Class Selection
-				if (!classTypeSet) {
-					GUI.DrawTexture(new Rect(0, Screen.height - 100, Screen.width, Screen.height), pixel);
+
+						GUI.DrawTexture(new Rect(0, Screen.height - 100, Screen.width, Screen.height), pixel);
 					if (GUI.Button(new Rect(10, Screen.height - 90, 150, 80), "Tank")) {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_TANK);
 					}
@@ -87,7 +87,6 @@ public class GameController : MonoBehaviour {
 					if (GUI.Button(new Rect(650, Screen.height - 90, 150, 80), "Assualt")) {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_ASSUALT);
 					}
-				}
 				if (PhotonNetwork.isMasterClient) {
 					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game")) {
 						photonView.RPC("startGame", PhotonTargets.All);
