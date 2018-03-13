@@ -55,4 +55,6 @@ MonoBehaviour:
   - shoot
   - startGame
   - TaggedPlayer
+  - animateTarget
+  - playTargetPing
   DisableAutoOpenWizard: 1

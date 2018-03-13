@@ -7,6 +7,7 @@ public class PlayerGUI : MonoBehaviour {
 	[SerializeField] private Text interactText;
 	[SerializeField] private Text healthText;
 	[SerializeField] private Text goldText;
+	[SerializeField] private RawImage crosshair;
 	void Start() {
 	}
 
@@ -20,6 +21,10 @@ public class PlayerGUI : MonoBehaviour {
 
 	public void setInteract(string message) {
 		interactText.text = message;
+	}
+
+	public void toggleCrosshair () {
+		crosshair.enabled = !crosshair.enabled;
 	}
 
 }
