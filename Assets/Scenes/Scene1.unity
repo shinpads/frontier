@@ -1146,6 +1146,18 @@ Prefab:
       propertyPath: MinDistance
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4128595733508918, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.000000057742
+      objectReference: {fileID: 0}
+    - target: {fileID: 4128595733508918, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.745
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307704111932622, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.364
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
   m_IsPrefabParent: 0

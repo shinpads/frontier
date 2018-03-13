@@ -12,6 +12,7 @@ public class Target : MonoBehaviour {
 	private const int CIRCLE_6 = 50;
 	private const int CIRCLE_7 = 100;
 	private bool isDown;
+	private bool timeUp;
 	private Animator targetAnimatorControl;
 	private AudioSource audioSource;
 	private PhotonView photonView;
@@ -22,6 +23,15 @@ public class Target : MonoBehaviour {
 		targetAnimatorControl = gameObject.GetComponent<Animator> ();
 		audioSource = gameObject.GetComponent<AudioSource> ();
 		isDown = false;
+		timeUp = false;
+	}
+
+	void Update() {
+		if (isDown && timeUp) {
+			targetAnimatorControl.SetTrigger ("targetUp");
+			isDown = false;
+			timeUp = false;
+		}
 	}
 
 	public int hitTarget(GameObject circleHit) {
@@ -62,8 +72,7 @@ public class Target : MonoBehaviour {
 
 	private IEnumerator targetDownTime() {
 		yield return new WaitForSeconds (CIRCLE_DOWNTIME);
-		targetAnimatorControl.SetTrigger ("targetUp");
-		isDown = false;
+		timeUp = true;
 	}
 
 	[PunRPC]
