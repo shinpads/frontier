@@ -200,7 +200,7 @@ AnimatorState:
   m_SpeedParameter:
   m_MirrorParameter:
   m_CycleOffsetParameter:
-  m_TimeParameter: 
+  m_TimeParameter:
 --- !u!1107 &1107878970454099998
 AnimatorStateMachine:
   serializedVersion: 5
