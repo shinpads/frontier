@@ -1141,6 +1141,11 @@ Prefab:
       propertyPath: instantiationId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 82418619742122448, guid: f027587d17816b34c8439ff9be1aa7d6,
+        type: 2}
+      propertyPath: MinDistance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
   m_IsPrefabParent: 0
