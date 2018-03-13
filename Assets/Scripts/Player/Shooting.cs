@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour {
 	public Camera playerCamera;
-	private float shootTime = 10f;
-    private const float SHOT_DELAY = 0.5f;
 	private RaycastHit hit;
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-    private bool canshoot = true;
+    private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	[SerializeField] private GameObject armPivot;
@@ -19,19 +17,14 @@ public class Shooting : MonoBehaviour {
 	[SerializeField] private GameObject sniper;
 	[SerializeField] private GameObject semiAuto;
 	[SerializeField] private AudioSource audioSource;
-	[SerializeField] private GameObject tipOfGun;
-	[Header("Sounds")]
-	[SerializeField] private AudioClip revolverSound;
-	[SerializeField] private AudioClip sniperSound;
-	[SerializeField] private AudioClip semiAutoSound;
 	private Animator armPivotAnimator;
-	private GameObject currentGun;
+	private Gun currentGun;
 	private PhotonView photonView;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 
 	void Start () {
-		currentGun = revolver;
+		currentGun = revolver.GetComponent<Gun>();
 		hip = new Vector3(0, 0, 0);
 		ads = new Vector3(-0.24f, 0.09f, -0.18f);
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
@@ -43,11 +36,17 @@ public class Shooting : MonoBehaviour {
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		// all layers except 2nd which is Ignore Raycast
 		ignoreRayCastLayer = ~(1 << 2);
+		gui.setAmmoCounter (currentGun.getMagCapacity(), currentGun.getMagCapacity());
 	}
 
 	void Update () {
 		if (!photonView.isMine) { return; }
 
+		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity ()) {
+			currentGun.reload ();
+			gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
+			canShoot = true;
+		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha1) && currentGun != revolver) {
 			swapGuns (revolver);
@@ -61,7 +60,11 @@ public class Shooting : MonoBehaviour {
 			swapGuns (semiAuto);
 		}
 
-		if (Input.GetButtonDown ("Fire1") && canshoot == true) {
+		if (currentGun.getAmmo() == 0) {
+			canShoot = false;
+		}
+
+		if (Input.GetButtonDown ("Fire1") && canShoot) {
       		//Get Point where bullet will hit
       		StartCoroutine(delayedShooting());
      		armPivotAnimator.SetTrigger("shooting");
@@ -69,45 +72,42 @@ public class Shooting : MonoBehaviour {
 			if (Physics.Raycast(ray ,out hit, Mathf.Infinity, ignoreRayCastLayer)) {
 				endpoint = ray.GetPoint(hit.distance);
 			} else {
-			endpoint = ray.GetPoint(1000);
+				endpoint = ray.GetPoint(1000);
 			}
-
-			gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, tipOfGun.transform.position,endpoint, player.getUserId());
+	
+			gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
+			currentGun.ammoShot ();
+			gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
 		}
 		if (Input.GetButtonDown("Fire2")) {
 			gunContainer.transform.localPosition = ads;
 			gui.toggleCrosshair();
-
 		} else if (Input.GetButtonUp("Fire2")) {
 			gunContainer.transform.localPosition = hip;
 			gui.toggleCrosshair();
 		}
 	}
+
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId) {
-		if (revolver.activeSelf) {
-			audioSource.PlayOneShot (revolverSound);
-		} else if (sniper.activeSelf) {
-			audioSource.PlayOneShot (sniperSound);
-		} else if (semiAuto.activeSelf) {
-			audioSource.PlayOneShot (semiAutoSound);
-		}
+		audioSource.PlayOneShot (currentGun.getGunShotSound());
 		if(!PhotonNetwork.isMasterClient) { return; }
 		//create the bullet at tip of gun
-		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*300, photonView.viewID});
+		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage()});
 		//shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
 		//shot.GetComponent<Bullet> ().setUserId (userId);
 	}
 
     private IEnumerator delayedShooting(){
-        canshoot = false;
-        yield return new WaitForSeconds(SHOT_DELAY);
-        canshoot = true;
+        canShoot = false;
+		yield return new WaitForSeconds(currentGun.getShotDelay());
+        canShoot = true;
     }
 
 	private void swapGuns(GameObject newGun) {
-		currentGun.SetActive (false);
+		currentGun.gameObject.SetActive (false);
 		newGun.SetActive (true);
-		currentGun = newGun;
+		currentGun = newGun.GetComponent<Gun>();
+		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
 	}
 }

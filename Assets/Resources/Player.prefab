@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4033085955524180}
+  - component: {fileID: 114982359483780338}
   - component: {fileID: 33880800186183254}
   - component: {fileID: 23257566829138972}
   m_Layer: 0
@@ -88,6 +89,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4409413557745276}
+  - component: {fileID: 114220738437890918}
   m_Layer: 0
   m_Name: revolver
   m_TagString: Untagged
@@ -244,6 +246,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4215584915197262}
+  - component: {fileID: 114893243119412926}
   - component: {fileID: 33632529955974636}
   - component: {fileID: 23637083429028270}
   - component: {fileID: 95532857649986480}
@@ -318,6 +321,24 @@ GameObject:
   - component: {fileID: 4981030025016572}
   m_Layer: 0
   m_Name: guncontainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1836894113211842
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224745550822281014}
+  - component: {fileID: 222590727803481742}
+  - component: {fileID: 114587262097712008}
+  - component: {fileID: 114855231829616128}
+  m_Layer: 5
+  m_Name: ammoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1082,6 +1103,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114220738437890918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1084830364548202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835cd69a9b09a984ea76fa7766d31ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunShotSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
+  bulletSpeed: 75
+  rateOfFire: 3
+  isAutomatic: 0
+  bulletDamage: 20
+  magCapacity: 6
+  tipOfGun: {fileID: 1307153609036226}
 --- !u!114 &114228151207222230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1311,10 +1350,39 @@ MonoBehaviour:
   sniper: {fileID: 1592693276566820}
   semiAuto: {fileID: 1007874185001204}
   audioSource: {fileID: 82523526476792996}
-  tipOfGun: {fileID: 1307153609036226}
-  revolverSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
-  sniperSound: {fileID: 8300000, guid: 01a97d6eb67cd134b9e5ad041b629e3a, type: 3}
-  semiAutoSound: {fileID: 8300000, guid: f3fb67f7871b5bb4385570dcbb1aec93, type: 3}
+--- !u!114 &114587262097712008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836894113211842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Fuck Ammo
 --- !u!114 &114690696834088616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1362,6 +1430,7 @@ MonoBehaviour:
   interactText: {fileID: 114690696834088616}
   healthText: {fileID: 114790490630106780}
   goldText: {fileID: 114438361985499452}
+  ammoText: {fileID: 114587262097712008}
   crosshair: {fileID: 114228151207222230}
 --- !u!114 &114790490630106780
 MonoBehaviour:
@@ -1396,6 +1465,20 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Fuck you
+--- !u!114 &114855231829616128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836894113211842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 0.3, y: 0.3}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114863477474755956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1413,6 +1496,24 @@ MonoBehaviour:
   mat3: {fileID: 2100000, guid: 6efe28cc09758a34eae40e128f27d39c, type: 2}
   bloodObject: {fileID: 1913480498854834, guid: 264a1c0272015e84ea39f8e24e93283b,
     type: 2}
+--- !u!114 &114893243119412926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1592693276566820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835cd69a9b09a984ea76fa7766d31ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunShotSound: {fileID: 8300000, guid: 01a97d6eb67cd134b9e5ad041b629e3a, type: 3}
+  bulletSpeed: 300
+  rateOfFire: 0.4
+  isAutomatic: 0
+  bulletDamage: 100
+  magCapacity: 5
+  tipOfGun: {fileID: 1317017427392708}
 --- !u!114 &114901104300622076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1434,6 +1535,24 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114982359483780338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1007874185001204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835cd69a9b09a984ea76fa7766d31ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunShotSound: {fileID: 8300000, guid: f3fb67f7871b5bb4385570dcbb1aec93, type: 3}
+  bulletSpeed: 200
+  rateOfFire: 2
+  isAutomatic: 0
+  bulletDamage: 30
+  magCapacity: 12
+  tipOfGun: {fileID: 1517458074318134}
 --- !u!124 &124272864567274656
 Behaviour:
   m_ObjectHideFlags: 1
@@ -1489,6 +1608,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1060548471757242}
+--- !u!222 &222590727803481742
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836894113211842}
 --- !u!222 &222619906178457414
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1532,6 +1657,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 224660547470053834}
+  - {fileID: 224745550822281014}
   - {fileID: 224810163109411962}
   - {fileID: 224435780929649306}
   - {fileID: 224589005366261200}
@@ -1554,7 +1680,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224336037007894448}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1572,7 +1698,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224336037007894448}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1597,6 +1723,24 @@ RectTransform:
   m_AnchoredPosition: {x: 56.66992, y: -14.390015}
   m_SizeDelta: {x: 113.34, y: 18.57}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224745550822281014
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836894113211842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224336037007894448}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 391.5, y: -178.8}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224810163109411962
 RectTransform:
   m_ObjectHideFlags: 1
@@ -1608,7 +1752,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224336037007894448}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
