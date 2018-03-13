@@ -920,7 +920,7 @@ MonoBehaviour:
   armPivot: {fileID: 1575471919955330}
   gunContainer: {fileID: 1822954902708010}
   audioSource: {fileID: 82523526476792996}
-  revolverSound: {fileID: 8300000, guid: 2c074768033cb4b4aa0982f06a9da04a, type: 3}
+  revolverSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
 --- !u!114 &114690696834088616
 MonoBehaviour:
   m_ObjectHideFlags: 1
