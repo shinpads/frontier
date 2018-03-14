@@ -9,6 +9,7 @@ public class PlayerGUI : MonoBehaviour {
 	[SerializeField] private Text goldText;
 	[SerializeField] private Text ammoText;
 	[SerializeField] private RawImage crosshair;
+	[SerializeField] private Image scope;
 	void Start() {
 	}
 
@@ -24,10 +25,12 @@ public class PlayerGUI : MonoBehaviour {
 		interactText.text = message;
 	}
 
-	public void toggleCrosshair () {
-		crosshair.enabled = !crosshair.enabled;
+	public void setCrosshairEnabled (bool enabled) {
+		crosshair.enabled = enabled;
 	}
-
+	public void setScopeEnabled (bool enabled) {
+		scope.enabled = enabled;
+	}
 	public void setAmmoCounter(int current, int max) {
 		ammoText.text = current + "/" + max;
 	}

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour {
 	public Camera playerCamera;
+	public GameObject gunCamera;
 	private RaycastHit hit;
 	private Ray ray;
 	private Vector3 endpoint;
@@ -22,6 +23,7 @@ public class Shooting : MonoBehaviour {
 	private PhotonView photonView;
 	LayerMask ignoreRayCastLayer;
 	Character player;
+	PlayerController playerController;
 
 	void Start () {
 		currentGun = revolver.GetComponent<Gun>();
@@ -37,6 +39,7 @@ public class Shooting : MonoBehaviour {
 		// all layers except 2nd which is Ignore Raycast
 		ignoreRayCastLayer = ~(1 << 2);
 		gui.setAmmoCounter (currentGun.getMagCapacity(), currentGun.getMagCapacity());
+		playerController = gameObject.GetComponent<PlayerController>();
 	}
 
 	void Update () {
@@ -74,17 +77,29 @@ public class Shooting : MonoBehaviour {
 			} else {
 				endpoint = ray.GetPoint(1000);
 			}
-	
+
 			gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
 			currentGun.ammoShot ();
 			gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
 		}
 		if (Input.GetButtonDown("Fire2")) {
-			gunContainer.transform.localPosition = ads;
-			gui.toggleCrosshair();
+			gunContainer.transform.localPosition = currentGun.ads;
+			playerCamera.fieldOfView = currentGun.adsFov;
+			gui.setCrosshairEnabled(false);
+			if (currentGun.getIsScoped()) {
+				gui.setScopeEnabled(true);
+				gunCamera.SetActive(false);
+				playerController.setSensitivity(2);
+			} else {
+				playerController.setSensitivity(1);
+			}
 		} else if (Input.GetButtonUp("Fire2")) {
-			gunContainer.transform.localPosition = hip;
-			gui.toggleCrosshair();
+			gunContainer.transform.localPosition = currentGun.hip;
+			playerCamera.fieldOfView = 60;
+			gui.setCrosshairEnabled(true);
+			gui.setScopeEnabled(false);
+			gunCamera.SetActive(true);
+			playerController.setSensitivity(0);
 		}
 	}
 
