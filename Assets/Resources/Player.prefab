@@ -1241,8 +1241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
-  bulletSpeed: 75
-  rateOfFire: 3
+  bulletSpeed: 200
+  rateOfFire: 3.5
   isAutomatic: 0
   isScoped: 0
   bulletDamage: 20
@@ -1348,8 +1348,8 @@ MonoBehaviour:
   - {fileID: 114539432057266022}
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
@@ -1641,7 +1641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 01a97d6eb67cd134b9e5ad041b629e3a, type: 3}
-  bulletSpeed: 300
+  bulletSpeed: 400
   rateOfFire: 0.4
   isAutomatic: 0
   isScoped: 1
@@ -1712,8 +1712,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: f3fb67f7871b5bb4385570dcbb1aec93, type: 3}
-  bulletSpeed: 200
-  rateOfFire: 2
+  bulletSpeed: 300
+  rateOfFire: 3
   isAutomatic: 0
   isScoped: 0
   bulletDamage: 30
