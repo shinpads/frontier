@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-    private bool canShoot = true;
+  private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	[SerializeField] private GameObject armPivot;
@@ -24,6 +24,15 @@ public class Shooting : MonoBehaviour {
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
+
+	IEnumerator reloadwait()  {
+	    canShoot = false;
+	    yield return new WaitForSeconds(currentGun.getReloadTime());
+	    canShoot = true;
+	    currentGun.reload ();
+	    gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
+
+	}
 
 	void Start () {
 		currentGun = revolver.GetComponent<Gun>();
@@ -45,10 +54,8 @@ public class Shooting : MonoBehaviour {
 	void Update () {
 		if (!photonView.isMine) { return; }
 
-		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity ()) {
-			currentGun.reload ();
-			gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
-			canShoot = true;
+		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity()) {
+		     StartCoroutine(reloadwait());
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha1) && currentGun != revolver) {

@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour {
 	[SerializeField] private int bulletDamage;
 	[SerializeField] private int magCapacity;
 	[SerializeField] private GameObject tipOfGun;
+	[SerializeField] private float reloadWait;
 	public Vector3 hip, ads;
 	public float adsFov;
 	private int ammo;
@@ -30,6 +31,7 @@ public class Gun : MonoBehaviour {
 	public GameObject getJustTheTip() { return tipOfGun; }
 	public int getAmmo() { return ammo; }
 	public bool getIsScoped() { return isScoped; }
+	public float getReloadTime() { return reloadWait; }
 
 	public void ammoShot() {
 		if (ammo > 0) {

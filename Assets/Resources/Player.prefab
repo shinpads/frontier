@@ -438,7 +438,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192647942562838}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.24144, y: 1, z: 39.07686}
+  m_LocalPosition: {x: -78.95729, y: 1, z: -14.023773}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4550870425495800}
@@ -1248,6 +1248,7 @@ MonoBehaviour:
   bulletDamage: 20
   magCapacity: 6
   tipOfGun: {fileID: 1307153609036226}
+  reloadWait: 1
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.24, y: 0.09, z: -0.18}
   adsFov: 60
@@ -1412,8 +1413,8 @@ MonoBehaviour:
   - {fileID: 4128103019909916}
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
@@ -1647,6 +1648,7 @@ MonoBehaviour:
   bulletDamage: 100
   magCapacity: 5
   tipOfGun: {fileID: 1317017427392708}
+  reloadWait: 1
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.23, y: 0.03, z: 0}
   adsFov: 15
@@ -1717,6 +1719,7 @@ MonoBehaviour:
   bulletDamage: 30
   magCapacity: 12
   tipOfGun: {fileID: 1517458074318134}
+  reloadWait: 2
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.247, y: 0.08, z: -0.18}
   adsFov: 60
