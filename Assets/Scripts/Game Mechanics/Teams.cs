@@ -33,7 +33,7 @@ public class Teams {
 
 	public Player addPlayer(int userId, string username) {
 		if (playerCount < PLAYERS_PER_TEAM) {
-			players [playerCount] = new Player(userId, username);
+			players [playerCount] = new Player(userId, username, this);
 			Stats playerStats = new Stats ();
 			playerStats.kills = playerStats.deaths = playerStats.assists = playerStats.goldStolen = 0;
 			teamStats.Add (userId, playerStats);
@@ -78,5 +78,23 @@ public class Teams {
 			statsList.Add(new KeyValuePair<int, Teams.Stats>(playerEntry.Key, playerEntry.Value));
 		}
 		return statsList;
+	}
+
+	public void setRollsFilled(int classReference, bool state) {
+		rolesFilled [classReference] = state;
+	}
+
+	public bool getRollState(int classReference) {
+		return rolesFilled [classReference];
+	}
+
+	public bool teamClassesPicked() {
+		foreach (Player player in players) {
+			if (player == null) { continue; }
+			if (player.getClassType() < 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

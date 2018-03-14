@@ -8,7 +8,6 @@ public class GameController : MonoBehaviour {
 	private PhotonView photonView;
 	private ArrayList scores = new ArrayList();
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
-	private Vector3[] teamSpawns =  { new Vector3(-6.7f, 5f, -88.76f), new Vector3(-132.7f, 5f, 14.9f), new Vector3(-8.7f, 5f, 129.4f), new Vector3(104.4f, 3f, 15f) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
 	private Dictionary<int, Teams> userTeam = new Dictionary<int, Teams>();
 	private int thisTeam;
@@ -89,7 +88,7 @@ public class GameController : MonoBehaviour {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_ASSUALT);
 					}
 				if (PhotonNetwork.isMasterClient) {
-					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game")) {
+					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game") && allClassesPicked()) {
 						photonView.RPC("startGame", PhotonTargets.All);
 					}
 				}
@@ -102,7 +101,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spawnPlayer() {
-		PhotonNetwork.Instantiate("Player", teamSpawns[thisTeam], Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
+		PhotonNetwork.Instantiate("Player", new Vector3(0, 30, 0), Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
 		//playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
 		//playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
 		//playerObject.GetComponent<Character> ().setTeamId (thisTeam);
@@ -211,5 +210,14 @@ public class GameController : MonoBehaviour {
 	public Dictionary<int, Teams> getUserTeamDict() {
 		return userTeam;
 
+	}
+
+	public bool allClassesPicked() {
+		foreach (Teams team in teams) {
+			if (!team.teamClassesPicked ()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
