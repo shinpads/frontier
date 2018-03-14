@@ -158,8 +158,8 @@ public class GameController : MonoBehaviour {
 			Debug.Log("Invalid userId on setupTeam");
 			return;
 		}
-		nextTeam = 0;
-		//nextTeam = (nextTeam+1)%4;
+
+		nextTeam = (nextTeam+1)%4;
 		photonView.RPC("addToTeam", PhotonTargets.AllBuffered, userId, nextTeam, username);
 
 	}
