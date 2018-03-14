@@ -9,6 +9,7 @@ TagManager:
   - Control
   - Mine Cart
   - End Block
+  - TargetCircle
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - guns
   - 
   - 
   - 

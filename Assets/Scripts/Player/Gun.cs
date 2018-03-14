@@ -7,10 +7,12 @@ public class Gun : MonoBehaviour {
 	[SerializeField] private float bulletSpeed;
 	[SerializeField] private float rateOfFire;
 	[SerializeField] private bool isAutomatic;
+	[SerializeField] private bool isScoped;
 	[SerializeField] private int bulletDamage;
 	[SerializeField] private int magCapacity;
 	[SerializeField] private GameObject tipOfGun;
-	private Vector3 hipFire, ads;
+	public Vector3 hip, ads;
+	public float adsFov;
 	private int ammo;
 	//Recoil?
 
@@ -27,6 +29,7 @@ public class Gun : MonoBehaviour {
 	public int getMagCapacity() { return magCapacity; }
 	public GameObject getJustTheTip() { return tipOfGun; }
 	public int getAmmo() { return ammo; }
+	public bool getIsScoped() { return isScoped; }
 
 	public void ammoShot() {
 		if (ammo > 0) {

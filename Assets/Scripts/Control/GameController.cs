@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField] GameObject playerPrefab;
 	private PhotonView photonView;
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
+	private Vector3[] teamSpawns =  { new Vector3(-6.7f, 5f, -88.76f), new Vector3(-132.7f, 5f, 14.9f), new Vector3(-8.7f, 5f, 129.4f), new Vector3(104.4f, 3f, 15f) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
 	private Dictionary<int, Teams> userTeam = new Dictionary<int, Teams>();
 	private int thisTeam;
@@ -102,7 +103,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spawnPlayer() {
-		PhotonNetwork.Instantiate("Player", new Vector3(0, 30, 0), Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
+		PhotonNetwork.Instantiate("Player", teamSpawns[thisTeam], Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
 		//playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
 		//playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
 		//playerObject.GetComponent<Character> ().setTeamId (thisTeam);
