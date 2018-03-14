@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-  private bool canShoot = true;
+    private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	[SerializeField] private GameObject armPivot;
@@ -21,18 +21,10 @@ public class Shooting : MonoBehaviour {
 	private Animator armPivotAnimator;
 	private Gun currentGun;
 	private PhotonView photonView;
+	private bool isReloading = false;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
-
-	IEnumerator reloadwait()  {
-	    canShoot = false;
-	    yield return new WaitForSeconds(currentGun.getReloadTime());
-	    canShoot = true;
-	    currentGun.reload ();
-	    gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
-
-	}
 
 	void Start () {
 		currentGun = revolver.GetComponent<Gun>();
@@ -52,9 +44,12 @@ public class Shooting : MonoBehaviour {
 	}
 
 	void Update () {
+		Debug.Log ("reload " + isReloading);
+		Debug.Log ("canshoot " + canShoot);
+		Debug.Log ("ammo " + currentGun.getAmmo());
 		if (!photonView.isMine) { return; }
 
-		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity()) {
+		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity() && !isReloading) {
 		     StartCoroutine(reloadwait());
 		}
 
@@ -74,7 +69,7 @@ public class Shooting : MonoBehaviour {
 			canShoot = false;
 		}
 
-		if (Input.GetButtonDown ("Fire1") && canShoot) {
+		if (Input.GetButtonDown ("Fire1") && canShoot && !isReloading) {
       		//Get Point where bullet will hit
       		StartCoroutine(delayedShooting());
      		armPivotAnimator.SetTrigger("shooting");
@@ -118,6 +113,15 @@ public class Shooting : MonoBehaviour {
 		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage()});
 		//shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
 		//shot.GetComponent<Bullet> ().setUserId (userId);
+	}
+
+	private IEnumerator reloadwait()  {
+		isReloading = true;
+		yield return new WaitForSeconds(currentGun.getReloadTime());
+		currentGun.reload ();
+		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
+		isReloading = false;
+		canShoot = true;
 	}
 
     private IEnumerator delayedShooting(){
