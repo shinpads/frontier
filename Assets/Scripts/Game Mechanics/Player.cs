@@ -5,10 +5,12 @@ public class Player {
 	private int userId;
 	private string username;
 	private int classType;
+	private Teams team;
 
-	public Player (int userId, string username) {
+	public Player (int userId, string username, Teams userTeam) {
 		this.userId = userId;
 		this.username = username;
+		team = userTeam;
 		classType = -1;
 	}
 
@@ -21,7 +23,12 @@ public class Player {
 	}
 
 	public void setClassType (int classType) {
+		if (this.classType >= 0) {
+			team.setRollsFilled (this.classType, false);
+		}
+		if (team.getRollState(classType)) { return; }
 		this.classType = classType;
+		team.setRollsFilled (this.classType, true); 
 	}
 
 	public int getClassType () {
