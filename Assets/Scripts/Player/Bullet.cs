@@ -12,13 +12,11 @@ public class Bullet : MonoBehaviour {
 	private int userId;
 	private PhotonView userPlayer;
 	private int healScore;
-	private int bulletDamage;
 	[SerializeField] GameObject dirtImpactParticles;
 	void Start () {
 		if(!PhotonNetwork.isMasterClient) { enabled = false; }
 		object[] data = GetComponent<PhotonView>().instantiationData;
 		setUserId ((int)data[0]);
-		bulletDamage = (int)data [3];
 		currentPosition = gameObject.transform.position;
 		lastPosition = gameObject.transform.position;
 		userPlayer = PhotonView.Find ((int)data [2]);
@@ -42,14 +40,14 @@ public class Bullet : MonoBehaviour {
 			ray = new Ray(lastPosition,rigidbod.velocity.normalized);
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
-					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -bulletDamage, userId);
+					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -25, userId);
 				} else if (hit.collider.gameObject.tag == "TargetCircle") {
 					healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
 					if (healScore > 0) {
 						userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
 					}
 				} else {
-					PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.EulerAngles(new Vector3(-90, 0, 0)), 0);
+					PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.LookRotation(hit.normal), 0);
 				}
 				PhotonNetwork.Destroy(gameObject);
 			}
