@@ -57,4 +57,5 @@ MonoBehaviour:
   - TaggedPlayer
   - animateTarget
   - playTargetPing
+  - sendSwapGuns
   DisableAutoOpenWizard: 1

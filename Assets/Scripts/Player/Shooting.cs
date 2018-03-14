@@ -25,7 +25,6 @@ public class Shooting : MonoBehaviour {
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
-
 	void Start () {
 		currentGun = revolver.GetComponent<Gun>();
 		hip = new Vector3(0, 0, 0);
@@ -54,15 +53,15 @@ public class Shooting : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha1) && currentGun != revolver) {
-			swapGuns (revolver);
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "revolver");
 		}
 
 		else if (Input.GetKeyDown (KeyCode.Alpha2) && currentGun != sniper) {
-			swapGuns(sniper);
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "sniper");
 		}
 
 		else if ((Input.GetKeyDown (KeyCode.Alpha3) && currentGun != semiAuto)) {
-			swapGuns (semiAuto);
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "semiAuto");
 		}
 
 		if (currentGun.getAmmo() == 0) {
@@ -130,6 +129,20 @@ public class Shooting : MonoBehaviour {
         canShoot = true;
     }
 
+	[PunRPC]
+	private void sendSwapGuns (string newGunName) {
+		switch (newGunName) {
+			case "revolver":
+				swapGuns(revolver);
+				break;
+			case "sniper":
+				swapGuns(sniper);
+				break;
+			case "semiAuto":
+				swapGuns(semiAuto);
+				break;
+		}
+	}
 	private void swapGuns(GameObject newGun) {
 		currentGun.gameObject.SetActive (false);
 		newGun.SetActive (true);
