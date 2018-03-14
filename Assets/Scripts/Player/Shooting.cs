@@ -65,11 +65,7 @@ public class Shooting : MonoBehaviour {
 			swapGuns (semiAuto);
 		}
 
-		if (currentGun.getAmmo() == 0) {
-			canShoot = false;
-		}
-
-		if (Input.GetButtonDown ("Fire1") && canShoot && !isReloading) {
+		if (Input.GetButtonDown ("Fire1") && canShoot && !isReloading && currentGun.getAmmo() != 0) {
       		//Get Point where bullet will hit
       		StartCoroutine(delayedShooting());
      		armPivotAnimator.SetTrigger("shooting");
