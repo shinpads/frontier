@@ -1416,6 +1416,10 @@ Prefab:
       propertyPath: m_Name
       value: Rail 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1573085015422186, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
+      propertyPath: m_Name
+      value: Mine Cart0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
   m_IsPrefabParent: 0

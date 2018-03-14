@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Teams {
 	private const int PLAYERS_PER_TEAM = 5;
@@ -7,16 +8,9 @@ public class Teams {
 	private int playerCount;
 	// [Tank, Scout, Thief, Other, Assualt]
 	private bool[] rolesFilled = { false, false, false, false, false };
+	private Player[] teamStats = { null, null, null, null, null };
 	private Minecart teamCart;
-	public Player[] players = new Player[PLAYERS_PER_TEAM];
-	private Dictionary<int, Stats> teamStats = new Dictionary<int, Stats>();
-
-	public class Stats {
-		public int kills;
-		public int deaths;
-		public int assists;
-		public int goldStolen;
-	}
+	public Dictionary<int, Player> players = new Dictionary<int, Player> ();
 
 	public Teams (int id) {
 		teamId = id;
@@ -33,52 +27,17 @@ public class Teams {
 
 	public Player addPlayer(int userId, string username) {
 		if (playerCount < PLAYERS_PER_TEAM) {
-			players [playerCount] = new Player(userId, username, this);
-			Stats playerStats = new Stats ();
-			playerStats.kills = playerStats.deaths = playerStats.assists = playerStats.goldStolen = 0;
-			teamStats.Add (userId, playerStats);
+			players [userId] = new Player(userId, username, this);
 			playerCount++;
-			return players[playerCount-1];
+			return players[userId];
 		}
 		return null;
 	}
 
 	public Player findPlayerByUserId (int userId) {
-		for (int i = 0; i < playerCount; i++) {
-			if (players[i].getUserId() == userId) {
-				return players[i];
-			}
-		}
-		return null;
+		return players [userId];
 	}
-
-	public void addPlayerDeath(int userId) {
-		teamStats [userId].deaths++;
-	}
-
-	public void addPlayerKill(int userId) {
-		teamStats [userId].kills++;
-	}
-
-	public void addPlayerAssist(int userId) {
-		teamStats [userId].assists++;
-	}
-
-	public void addPlayerGoldStolen(int userId, int gold) {
-		teamStats [userId].goldStolen += gold;
-	}
-
-	public Dictionary<int, Stats> getScore() {
-		return teamStats;
-	}
-
-	public List<KeyValuePair<int, Teams.Stats>> getScoreList() {
-		List<KeyValuePair<int, Teams.Stats>> statsList = new List<KeyValuePair<int, Teams.Stats>>();
-		foreach (KeyValuePair<int, Teams.Stats> playerEntry in teamStats) {
-			statsList.Add(new KeyValuePair<int, Teams.Stats>(playerEntry.Key, playerEntry.Value));
-		}
-		return statsList;
-	}
+		
 
 	public void setRollsFilled(int classReference, bool state) {
 		rolesFilled [classReference] = state;
@@ -89,12 +48,21 @@ public class Teams {
 	}
 
 	public bool teamClassesPicked() {
-		foreach (Player player in players) {
-			if (player == null) { continue; }
-			if (player.getClassType() < 0) {
+		foreach (KeyValuePair<int, Player> entry in players) {
+			if (entry.Value == null) { continue; }
+			if (entry.Value.getClassType() < 0) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	public Dictionary<int, Player> getPlayerDict() { return players; }
+
+	public Player[] getTeamStats() {
+		foreach (KeyValuePair<int, Player> entry in players) {
+			teamStats [entry.Value.getClassType ()] = entry.Value;
+		}
+		return teamStats;
 	}
 }

@@ -6,7 +6,6 @@ public class GameController : MonoBehaviour {
 	const int MAX_PLAYERS = 25;
 	[SerializeField] GameObject playerPrefab;
 	private PhotonView photonView;
-	private ArrayList scores = new ArrayList();
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
 	private Vector3[] teamSpawns =  { new Vector3(-6.7f, 5f, -88.76f), new Vector3(-132.7f, 5f, 14.9f), new Vector3(-8.7f, 5f, 129.4f), new Vector3(104.4f, 3f, 15f) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
@@ -61,13 +60,15 @@ public class GameController : MonoBehaviour {
 				GUI.DrawTexture(new Rect(0, 0, 850, 220), pixel);
 				for (int curTeam = 0; curTeam < 4; curTeam ++) {
 					GUI.Label(new Rect(10 + (210 * curTeam), 10, 200, 20), "TEAM " + (curTeam + 1).ToString());
-					for (int i = 0; i < teams[curTeam].getPlayerCount(); i++) {
-						Player curPlayer = teams[curTeam].players[i];
+					int i = 0;
+					foreach (KeyValuePair<int, Player> entry in teams[curTeam].getPlayerDict()) {
+						Player curPlayer = entry.Value;
 						string lab = curPlayer.getUsername() + " [Choosing...]";
 						if (curPlayer.getClassType() != -1) {
 							lab = curPlayer.getUsername() + " [" + Global.CHARACTER_NAMES[curPlayer.getClassType()] + "]";
 						}
 						GUI.Label(new Rect(10 + (210 * curTeam), 30 + (20 * i), 200, 20), lab);
+						i++;
 					}
 				}
 				// Class Selection
@@ -182,35 +183,26 @@ public class GameController : MonoBehaviour {
 
 	[PunRPC]
 	public void addPlayerDeath(int userId) {
-		userTeam [userId].addPlayerDeath(userId);
+		userTeam [userId].findPlayerByUserId (userId).addDeath ();
 	}
 
 	[PunRPC]
 	public void addPlayerKill(int userId) {
-		userTeam [userId].addPlayerKill (userId);
+		userTeam [userId].findPlayerByUserId (userId).addKill ();
 	}
 
 	[PunRPC]
 	public void addPlayerGoldStolen(int userId, int gold) {
-		userTeam [userId].addPlayerGoldStolen (userId, gold);
+		userTeam [userId].findPlayerByUserId (userId).addGoldStolen (gold);
 	}
 
 	[PunRPC]
 	public void addPlayerAssist(int userId) {
-		userTeam [userId].addPlayerAssist (userId);
+		userTeam [userId].findPlayerByUserId (userId).addAssist ();
 	}
 
-	public ArrayList getScores() {
-		scores.Clear();
-		foreach (Teams t in teams) {
-			scores.Add(t.getScoreList());
-		}
-		return scores;
-	}
-
-	public Dictionary<int, Teams> getUserTeamDict() {
-		return userTeam;
-
+	public Teams getUserTeam(int userId) {
+		return userTeam [userId];
 	}
 
 	public bool allClassesPicked() {

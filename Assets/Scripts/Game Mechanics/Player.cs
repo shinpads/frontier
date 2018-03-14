@@ -6,11 +6,21 @@ public class Player {
 	private string username;
 	private int classType;
 	private Teams team;
+	private Stats statLine;
+
+	public class Stats {
+		public int kills;
+		public int deaths;
+		public int assists;
+		public int goldStolen;
+	}
 
 	public Player (int userId, string username, Teams userTeam) {
 		this.userId = userId;
 		this.username = username;
 		team = userTeam;
+		statLine = new Stats ();
+		statLine.kills = statLine.deaths = statLine.assists = statLine.goldStolen = 0;
 		classType = -1;
 	}
 
@@ -38,4 +48,24 @@ public class Player {
 	public int getUserId () {
 		return this.userId;
 	}
+
+	public void addDeath() {
+		statLine.deaths++;
+	}
+
+	public void addKill() {
+		statLine.kills++;
+	}
+
+	public void addAssist() {
+		statLine.assists++;
+	}
+
+	public void addGoldStolen(int gold) {
+		statLine.goldStolen += gold;
+	}
+
+	public Teams getPlayerTeam() { return team; }
+
+	public Stats getStatLine() { return statLine; }
 }
