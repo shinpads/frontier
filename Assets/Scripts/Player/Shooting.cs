@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Animations;
 
 public class Shooting : MonoBehaviour {
 	public Camera playerCamera;
@@ -137,7 +138,7 @@ public class Shooting : MonoBehaviour {
 	private void shootBullet() {
 		//Get Point where bullet will hit
 		StartCoroutine(delayedShooting());
-		armPivotAnimator.SetTrigger("shooting");
+		armPivotAnimator.Play(currentGun.getShootingAnimationName());
 		ray = new Ray(playerCamera.transform.position,playerCamera.transform.forward*100);
 		if (Physics.Raycast(ray ,out hit, Mathf.Infinity, ignoreRayCastLayer)) {
 			endpoint = ray.GetPoint(hit.distance);
@@ -155,5 +156,6 @@ public class Shooting : MonoBehaviour {
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
+
 	}
 }
