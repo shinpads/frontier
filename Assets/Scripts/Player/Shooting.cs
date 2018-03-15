@@ -14,9 +14,10 @@ public class Shooting : MonoBehaviour {
 	private PlayerGUI gui;
 	[SerializeField] private GameObject armPivot;
 	[SerializeField] private GameObject gunContainer;
-	[SerializeField] private GameObject revolver;
-	[SerializeField] private GameObject sniper;
-	[SerializeField] private GameObject semiAuto;
+	[SerializeField] private GameObject[] gunObjects;
+	// [SerializeField] private GameObject revolver;
+	// [SerializeField] private GameObject sniper;
+	// [SerializeField] private GameObject semiAuto;
 	[SerializeField] private AudioSource audioSource;
 	private Animator armPivotAnimator;
 	private Gun currentGun;
@@ -26,7 +27,7 @@ public class Shooting : MonoBehaviour {
 	Character player;
 	PlayerController playerController;
 	void Start () {
-		currentGun = revolver.GetComponent<Gun>();
+		currentGun = gunObjects[0].GetComponent<Gun>();
 		hip = new Vector3(0, 0, 0);
 		ads = new Vector3(-0.24f, 0.09f, -0.18f);
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
@@ -40,6 +41,9 @@ public class Shooting : MonoBehaviour {
 		ignoreRayCastLayer = ~(1 << 2);
 		gui.setAmmoCounter (currentGun.getMagCapacity(), currentGun.getMagCapacity());
 		playerController = gameObject.GetComponent<PlayerController>();
+		if (photonView.isMine) {
+			setGunLayers();
+		}
 	}
 
 	void Update () {
@@ -52,16 +56,16 @@ public class Shooting : MonoBehaviour {
 		     StartCoroutine(reloadwait());
 		}
 
-		if (Input.GetKeyDown (KeyCode.Alpha1) && currentGun != revolver) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "revolver");
+		if (Input.GetKeyDown (KeyCode.Alpha1) && currentGun != gunObjects[0]) {
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
 		}
 
-		else if (Input.GetKeyDown (KeyCode.Alpha2) && currentGun != sniper) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "sniper");
+		else if (Input.GetKeyDown (KeyCode.Alpha2) && currentGun != gunObjects[1]) {
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 1);
 		}
 
-		else if ((Input.GetKeyDown (KeyCode.Alpha3) && currentGun != semiAuto)) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "semiAuto");
+		else if ((Input.GetKeyDown (KeyCode.Alpha3) && currentGun != gunObjects[2])) {
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 2);
 		}
 
 		if (Input.GetButtonDown ("Fire1") && canShoot && !isReloading && currentGun.getAmmo() != 0) {
@@ -99,7 +103,12 @@ public class Shooting : MonoBehaviour {
 			playerController.setSensitivity(0);
 		}
 	}
-
+	private void setGunLayers () {
+		// ONLY FOR USERS OWN PLAYER
+		for (int i = 0; i < gunObjects.Length; i++) {
+			gunObjects[i].layer = 12;
+		}
+	}
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId) {
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
@@ -126,18 +135,8 @@ public class Shooting : MonoBehaviour {
     }
 
 	[PunRPC]
-	private void sendSwapGuns (string newGunName) {
-		switch (newGunName) {
-			case "revolver":
-				swapGuns(revolver);
-				break;
-			case "sniper":
-				swapGuns(sniper);
-				break;
-			case "semiAuto":
-				swapGuns(semiAuto);
-				break;
-		}
+	private void sendSwapGuns (int newGunIndex) {
+		swapGuns(gunObjects[newGunIndex]);
 	}
 	private void swapGuns(GameObject newGun) {
 		currentGun.gameObject.SetActive (false);
