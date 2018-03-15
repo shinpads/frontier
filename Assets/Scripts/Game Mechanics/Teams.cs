@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Teams {
 	private const int PLAYERS_PER_TEAM = 5;

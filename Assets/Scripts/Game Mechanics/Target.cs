@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Target : MonoBehaviour {
-	private const int CIRCLE_DOWNTIME = 10;
+	private const int TARGET_DOWNTIME = 10;
 	private const int CIRCLE_1 = 5;
 	private const int CIRCLE_2 = 10;
 	private const int CIRCLE_3 = 15;
@@ -23,6 +23,7 @@ public class Target : MonoBehaviour {
 		photonView = gameObject.GetComponent<PhotonView> ();
 		targetAnimatorControl = gameObject.GetComponent<Animator> ();
 		audioSource = gameObject.GetComponent<AudioSource> ();
+		if(!PhotonNetwork.isMasterClient) { return; }
 		isDown = false;
 		timeUp = false;
 	}
@@ -73,7 +74,7 @@ public class Target : MonoBehaviour {
 	}
 
 	private IEnumerator targetDownTime() {
-		yield return new WaitForSeconds (CIRCLE_DOWNTIME);
+		yield return new WaitForSeconds (TARGET_DOWNTIME);
 		timeUp = true;
 	}
 

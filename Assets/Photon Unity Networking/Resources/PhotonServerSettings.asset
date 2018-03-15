@@ -59,4 +59,5 @@ MonoBehaviour:
   - playTargetPing
   - sendSwapGuns
   - playTargetCentre
+  - targetUp
   DisableAutoOpenWizard: 1
