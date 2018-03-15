@@ -44,9 +44,6 @@ public class Shooting : MonoBehaviour {
 	}
 
 	void Update () {
-		Debug.Log ("reload " + isReloading);
-		Debug.Log ("canshoot " + canShoot);
-		Debug.Log ("ammo " + currentGun.getAmmo());
 		if (!photonView.isMine) { return; }
 
 		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity() && !isReloading) {
