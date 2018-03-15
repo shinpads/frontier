@@ -44,9 +44,6 @@ public class Shooting : MonoBehaviour {
 	}
 
 	void Update () {
-		Debug.Log ("reload " + isReloading);
-		Debug.Log ("canshoot " + canShoot);
-		Debug.Log ("ammo " + currentGun.getAmmo());
 		if (!photonView.isMine) { return; }
 
 		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity() && !isReloading) {
@@ -76,7 +73,7 @@ public class Shooting : MonoBehaviour {
 				shootBullet ();
 			}
 		}
-			
+
 		if (Input.GetButtonDown("Fire2")) {
 			gunContainer.transform.localPosition = currentGun.ads;
 			playerCamera.fieldOfView = currentGun.adsFov;
@@ -101,7 +98,11 @@ public class Shooting : MonoBehaviour {
 		// ONLY FOR USERS OWN PLAYER
 		for (int i = 0; i < gunObjects.Length; i++) {
 			gunObjects[i].layer = 12;
+			foreach (Transform child in gunObjects[i].transform) {
+				child.gameObject.layer = 12;
+			}
 		}
+		armPivot.layer = 12;
 	}
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId) {
