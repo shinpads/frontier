@@ -17,6 +17,7 @@ public class Shooting : MonoBehaviour {
 	[SerializeField] private GameObject revolver;
 	[SerializeField] private GameObject sniper;
 	[SerializeField] private GameObject semiAuto;
+	[SerializeField] private GameObject autoRifle;
 	[SerializeField] private AudioSource audioSource;
 	private Animator armPivotAnimator;
 	private Gun currentGun;
@@ -64,21 +65,18 @@ public class Shooting : MonoBehaviour {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "semiAuto");
 		}
 
-		if (Input.GetButtonDown ("Fire1") && canShoot && !isReloading && currentGun.getAmmo() != 0) {
-      		//Get Point where bullet will hit
-      		StartCoroutine(delayedShooting());
-     		armPivotAnimator.SetTrigger("shooting");
-			ray = new Ray(playerCamera.transform.position,playerCamera.transform.forward*100);
-			if (Physics.Raycast(ray ,out hit, Mathf.Infinity, ignoreRayCastLayer)) {
-				endpoint = ray.GetPoint(hit.distance);
-			} else {
-				endpoint = ray.GetPoint(1000);
-			}
-
-			gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
-			currentGun.ammoShot ();
-			gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
+		else if ((Input.GetKeyDown (KeyCode.Alpha4) && currentGun != autoRifle)) {
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, "autoRifle");
 		}
+
+		if (canShoot && !isReloading && currentGun.getAmmo () != 0) {
+			if (currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) {
+				shootBullet ();
+			} else if (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1")) {
+				shootBullet ();
+			}
+		}
+			
 		if (Input.GetButtonDown("Fire2")) {
 			gunContainer.transform.localPosition = currentGun.ads;
 			playerCamera.fieldOfView = currentGun.adsFov;
@@ -137,8 +135,28 @@ public class Shooting : MonoBehaviour {
 			case "semiAuto":
 				swapGuns(semiAuto);
 				break;
+			case "autoRifle":
+				swapGuns(autoRifle);
+				break;
 		}
 	}
+
+	private void shootBullet() {
+		//Get Point where bullet will hit
+		StartCoroutine(delayedShooting());
+		armPivotAnimator.SetTrigger("shooting");
+		ray = new Ray(playerCamera.transform.position,playerCamera.transform.forward*100);
+		if (Physics.Raycast(ray ,out hit, Mathf.Infinity, ignoreRayCastLayer)) {
+			endpoint = ray.GetPoint(hit.distance);
+		} else {
+			endpoint = ray.GetPoint(1000);
+		}
+
+		gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
+		currentGun.ammoShot ();
+		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
+	}
+
 	private void swapGuns(GameObject newGun) {
 		currentGun.gameObject.SetActive (false);
 		newGun.SetActive (true);

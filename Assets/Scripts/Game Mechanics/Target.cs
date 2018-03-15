@@ -17,6 +17,7 @@ public class Target : MonoBehaviour {
 	private AudioSource audioSource;
 	private PhotonView photonView;
 	[SerializeField] private AudioClip targetPing;
+	[SerializeField] private AudioClip targetCentre;
 
 	void Start() {
 		photonView = gameObject.GetComponent<PhotonView> ();
@@ -62,6 +63,7 @@ public class Target : MonoBehaviour {
 			score = CIRCLE_6;
 			break;
 		case("Circle7"):
+			photonView.RPC ("playTargetCentre", PhotonTargets.All);
 			score = CIRCLE_7;
 			break;
 		default:
@@ -78,5 +80,10 @@ public class Target : MonoBehaviour {
 	[PunRPC]
 	public void playTargetPing() {
 		audioSource.PlayOneShot (targetPing);
+	}
+
+	[PunRPC]
+	public void playTargetCentre() {
+		audioSource.PlayOneShot (targetCentre);
 	}
 }
