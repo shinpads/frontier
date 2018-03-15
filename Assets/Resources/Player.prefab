@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114982359483780338}
   - component: {fileID: 33880800186183254}
   - component: {fileID: 23257566829138972}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Enfield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4480809413622340}
   - component: {fileID: 33005290745052886}
   - component: {fileID: 23218676765973258}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Collar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 4581360183845020}
   - component: {fileID: 33938869090956120}
   - component: {fileID: 23097070813069396}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: MuzzleSight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4409413557745276}
   - component: {fileID: 114220738437890918}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4662694705965232}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: TipOfGun
   m_TagString: TipOfGun
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4181597472676304}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: TipOfGun
   m_TagString: TipOfGun
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 4339762706356104}
   - component: {fileID: 33899608029021772}
   - component: {fileID: 23115406353577576}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 4319218258480088}
   - component: {fileID: 33073305898575532}
   - component: {fileID: 23672496340084116}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Shutter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4325985358944678}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: TipOfGun
   m_TagString: TipOfGun
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4918900482488906}
   - component: {fileID: 95292551189768474}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: armpivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 33632529955974636}
   - component: {fileID: 23637083429028270}
   - component: {fileID: 95532857649986480}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: M40A3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4981030025016572}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: guncontainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 4966554420497904}
   - component: {fileID: 33007377510643086}
   - component: {fileID: 23231425452155894}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Object723
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1691,8 +1691,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionModel:
     SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
+    TeleportEnabled: 0
+    TeleportIfDistanceGreaterThan: 5
     InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
@@ -1776,10 +1776,11 @@ MonoBehaviour:
   gunCamera: {fileID: 1578680932723900}
   armPivot: {fileID: 1575471919955330}
   gunContainer: {fileID: 1822954902708010}
-  revolver: {fileID: 1084830364548202}
-  sniper: {fileID: 1592693276566820}
-  semiAuto: {fileID: 1007874185001204}
-  autoRifle: {fileID: 1655420492931228}
+  gunObjects:
+  - {fileID: 1084830364548202}
+  - {fileID: 1007874185001204}
+  - {fileID: 1592693276566820}
+  - {fileID: 1655420492931228}
   audioSource: {fileID: 82523526476792996}
 --- !u!114 &114587262097712008
 MonoBehaviour:
