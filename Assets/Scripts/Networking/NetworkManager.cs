@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour {
 	[SerializeField] private GameObject gameControl;
 	private bool gameControlSpawned = false;
 	void Start () {
-		PhotonNetwork.sendRate = 50;
+		PhotonNetwork.sendRate = 64;
 		PhotonNetwork.sendRateOnSerialize = 50;
 		Application.runInBackground = true;
 		username = "";
