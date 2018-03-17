@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-    private bool canShoot = true;
+  private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	[SerializeField] private GameObject armPivot;
@@ -75,23 +75,9 @@ public class Shooting : MonoBehaviour {
 		}
 
 		if (Input.GetButtonDown("Fire2")) {
-			gunContainer.transform.localPosition = currentGun.ads;
-			playerCamera.fieldOfView = currentGun.adsFov;
-			gui.setCrosshairEnabled(false);
-			if (currentGun.getIsScoped()) {
-				gui.setScopeEnabled(true);
-				gunCamera.SetActive(false);
-				playerController.setSensitivity(2);
-			} else {
-				playerController.setSensitivity(1);
-			}
+			hipToAds();
 		} else if (Input.GetButtonUp("Fire2")) {
-			gunContainer.transform.localPosition = currentGun.hip;
-			playerCamera.fieldOfView = 60;
-			gui.setCrosshairEnabled(true);
-			gui.setScopeEnabled(false);
-			gunCamera.SetActive(true);
-			playerController.setSensitivity(0);
+			adsToHip();
 		}
 	}
 	private void setGunLayers () {
@@ -148,6 +134,9 @@ public class Shooting : MonoBehaviour {
 		gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
 		currentGun.ammoShot ();
 		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
+		if (currentGun.getIsScoped()) {
+			adsToHip();
+		}
 	}
 
 	private void swapGuns(GameObject newGun) {
@@ -156,5 +145,25 @@ public class Shooting : MonoBehaviour {
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
 
+	}
+	private void adsToHip() {
+		gunContainer.transform.localPosition = currentGun.hip;
+		playerCamera.fieldOfView = 60;
+		gui.setCrosshairEnabled(true);
+		gui.setScopeEnabled(false);
+		gunCamera.SetActive(true);
+		playerController.setSensitivity(0);
+	}
+	private void hipToAds() {
+		gunContainer.transform.localPosition = currentGun.ads;
+		playerCamera.fieldOfView = currentGun.adsFov;
+		gui.setCrosshairEnabled(false);
+		if (currentGun.getIsScoped()) {
+			gui.setScopeEnabled(true);
+			gunCamera.SetActive(false);
+			playerController.setSensitivity(2);
+		} else {
+			playerController.setSensitivity(1);
+		}
 	}
 }
