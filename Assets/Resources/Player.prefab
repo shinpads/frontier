@@ -1648,8 +1648,8 @@ MonoBehaviour:
   - {fileID: 114539432057266022}
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
@@ -1944,14 +1944,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 01a97d6eb67cd134b9e5ad041b629e3a, type: 3}
   bulletSpeed: 400
-  rateOfFire: 0.4
+  rateOfFire: 0.7
   isAutomatic: 0
   isScoped: 1
   bulletDamage: 100
   magCapacity: 5
   tipOfGun: {fileID: 1317017427392708}
   reloadWait: 1
-  shootingAnimationName: pistol
+  shootingAnimationName: m40a3Shoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.23, y: 0.03, z: 0}
   adsFov: 15
