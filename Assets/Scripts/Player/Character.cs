@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CinematicEffects;
 
 public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
@@ -23,6 +24,7 @@ public class Character : MonoBehaviour {
 	private GameController gameController;
 	private MeshRenderer renderer;
 	PhotonView photonView;
+	LensAberrations bloodCameraEffect;
 
 	void Start () {
 		photonView = gameObject.GetComponent<PhotonView>();
@@ -36,6 +38,7 @@ public class Character : MonoBehaviour {
 		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		goldCarry = 0;
 		gui.setGold (goldCarry, goldCapacity);
+		bloodCameraEffect = gameObject.GetComponent<PlayerController>().playerCamera.GetComponent<LensAberrations>();
 	}
 
 	public void setUserId(int id) {
@@ -69,6 +72,7 @@ public class Character : MonoBehaviour {
 		if (characterHealth == 0) {
 			getDead (enemyId);
 		}
+		bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
 	}
 
 	void setDamagers(int enemyId, int damage) {

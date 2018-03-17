@@ -1069,6 +1069,7 @@ GameObject:
   - component: {fileID: 1577416431}
   - component: {fileID: 1577416430}
   - component: {fileID: 1577416434}
+  - component: {fileID: 1577416435}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MenuCamera
@@ -1156,6 +1157,39 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1577416435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1577416429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5335a7357baa3489a469d0ca0f40f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distortion:
+    enabled: 0
+    amount: 0
+    centerX: 0
+    centerY: 0
+    amountX: 1
+    amountY: 1
+    scale: 1
+  vignette:
+    enabled: 1
+    color: {r: 0.60294116, g: 0, b: 0, a: 1}
+    center: {x: 0.5, y: 0.5}
+    intensity: 0
+    smoothness: 3
+    roundness: 1
+    blur: 0
+    desaturate: 0.422
+  chromaticAberration:
+    enabled: 0
+    color: {r: 0, g: 1, b: 0, a: 1}
+    amount: 0
+  m_Shader: {fileID: 4800000, guid: 136ab50fe2b9ad64d9c22adc3668abb7, type: 3}
 --- !u!1 &1643657666
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CinematicEffects;
 
 public class Shooting : MonoBehaviour {
 	public Camera playerCamera;
@@ -23,6 +24,7 @@ public class Shooting : MonoBehaviour {
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
+	LensAberrations lensBlur;
 	void Start () {
 		currentGun = gunObjects[0].GetComponent<Gun>();
 		hip = new Vector3(0, 0, 0);
@@ -38,6 +40,7 @@ public class Shooting : MonoBehaviour {
 		ignoreRayCastLayer = ~(1 << 2);
 		gui.setAmmoCounter (currentGun.getMagCapacity(), currentGun.getMagCapacity());
 		playerController = gameObject.GetComponent<PlayerController>();
+		lensBlur = playerCamera.GetComponent<LensAberrations>();
 		if (photonView.isMine) {
 			setGunLayers();
 		}
@@ -153,6 +156,7 @@ public class Shooting : MonoBehaviour {
 		gui.setScopeEnabled(false);
 		gunCamera.SetActive(true);
 		playerController.setSensitivity(0);
+		lensBlur.vignette.blur = 0f;
 	}
 	private void hipToAds() {
 		gunContainer.transform.localPosition = currentGun.ads;
@@ -161,9 +165,11 @@ public class Shooting : MonoBehaviour {
 		if (currentGun.getIsScoped()) {
 			gui.setScopeEnabled(true);
 			gunCamera.SetActive(false);
+			lensBlur.vignette.blur = 1f;
 			playerController.setSensitivity(2);
 		} else {
 			playerController.setSensitivity(1);
+			lensBlur.vignette.blur = 0.4f;
 		}
 	}
 }
