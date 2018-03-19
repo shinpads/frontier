@@ -165,11 +165,10 @@ public class Shooting : MonoBehaviour {
 		if (currentGun.getIsScoped()) {
 			gui.setScopeEnabled(true);
 			gunCamera.SetActive(false);
-			lensBlur.vignette.blur = 1f;
+			lensBlur.vignette.blur = 0.8f;
 			playerController.setSensitivity(2);
 		} else {
 			playerController.setSensitivity(1);
-			lensBlur.vignette.blur = 0.4f;
 		}
 	}
 }
