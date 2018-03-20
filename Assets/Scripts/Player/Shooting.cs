@@ -79,8 +79,10 @@ public class Shooting : MonoBehaviour {
 
 		if (Input.GetButtonDown("Fire2")) {
 			hipToAds();
+			playerController.changeAdsState (true);
 		} else if (Input.GetButtonUp("Fire2")) {
 			adsToHip();
+			playerController.changeAdsState (false);
 		}
 	}
 	private void setGunLayers () {
