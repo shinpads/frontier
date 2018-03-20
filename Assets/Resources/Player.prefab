@@ -1630,7 +1630,7 @@ MonoBehaviour:
   shootingAnimationName: ppsh41Shoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.24, y: 0.06, z: -0.18}
-  adsFov: 60
+  adsFov: 55
 --- !u!114 &114438361985499452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2222,7 +2222,7 @@ MonoBehaviour:
   shootingAnimationName: enfieldShoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.247, y: 0.08, z: -0.18}
-  adsFov: 60
+  adsFov: 45
 --- !u!124 &124272864567274656
 Behaviour:
   m_ObjectHideFlags: 1
