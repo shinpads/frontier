@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour {
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
 					Debug.Log(Vector3.Distance (startSpot, hit.point));
-					//damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
+					damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
 					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);
 				} else if (hit.collider.gameObject.tag == "TargetCircle") {
 					healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
