@@ -1559,7 +1559,7 @@ MonoBehaviour:
   magCapacity: 6
   tipOfGun: {fileID: 1307153609036226}
   reloadWait: 1
-  dropOff: 42.7
+  dropOff: 75
   dropOffStop: 204.3
   shootingAnimationName: revolver
   hip: {x: 0, y: 0, z: 0}
@@ -1625,8 +1625,8 @@ MonoBehaviour:
   magCapacity: 30
   tipOfGun: {fileID: 1265695028888666}
   reloadWait: 1.5
-  dropOff: 50
-  dropOffStop: 115
+  dropOff: 60
+  dropOffStop: 125
   shootingAnimationName: ppsh41Shoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.24, y: 0.06, z: -0.18}
@@ -2143,8 +2143,8 @@ MonoBehaviour:
   magCapacity: 5
   tipOfGun: {fileID: 1317017427392708}
   reloadWait: 1
-  dropOff: 300
-  dropOffStop: 1000
+  dropOff: 250
+  dropOffStop: 600
   shootingAnimationName: m40a3Shoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.23, y: 0, z: -0.18}
