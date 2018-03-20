@@ -11,7 +11,9 @@ public class Gun : MonoBehaviour {
 	[SerializeField] private int bulletDamage;
 	[SerializeField] private int magCapacity;
 	[SerializeField] private GameObject tipOfGun;
-	[SerializeField] private float reloadWait ;
+	[SerializeField] private float reloadWait;
+	[SerializeField] private float dropOff;
+	[SerializeField] private float dropOffStop;
 	[SerializeField] private string shootingAnimationName = "revolver";
 	public Vector3 hip, ads;
 	public float adsFov;
@@ -34,6 +36,8 @@ public class Gun : MonoBehaviour {
 	public bool getIsScoped() { return isScoped; }
 	public float getReloadTime() { return reloadWait; }
 	public string getShootingAnimationName() { return shootingAnimationName; }
+	public float getDropOff() { return dropOff; }
+	public float getDropOffStop() { return dropOffStop; }
 
 	public void ammoShot() {
 		if (ammo > 0) {

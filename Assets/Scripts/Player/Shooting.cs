@@ -98,7 +98,7 @@ public class Shooting : MonoBehaviour {
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
 		if(!PhotonNetwork.isMasterClient) { return; }
 		//create the bullet at tip of gun
-		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage()});
+		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
 		//shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
 		//shot.GetComponent<Bullet> ().setUserId (userId);
 	}
@@ -147,7 +147,9 @@ public class Shooting : MonoBehaviour {
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
-		adsToHip ();
+		if (currentGun.getIsScoped ()) {
+			adsToHip ();
+		}
 
 	}
 	private void adsToHip() {
