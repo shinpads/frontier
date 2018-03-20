@@ -73,6 +73,7 @@ public class Character : MonoBehaviour {
 			getDead (enemyId);
 		}
 		bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
+		StartCoroutine(fadeBlood(bloodCameraEffect.vignette.intensity, 0f, 1.4f));
 	}
 
 	void setDamagers(int enemyId, int damage) {
@@ -193,5 +194,13 @@ public class Character : MonoBehaviour {
 	[PunRPC]
 	void setGoldCarryRPC (int amount) {
 		setGoldCarry(goldCarry + amount);
+	}
+	private IEnumerator fadeBlood(float startValue, float endValue, float time) {
+		float startTime = Time.time;
+		while (Time.time < startTime + time) {
+			bloodCameraEffect.vignette.intensity = Mathf.Lerp(startValue, endValue, (Time.time - startTime) / time);
+			yield return new WaitForEndOfFrame();
+		}
+		bloodCameraEffect.vignette.intensity = endValue;
 	}
 }
