@@ -147,6 +147,7 @@ public class Shooting : MonoBehaviour {
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
+		adsToHip ();
 
 	}
 	private void adsToHip() {
@@ -165,7 +166,7 @@ public class Shooting : MonoBehaviour {
 		if (currentGun.getIsScoped()) {
 			gui.setScopeEnabled(true);
 			gunCamera.SetActive(false);
-			lensBlur.vignette.blur = 0.8f;
+			lensBlur.vignette.blur = 0f;
 			playerController.setSensitivity(2);
 		} else {
 			playerController.setSensitivity(1);
