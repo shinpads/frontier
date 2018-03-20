@@ -2141,8 +2141,8 @@ MonoBehaviour:
   reloadWait: 1
   shootingAnimationName: m40a3Shoot
   hip: {x: 0, y: 0, z: 0}
-  ads: {x: -0.23, y: 0.03, z: 0}
-  adsFov: 15
+  ads: {x: -0.23, y: 0, z: -0.18}
+  adsFov: 5
 --- !u!114 &114901104300622076
 MonoBehaviour:
   m_ObjectHideFlags: 1
