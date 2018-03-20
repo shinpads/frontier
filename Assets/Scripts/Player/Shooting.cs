@@ -151,7 +151,7 @@ public class Shooting : MonoBehaviour {
 
 	}
 	private void adsToHip() {
-		gunContainer.transform.localPosition = currentGun.hip;
+    StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.hip, 0.07f));
 		playerCamera.fieldOfView = 60;
 		gui.setCrosshairEnabled(true);
 		gui.setScopeEnabled(false);
@@ -160,7 +160,7 @@ public class Shooting : MonoBehaviour {
 		lensBlur.vignette.blur = 0f;
 	}
 	private void hipToAds() {
-		gunContainer.transform.localPosition = currentGun.ads;
+    StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.ads, 0.07f));
 		playerCamera.fieldOfView = currentGun.adsFov;
 		gui.setCrosshairEnabled(false);
 		if (currentGun.getIsScoped()) {
@@ -172,4 +172,12 @@ public class Shooting : MonoBehaviour {
 			playerController.setSensitivity(1);
 		}
 	}
+  private IEnumerator lerpGunPosition (Vector3 startPosition, Vector3 endPosition, float time) {
+    float startTime = Time.time;
+    while (Time.time < startTime + time) {
+      gunContainer.transform.localPosition = Vector3.Lerp(startPosition, endPosition, (Time.time - startTime) / time);
+      yield return new WaitForEndOfFrame();
+    }
+    gunContainer.transform.localPosition = endPosition;
+  }
 }
