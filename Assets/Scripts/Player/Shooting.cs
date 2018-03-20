@@ -154,7 +154,7 @@ public class Shooting : MonoBehaviour {
 	}
 	private void adsToHip() {
     StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.hip, 0.07f));
-		playerCamera.fieldOfView = 60;
+    StartCoroutine(lerpGunZoom(playerCamera.fieldOfView, 60, 0.1f));
 		gui.setCrosshairEnabled(true);
 		gui.setScopeEnabled(false);
 		gunCamera.SetActive(true);
@@ -163,7 +163,7 @@ public class Shooting : MonoBehaviour {
 	}
 	private void hipToAds() {
     StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.ads, 0.07f));
-		playerCamera.fieldOfView = currentGun.adsFov;
+    StartCoroutine(lerpGunZoom(playerCamera.fieldOfView, currentGun.adsFov, 0.1f));
 		gui.setCrosshairEnabled(false);
 		if (currentGun.getIsScoped()) {
 			gui.setScopeEnabled(true);
@@ -181,5 +181,13 @@ public class Shooting : MonoBehaviour {
       yield return new WaitForEndOfFrame();
     }
     gunContainer.transform.localPosition = endPosition;
+  }
+  private IEnumerator lerpGunZoom (float startValue, float endValue, float time) {
+    float startTime = Time.time;
+    while (Time.time < startTime + time) {
+      playerCamera.fieldOfView = Mathf.Lerp(startValue, endValue, (Time.time - startTime) / time);
+      yield return new WaitForEndOfFrame();
+    }
+    playerCamera.fieldOfView = endValue;
   }
 }
