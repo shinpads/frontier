@@ -1551,7 +1551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
-  bulletSpeed: 200
+  bulletSpeed: 350
   rateOfFire: 3.5
   isAutomatic: 0
   isScoped: 0
@@ -1617,7 +1617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: b78af8354d80787469cf3d97d3649a4a, type: 3}
-  bulletSpeed: 300
+  bulletSpeed: 400
   rateOfFire: 10
   isAutomatic: 1
   isScoped: 0
@@ -2135,7 +2135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 01a97d6eb67cd134b9e5ad041b629e3a, type: 3}
-  bulletSpeed: 400
+  bulletSpeed: 600
   rateOfFire: 0.7
   isAutomatic: 0
   isScoped: 1
@@ -2209,7 +2209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: f3fb67f7871b5bb4385570dcbb1aec93, type: 3}
-  bulletSpeed: 300
+  bulletSpeed: 400
   rateOfFire: 3
   isAutomatic: 0
   isScoped: 0
