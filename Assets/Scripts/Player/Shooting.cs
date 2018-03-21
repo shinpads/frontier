@@ -79,10 +79,8 @@ public class Shooting : MonoBehaviour {
 
 		if (Input.GetButtonDown("Fire2")) {
 			hipToAds();
-			playerController.changeAdsState (true);
 		} else if (Input.GetButtonUp("Fire2")) {
 			adsToHip();
-			playerController.changeAdsState (false);
 		}
 	}
 	private void setGunLayers () {
@@ -156,6 +154,7 @@ public class Shooting : MonoBehaviour {
 	}
 	private void adsToHip() {
     StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.hip, 0.07f));
+		playerController.changeAdsState (false);
 		gui.setCrosshairEnabled(true);
 		gui.setScopeEnabled(false);
 		gunCamera.SetActive(true);
@@ -169,6 +168,7 @@ public class Shooting : MonoBehaviour {
 	}
 	private void hipToAds() {
     StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.ads, 0.07f));
+		playerController.changeAdsState (true);
 		gui.setCrosshairEnabled(false);
 		if (currentGun.getIsScoped()) {
 			gui.setScopeEnabled(true);
