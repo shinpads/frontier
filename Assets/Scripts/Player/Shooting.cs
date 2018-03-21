@@ -10,9 +10,10 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-  private bool canShoot = true;
+  	private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
+	private int currentGunIndex;
 	[SerializeField] private GameObject armPivot;
 	[SerializeField] private GameObject gunContainer;
 	[SerializeField] private GameObject[] gunObjects;
@@ -21,12 +22,13 @@ public class Shooting : MonoBehaviour {
 	private Gun currentGun;
 	private PhotonView photonView;
 	private bool isReloading = false;
+	private bool isAds = false;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
-	LensAberrations lensBlur;
 	void Start () {
 		currentGun = gunObjects[0].GetComponent<Gun>();
+		currentGunIndex = 0;
 		hip = new Vector3(0, 0, 0);
 		ads = new Vector3(-0.24f, 0.09f, -0.18f);
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
@@ -40,7 +42,6 @@ public class Shooting : MonoBehaviour {
 		ignoreRayCastLayer = ~(1 << 2);
 		gui.setAmmoCounter (currentGun.getMagCapacity(), currentGun.getMagCapacity());
 		playerController = gameObject.GetComponent<PlayerController>();
-		lensBlur = playerCamera.GetComponent<LensAberrations>();
 		if (photonView.isMine) {
 			setGunLayers();
 		}
@@ -53,20 +54,35 @@ public class Shooting : MonoBehaviour {
 		     StartCoroutine(reloadwait());
 		}
 
-		if (Input.GetKeyDown (KeyCode.Alpha1) && currentGun != gunObjects[0]) {
+		if (Input.GetAxis("Mouse ScrollWheel") < 0 && !currentGun.gameObject.Equals(gunObjects[gunObjects.Length-1])) {
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex + 1));
+			currentGunIndex++;
+		}
+
+		else if (Input.GetAxis("Mouse ScrollWheel") > 0 && !currentGun.gameObject.Equals(gunObjects[0])) {
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex - 1));
+			currentGunIndex--;
+		}
+			
+		if (Input.GetKeyDown (KeyCode.Alpha1) && !currentGun.gameObject.Equals(gunObjects[0])) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
+			Debug.Log ("bitch");
+			currentGunIndex = 0;
 		}
 
-		else if (Input.GetKeyDown (KeyCode.Alpha2) && currentGun != gunObjects[1]) {
+		else if (Input.GetKeyDown (KeyCode.Alpha2) && !currentGun.gameObject.Equals(gunObjects[1])) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 1);
+			currentGunIndex = 1;
 		}
 
-		else if ((Input.GetKeyDown (KeyCode.Alpha3) && currentGun != gunObjects[2])) {
+		else if (Input.GetKeyDown (KeyCode.Alpha3) && !currentGun.gameObject.Equals(gunObjects[2])) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 2);
+			currentGunIndex = 2;
 		}
 
-		else if ((Input.GetKeyDown (KeyCode.Alpha4) && currentGun != gunObjects[3])) {
+		else if (Input.GetKeyDown (KeyCode.Alpha4) && !currentGun.gameObject.Equals(gunObjects[3])) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 3);
+			currentGunIndex = 3;
 		}
 
 		if (canShoot && !isReloading && currentGun.getAmmo () != 0) {
@@ -78,9 +94,11 @@ public class Shooting : MonoBehaviour {
 		}
 
 		if (Input.GetButtonDown("Fire2")) {
+			isAds = true;
 			hipToAds();
 		} else if (Input.GetButtonUp("Fire2")) {
-			adsToHip();
+			isAds = false;
+			adsToHip(false);
 		}
 	}
 	private void setGunLayers () {
@@ -138,7 +156,8 @@ public class Shooting : MonoBehaviour {
 		currentGun.ammoShot ();
 		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
 		if (currentGun.getIsScoped()) {
-			adsToHip();
+			adsToHip(false);
+			isAds = false;
 		}
 	}
 
@@ -147,19 +166,22 @@ public class Shooting : MonoBehaviour {
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
-		if (currentGun.getIsScoped ()) {
-			adsToHip ();
+		if (isAds) {
+			adsToHip (true);
 		}
 
 	}
-	private void adsToHip() {
-    StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.hip, 0.07f));
+	private void adsToHip(bool direct) {
+		if (!direct) {
+			StartCoroutine (lerpGunPosition (gunContainer.transform.localPosition, currentGun.hip, 0.07f));
+		} else {
+			StartCoroutine (lerpGunPosition (gunContainer.transform.localPosition, currentGun.hip, 0f));
+		}
 		playerController.changeAdsState (false);
 		gui.setCrosshairEnabled(true);
 		gui.setScopeEnabled(false);
 		gunCamera.SetActive(true);
 		playerController.setSensitivity(0);
-		lensBlur.vignette.blur = 0f;
 		if (currentGun.getIsScoped()) {
 			playerCamera.fieldOfView = 60;
 		} else {
@@ -167,13 +189,12 @@ public class Shooting : MonoBehaviour {
 		}
 	}
 	private void hipToAds() {
-    StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.ads, 0.07f));
+    	StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.ads, 0.07f));
 		playerController.changeAdsState (true);
 		gui.setCrosshairEnabled(false);
 		if (currentGun.getIsScoped()) {
 			gui.setScopeEnabled(true);
 			gunCamera.SetActive(false);
-			lensBlur.vignette.blur = 0f;
 			playerController.setSensitivity(2);
 			playerCamera.fieldOfView = currentGun.adsFov;
 		} else {
@@ -181,7 +202,8 @@ public class Shooting : MonoBehaviour {
 			StartCoroutine(lerpGunZoom(playerCamera.fieldOfView, currentGun.adsFov, 0.1f));
 		}
 	}
-  private IEnumerator lerpGunPosition (Vector3 startPosition, Vector3 endPosition, float time) {
+
+  	private IEnumerator lerpGunPosition (Vector3 startPosition, Vector3 endPosition, float time) {
     float startTime = Time.time;
     while (Time.time < startTime + time) {
       gunContainer.transform.localPosition = Vector3.Lerp(startPosition, endPosition, (Time.time - startTime) / time);
