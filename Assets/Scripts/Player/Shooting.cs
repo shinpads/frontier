@@ -24,10 +24,14 @@ public class Shooting : MonoBehaviour {
 	private bool isReloading = false;
 	private bool isAds = false;
 	private bool stillScoped = false;
+	private float coneLength;
+	private float coneRadius;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
 	void Start () {
+		coneLength = 15f;
+		coneRadius = 0.75f;
 		currentGun = gunObjects[0].GetComponent<Gun>();
 		currentGunIndex = 0;
 		hip = new Vector3(0, 0, 0);
@@ -149,18 +153,19 @@ public class Shooting : MonoBehaviour {
 		//Get Point where bullet will hit
 		StartCoroutine(delayedShooting());
 		armPivotAnimator.Play(currentGun.getShootingAnimationName());
-		ray = new Ray (playerCamera.transform.position, playerCamera.transform.forward * 100);
+		if (isAds) {
+			ray = new Ray (playerCamera.transform.position, playerCamera.transform.forward * 100);
+		} else {
+			float randomRadius = Random.Range (0f, coneRadius);
+			float randomAngle = Random.Range (0f, 2 * Mathf.PI);
+			Vector3 randomDirection = new Vector3 (randomRadius * Mathf.Cos (randomAngle), randomRadius * Mathf.Sin (randomAngle), coneLength);
+			ray = new Ray (playerCamera.transform.position, transform.TransformDirection(randomDirection.normalized));
+		}
 
 		if (Physics.Raycast (ray, out hit, Mathf.Infinity, ignoreRayCastLayer)) {
 			endpoint = ray.GetPoint (hit.distance);
 		} else {
 			endpoint = ray.GetPoint (1000);
-		}
-
-		if (!isAds) {
-			endpoint.x += Random.Range (-0.3f, 0.3f);
-			endpoint.y += Random.Range (-0.3f, 0.3f);
-			endpoint.z += Random.Range (-0.3f, 0.3f);
 		}
 		gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
 		currentGun.ammoShot ();
