@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour {
 	private float positionDifference;
 	private RaycastHit hit;
 	private Ray ray;
-	private Rigidbody rigidbod;
+	private Vector3 velocity;
 	private int userId;
 	private PhotonView userPlayer;
 	private int healScore;
@@ -24,9 +24,7 @@ public class Bullet : MonoBehaviour {
 		currentPosition = gameObject.transform.position;
 		lastPosition = gameObject.transform.position;
 		userPlayer = PhotonView.Find ((int)data [2]);
-		rigidbod = gameObject.GetComponent<Rigidbody>();
-		rigidbod.detectCollisions = false;
-		rigidbod.velocity = (Vector3)data[1];
+		velocity = (Vector3)data[1];
 		dropOff = (float)data [4];
 		dropOffStop = (float)data [5];
 		maxDamage = (int)data[3];
@@ -39,13 +37,15 @@ public class Bullet : MonoBehaviour {
 		userId = id;
 	}
 
-	void FixedUpdate() {
-		gameObject.transform.rotation = Quaternion.LookRotation(rigidbod.velocity.normalized);
+	void Update() {
+		velocity.y -= 9.81f * Time.deltaTime;
+		gameObject.transform.position = gameObject.transform.position + (velocity * Time.deltaTime);
+		gameObject.transform.rotation = Quaternion.LookRotation(velocity.normalized);
 		currentPosition = gameObject.transform.position;
 		positionDifference = (currentPosition - lastPosition).magnitude;
 		// check if there was a collision in the last 0.1 units
 		if (positionDifference > 0.1f) {
-			ray = new Ray(lastPosition,rigidbod.velocity.normalized);
+			ray = new Ray(lastPosition, velocity.normalized);
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
 					Debug.Log(Vector3.Distance (startSpot, hit.point));
