@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
 	private Vector3[] teamSpawns =  { new Vector3(-6.7f, 5f, -88.76f), new Vector3(-132.7f, 5f, 14.9f), new Vector3(-8.7f, 5f, 129.4f), new Vector3(104.4f, 3f, 15f) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
+	[Header("Sounds")]
+	[SerializeField]private AudioClip eliminatedSound;
 	private Dictionary<int, Teams> userTeam = new Dictionary<int, Teams>();
 	private int thisTeam;
 	private int thisUserId;
@@ -20,6 +22,9 @@ public class GameController : MonoBehaviour {
 	int nextTeam = -1;
 	Texture2D pixel;
 	Color pixelColor;
+	string killNotification = "";
+	GUIStyle guiStyle;
+	AudioSource audioSource;
 	void Start () {
 		photonView = gameObject.GetComponent<PhotonView>();
 		// GUI things
@@ -28,6 +33,11 @@ public class GameController : MonoBehaviour {
 		pixel = new Texture2D (1, 1);
 		pixel.SetPixel (0, 0, pixelColor);
 		pixel.Apply ();
+		audioSource = gameObject.GetComponent<AudioSource>();
+		guiStyle = new GUIStyle();
+		guiStyle.alignment = TextAnchor.MiddleCenter;
+		guiStyle.fontSize = 20;
+		guiStyle.normal.textColor = Color.white;
 		loadMineCartObjects();
 	}
 
@@ -96,8 +106,12 @@ public class GameController : MonoBehaviour {
 				}
 			} else {
 				GUI.DrawTexture(new Rect(0, Screen.height-40, 450, Screen.height), pixel);
-				for (int curTeam = 0; curTeam < 4; curTeam ++)
+				for (int curTeam = 0; curTeam < 4; curTeam ++) {
 					GUI.Label(new Rect(10 + (110 * curTeam), Screen.height - 30, 200, 20), "TEAM " + (curTeam + 1).ToString() + " $" + minecarts[curTeam].GetComponent<Minecart>().getGold());
+				}
+				if (killNotification != "") {
+					GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/4, 200, 50), killNotification, guiStyle);
+				}
 			}
 		}
 	}
@@ -120,8 +134,8 @@ public class GameController : MonoBehaviour {
 		photonView.RPC("addPlayerDeath", PhotonTargets.All, userId);
 	}
 
-	public void sendPlayerKillRPC (int userId) {
-		photonView.RPC("addPlayerKill", PhotonTargets.All, userId);
+	public void sendPlayerKillRPC (int userId, int deadManId) {
+		photonView.RPC("addPlayerKill", PhotonTargets.All, userId, deadManId);
 	}
 
 	public void sendPlayerAssistRPC (int userId) {
@@ -187,8 +201,13 @@ public class GameController : MonoBehaviour {
 	}
 
 	[PunRPC]
-	public void addPlayerKill(int userId) {
+	public void addPlayerKill(int userId, int deadManId) {
 		userTeam [userId].findPlayerByUserId (userId).addKill ();
+		if (userId == thisUserId) {
+			audioSource.PlayOneShot(eliminatedSound);
+			killNotification = "Killed " + userTeam [deadManId].findPlayerByUserId (deadManId).getUsername();
+			StartCoroutine(clearKillNotification());
+		}
 	}
 
 	[PunRPC]
@@ -212,5 +231,9 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		return true;
+	}
+	private IEnumerator clearKillNotification() {
+		yield return new WaitForSeconds(2f);
+		killNotification = "";
 	}
 }

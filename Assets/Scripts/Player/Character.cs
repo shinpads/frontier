@@ -101,7 +101,7 @@ public class Character : MonoBehaviour {
 		PhotonNetwork.Destroy (gameObject);
 		HashSet<int> assistSet = new HashSet<int> ();
 		gameController.sendPlayerDeathRPC (userId);
-		gameController.sendPlayerKillRPC (enemyId);
+		gameController.sendPlayerKillRPC (enemyId, userId);
 		foreach (int[] enemy in damagers) {
 			if (assistSet.Add (enemy [0]) && enemy [0] != enemyId) {
 				gameController.sendPlayerAssistRPC (enemy [0]);
