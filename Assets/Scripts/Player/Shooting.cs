@@ -23,6 +23,7 @@ public class Shooting : MonoBehaviour {
 	private PhotonView photonView;
 	private bool isReloading = false;
 	private bool isAds = false;
+	private bool stillScoped = false;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
@@ -85,7 +86,7 @@ public class Shooting : MonoBehaviour {
 			currentGunIndex = 3;
 		}
 
-		if (canShoot && !isReloading && currentGun.getAmmo () != 0) {
+		if (canShoot && !isReloading && currentGun.getAmmo () != 0 && !stillScoped) {
 			if (currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) {
 				shootBullet ();
 			} else if (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1")) {
@@ -99,6 +100,9 @@ public class Shooting : MonoBehaviour {
 		} else if (Input.GetButtonUp("Fire2")) {
 			isAds = false;
 			adsToHip(false);
+			if (currentGun.getIsScoped ()) {
+				stillScoped = false;
+			}
 		}
 	}
 	private void setGunLayers () {
@@ -156,12 +160,12 @@ public class Shooting : MonoBehaviour {
 		currentGun.ammoShot ();
 		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
 		if (currentGun.getIsScoped()) {
-			adsToHip(false);
-			isAds = false;
+			stillScoped = true;
 		}
 	}
 
 	private void swapGuns(GameObject newGun) {
+		stillScoped = false;
 		currentGun.gameObject.SetActive (false);
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
