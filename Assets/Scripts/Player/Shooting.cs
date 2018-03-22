@@ -68,7 +68,7 @@ public class Shooting : MonoBehaviour {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex - 1));
 			currentGunIndex--;
 		}
-			
+
 		if (Input.GetKeyDown (KeyCode.Alpha1) && !currentGun.gameObject.Equals(gunObjects[0])) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
 			Debug.Log ("bitch");
@@ -170,7 +170,7 @@ public class Shooting : MonoBehaviour {
 		gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
 		currentGun.ammoShot ();
 		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
-		if (currentGun.getIsScoped()) {
+		if (currentGun.getIsScoped() && isAds) {
 			stillScoped = true;
 		}
 	}
