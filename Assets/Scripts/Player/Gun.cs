@@ -8,6 +8,7 @@ public class Gun : MonoBehaviour {
 	[SerializeField] private float rateOfFire;
 	[SerializeField] private bool isAutomatic;
 	[SerializeField] private bool isScoped;
+	[SerializeField] private bool isShotgun;
 	[SerializeField] private int bulletDamage;
 	[SerializeField] private int magCapacity;
 	[SerializeField] private GameObject tipOfGun;
@@ -38,7 +39,7 @@ public class Gun : MonoBehaviour {
 	public string getShootingAnimationName() { return shootingAnimationName; }
 	public float getDropOff() { return dropOff; }
 	public float getDropOffStop() { return dropOffStop; }
-
+	public bool getIsShotgun() { return isShotgun; }
 	public void ammoShot() {
 		if (ammo > 0) {
 			ammo--;

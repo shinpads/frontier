@@ -71,7 +71,6 @@ public class Shooting : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.Alpha1) && !currentGun.gameObject.Equals(gunObjects[0])) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
-			Debug.Log ("bitch");
 			currentGunIndex = 0;
 		}
 
@@ -89,11 +88,13 @@ public class Shooting : MonoBehaviour {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 3);
 			currentGunIndex = 3;
 		}
+		else if (Input.GetKeyDown (KeyCode.Alpha5) && !currentGun.gameObject.Equals(gunObjects[4])) {
+			photonView.RPC("sendSwapGuns", PhotonTargets.All, 4);
+			currentGunIndex = 4;
+		}
 
 		if (canShoot && !isReloading && currentGun.getAmmo () != 0 && !stillScoped) {
-			if (currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) {
-				shootBullet ();
-			} else if (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1")) {
+			if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
 				shootBullet ();
 			}
 		}
@@ -123,10 +124,24 @@ public class Shooting : MonoBehaviour {
 	private void shoot(Vector3 start, Vector3 end, int userId) {
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
 		if(!PhotonNetwork.isMasterClient) { return; }
-		//create the bullet at tip of gun
-		PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(Vector3.Normalize(end-start)), 0, new object[] {userId, Vector3.Normalize(end-start)*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
-		//shot.GetComponent<Rigidbody>().velocity = Vector3.Normalize(end-start)*300;
-		//shot.GetComponent<Bullet> ().setUserId (userId);
+		if (currentGun.getIsShotgun()) {
+			float range = Mathf.PI/24f;
+			float theta = 0f;
+			for (int i = 0; i < 5; i++) {
+				Vector3 direction = Vector3.Normalize(end-start);
+				theta = Random.Range(-range/2f, range/2f);
+				direction.x = (direction.x * Mathf.Cos(theta)) - (direction.z * Mathf.Sin(theta));
+				direction.z = (direction.x * Mathf.Sin(theta)) + (direction.z * Mathf.Cos(theta));
+				direction.y += Random.Range(-0.05f, 0.05f);
+				Debug.Log(direction.y);
+				PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
+				theta += range/5f;
+			}
+		} else {
+			Vector3 direction = Vector3.Normalize(end-start);
+			PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
+		}
+
 	}
 
 	private IEnumerator reloadwait()  {
@@ -150,10 +165,9 @@ public class Shooting : MonoBehaviour {
 	}
 
 	private void shootBullet() {
-		//Get Point where bullet will hit
 		StartCoroutine(delayedShooting());
 		armPivotAnimator.Play(currentGun.getShootingAnimationName());
-		if (isAds) {
+		if (isAds || currentGun.getIsShotgun()) {
 			ray = new Ray (playerCamera.transform.position, playerCamera.transform.forward * 100);
 		} else {
 			float randomRadius = Random.Range (0f, coneRadius);
@@ -167,7 +181,7 @@ public class Shooting : MonoBehaviour {
 		} else {
 			endpoint = ray.GetPoint (1000);
 		}
-		gameObject.GetComponent<PhotonView>().RPC("shoot",PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
+		gameObject.GetComponent<PhotonView>().RPC("shoot", PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
 		currentGun.ammoShot ();
 		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
 		if (currentGun.getIsScoped() && isAds) {

@@ -46,6 +46,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1037075345931444
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4164015325085310}
+  - component: {fileID: 114758494479689180}
+  m_Layer: 0
+  m_Name: m870
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1051897252660476
 GameObject:
   m_ObjectHideFlags: 1
@@ -165,6 +181,21 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4981149952955410}
+  m_Layer: 0
+  m_Name: TipOfGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1289837070614080
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4809468594251214}
   m_Layer: 0
   m_Name: TipOfGun
   m_TagString: Untagged
@@ -480,6 +511,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1934230374100842
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4627701986930160}
+  - component: {fileID: 33034870189760318}
+  - component: {fileID: 23544127053653538}
+  m_Layer: 0
+  m_Name: shotgun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1978677579449360
 GameObject:
   m_ObjectHideFlags: 1
@@ -559,6 +607,21 @@ Transform:
   - {fileID: 224336037007894448}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4164015325085310
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1037075345931444}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4809468594251214}
+  - {fileID: 4627701986930160}
+  m_Father: {fileID: 4918900482488906}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4181597472676304
 Transform:
@@ -708,6 +771,19 @@ Transform:
   m_Father: {fileID: 4120856866240072}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4627701986930160
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1934230374100842}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.06999965, y: 0, z: 0.40999985}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_Children: []
+  m_Father: {fileID: 4164015325085310}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!4 &4662694705965232
 Transform:
   m_ObjectHideFlags: 1
@@ -720,6 +796,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4409413557745276}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4809468594251214
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289837070614080}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.07389827, y: 0.122400045, z: 1.0993996}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_Children: []
+  m_Father: {fileID: 4164015325085310}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4918900482488906
 Transform:
@@ -735,6 +824,7 @@ Transform:
   - {fileID: 4033085955524180}
   - {fileID: 4215584915197262}
   - {fileID: 4120856866240072}
+  - {fileID: 4164015325085310}
   m_Father: {fileID: 4981030025016572}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1135,6 +1225,40 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!23 &23544127053653538
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1934230374100842}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 6a26de3d716dc6b499c019602505f576, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23637083429028270
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1251,6 +1375,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1876229049836696}
   m_Mesh: {fileID: 4300000, guid: f265f63b506e4604f8bc4b30200807b1, type: 3}
+--- !u!33 &33034870189760318
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1934230374100842}
+  m_Mesh: {fileID: 4300000, guid: 1c017ba8e4832ed42a943c13ad3e3f1b, type: 3}
 --- !u!33 &33070781267515272
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1551,10 +1682,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
-  bulletSpeed: 550
+  bulletSpeed: 950
   rateOfFire: 3.5
   isAutomatic: 0
   isScoped: 0
+  isShotgun: 0
   bulletDamage: 20
   magCapacity: 6
   tipOfGun: {fileID: 1307153609036226}
@@ -1770,10 +1902,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: b78af8354d80787469cf3d97d3649a4a, type: 3}
-  bulletSpeed: 500
+  bulletSpeed: 700
   rateOfFire: 10
   isAutomatic: 1
   isScoped: 0
+  isShotgun: 0
   bulletDamage: 11
   magCapacity: 30
   tipOfGun: {fileID: 1265695028888666}
@@ -1975,6 +2108,7 @@ MonoBehaviour:
   - {fileID: 1007874185001204}
   - {fileID: 1592693276566820}
   - {fileID: 1655420492931228}
+  - {fileID: 1037075345931444}
   audioSource: {fileID: 82523526476792996}
 --- !u!114 &114587262097712008
 MonoBehaviour:
@@ -2042,6 +2176,33 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &114758494479689180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1037075345931444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835cd69a9b09a984ea76fa7766d31ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunShotSound: {fileID: 8300000, guid: c7f8c7ae34a6167469ea6010ba2819eb, type: 3}
+  bulletSpeed: 1000
+  rateOfFire: 1.5
+  isAutomatic: 0
+  isScoped: 0
+  isShotgun: 1
+  bulletDamage: 20
+  magCapacity: 8
+  tipOfGun: {fileID: 1289837070614080}
+  reloadWait: 2
+  dropOff: 100
+  dropOffStop: 500
+  shootingAnimationName: m870Shoot
+  hip: {x: 0, y: 0, z: 0}
+  ads: {x: -0.175, y: 0.033, z: -0.04}
+  adsFov: 55
 --- !u!114 &114784713323985410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2135,10 +2296,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 01a97d6eb67cd134b9e5ad041b629e3a, type: 3}
-  bulletSpeed: 900
+  bulletSpeed: 1500
   rateOfFire: 0.7
   isAutomatic: 0
   isScoped: 1
+  isShotgun: 0
   bulletDamage: 100
   magCapacity: 5
   tipOfGun: {fileID: 1317017427392708}
@@ -2209,10 +2371,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: f3fb67f7871b5bb4385570dcbb1aec93, type: 3}
-  bulletSpeed: 650
+  bulletSpeed: 950
   rateOfFire: 3
   isAutomatic: 0
   isScoped: 0
+  isShotgun: 0
   bulletDamage: 30
   magCapacity: 12
   tipOfGun: {fileID: 1517458074318134}
