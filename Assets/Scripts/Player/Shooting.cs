@@ -181,10 +181,7 @@ public class Shooting : MonoBehaviour {
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
-		if (isAds) {
-			adsToHip (true);
-		}
-
+		adsToHip (true);
 	}
 	private void adsToHip(bool direct) {
 		if (!direct) {
@@ -193,7 +190,11 @@ public class Shooting : MonoBehaviour {
 			StartCoroutine (lerpGunPosition (gunContainer.transform.localPosition, currentGun.hip, 0f));
 		}
 		playerController.changeAdsState (false);
-		gui.setCrosshairEnabled(true);
+		if (currentGun.getIsScoped()) {
+			gui.setCrosshairEnabled(false);
+		} else {
+			gui.setCrosshairEnabled(true);
+		}
 		gui.setScopeEnabled(false);
 		gunCamera.SetActive(true);
 		playerController.setSensitivity(0);
