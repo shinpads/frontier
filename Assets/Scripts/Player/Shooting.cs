@@ -159,7 +159,7 @@ public class Shooting : MonoBehaviour {
 			float randomRadius = Random.Range (0f, coneRadius);
 			float randomAngle = Random.Range (0f, 2 * Mathf.PI);
 			Vector3 randomDirection = new Vector3 (randomRadius * Mathf.Cos (randomAngle), randomRadius * Mathf.Sin (randomAngle), coneLength);
-			ray = new Ray (playerCamera.transform.position, transform.TransformDirection(randomDirection.normalized));
+			ray = new Ray (playerCamera.transform.position, playerCamera.transform.TransformDirection(randomDirection.normalized));
 		}
 
 		if (Physics.Raycast (ray, out hit, Mathf.Infinity, ignoreRayCastLayer)) {

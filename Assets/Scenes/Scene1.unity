@@ -1070,6 +1070,7 @@ GameObject:
   - component: {fileID: 1577416430}
   - component: {fileID: 1577416434}
   - component: {fileID: 1577416435}
+  - component: {fileID: 1577416436}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MenuCamera
@@ -1211,9 +1212,9 @@ MonoBehaviour:
     enabled: 1
     precision: 16
     colorWheels:
-      shadows: {r: 0.795343, g: 0.8727581, b: 1, a: 1}
-      midtones: {r: 1, g: 0.7199629, b: 0.74219626, a: 1}
-      highlights: {r: 1, g: 0.8811266, b: 0.8284035, a: 1}
+      shadows: {r: 0.48183644, g: 0.55893517, b: 1, a: 1}
+      midtones: {r: 0.95161515, g: 1, b: 0.676084, a: 1}
+      highlights: {r: 1, g: 0.6119784, b: 0.60457516, a: 1}
     basics:
       temperatureShift: 0.3
       tint: 0
@@ -1310,6 +1311,45 @@ MonoBehaviour:
     texture: {fileID: 0}
     contribution: 1
   m_Shader: {fileID: 4800000, guid: 964b34bbab7f5e64fa40f37eaccac1ad, type: 3}
+--- !u!114 &1577416436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1577416429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a338d679868f45439ea43c7ae035e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings:
+    visualizeFocus: 0
+    tweakMode: 0
+    filteringQuality: 2
+    apertureShape: 0
+    apertureOrientation: 0
+  focus:
+    transform: {fileID: 0}
+    focusPlane: 20.589981
+    range: 31.5
+    nearPlane: 4.839981
+    nearFalloff: 15
+    farPlane: 36.33998
+    farFalloff: 50
+    nearBlurRadius: 15
+    farBlurRadius: 35
+  bokehTexture:
+    texture: {fileID: 0}
+    scale: 1
+    intensity: 50
+    threshold: 2
+    spawnHeuristic: 0.15
+  m_FilmicDepthOfFieldShader: {fileID: 4800000, guid: bff0e5458fb914f5c9985ba4f09171d2,
+    type: 3}
+  m_MedianFilterShader: {fileID: 4800000, guid: a058b22d4123add4b807e832604e5e7b,
+    type: 3}
+  m_TextureBokehShader: {fileID: 4800000, guid: c961b8ed1f00f924d804ada5143bd0e8,
+    type: 3}
 --- !u!1 &1643657666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1608,7 +1648,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4471328393321660, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.556
+      value: 0.033
       objectReference: {fileID: 0}
     - target: {fileID: 4471328393321660, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
       propertyPath: m_LocalPosition.z
