@@ -1910,14 +1910,14 @@ MonoBehaviour:
     enabled: 1
     precision: 16
     colorWheels:
-      shadows: {r: 0.795343, g: 0.8727581, b: 1, a: 1}
-      midtones: {r: 1, g: 0.7199629, b: 0.74219626, a: 1}
-      highlights: {r: 1, g: 0.8811266, b: 0.8284035, a: 1}
+      shadows: {r: 0.76738393, g: 1, b: 0.76731265, a: 1}
+      midtones: {r: 1, g: 0.7628363, b: 0.8075415, a: 1}
+      highlights: {r: 0.40358624, g: 0.30759984, b: 1, a: 1}
     basics:
-      temperatureShift: 0.3
+      temperatureShift: 0
       tint: 0
       hue: 0
-      saturation: 1.09
+      saturation: 1.1
       vibrance: 0
       value: 1
       contrast: 1
