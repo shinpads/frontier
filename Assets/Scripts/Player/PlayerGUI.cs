@@ -39,14 +39,12 @@ public class PlayerGUI : MonoBehaviour {
 
 	public void hitMarked() {
 		hitMarker.color = Color.white;
-		StopCoroutine (hitMarkerTime());
 		hitMarker.enabled = true;
 		StartCoroutine (hitMarkerTime());
 	}
 
 	public void killMarked() {
 		hitMarker.color = Color.red;
-		StopCoroutine (hitMarkerTime());
 		hitMarker.enabled = true;
 		StartCoroutine (hitMarkerTime());
 	}
