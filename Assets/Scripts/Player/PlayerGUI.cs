@@ -10,7 +10,9 @@ public class PlayerGUI : MonoBehaviour {
 	[SerializeField] private Text ammoText;
 	[SerializeField] private RawImage crosshair;
 	[SerializeField] private Image scope;
+	[SerializeField] private RawImage hitMarker;
 	void Start() {
+		hitMarker.enabled = false;
 	}
 
 	public void setHealth(int health){
@@ -33,5 +35,22 @@ public class PlayerGUI : MonoBehaviour {
 	}
 	public void setAmmoCounter(int current, int max) {
 		ammoText.text = current + "/" + max;
+	}
+
+	public void hitMarked() {
+		hitMarker.color = Color.white;
+		hitMarker.enabled = true;
+		StartCoroutine (hitMarkerTime());
+	}
+
+	public void killMarked() {
+		hitMarker.color = Color.red;
+		hitMarker.enabled = true;
+		StartCoroutine (hitMarkerTime());
+	}
+
+	private IEnumerator hitMarkerTime() {
+		yield return new WaitForSeconds(0.5f);
+		hitMarker.enabled = false;
 	}
 }

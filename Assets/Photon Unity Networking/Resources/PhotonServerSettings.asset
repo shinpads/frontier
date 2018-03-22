@@ -60,4 +60,5 @@ MonoBehaviour:
   - sendSwapGuns
   - playTargetCentre
   - targetUp
+  - hitMarked
   DisableAutoOpenWizard: 1

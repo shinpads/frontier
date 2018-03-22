@@ -17,8 +17,10 @@ public class Bullet : MonoBehaviour {
 	private float dropOff, dropOffStop;
 	[SerializeField] GameObject dirtImpactParticles;
 	private int maxDamage;
+	GameController gameController;
 	void Start () {
 		if(!PhotonNetwork.isMasterClient) { enabled = false; }
+		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		object[] data = GetComponent<PhotonView>().instantiationData;
 		setUserId ((int)data[0]);
 		currentPosition = gameObject.transform.position;
@@ -48,10 +50,10 @@ public class Bullet : MonoBehaviour {
 			ray = new Ray(lastPosition, velocity.normalized);
 			if (Physics.Raycast(ray, out hit, positionDifference)) {
 				if (hit.collider.gameObject.tag == "Player") {
-					Debug.Log(Vector3.Distance (startSpot, hit.point));
 					damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
 					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);
 				} else if (hit.collider.gameObject.tag == "TargetCircle") {
+					gameController.sendHitMarked (userPlayer.GetComponent<Character> ().getUserId ());
 					healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
 					if (healScore > 0) {
 						userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
@@ -68,5 +70,4 @@ public class Bullet : MonoBehaviour {
 		yield return new WaitForSeconds(LIFE_SPAN);
 		PhotonNetwork.Destroy(gameObject);
 	}
-
 }
