@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
 	bool connected = false;
 	bool gameStarted = false;
 	int nextTeam = -1;
+	GameObject playerObject;
 	Texture2D pixel;
 	Color pixelColor;
 	string killNotification = "";
@@ -117,7 +118,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spawnPlayer() {
-		PhotonNetwork.Instantiate("Player", teamSpawns[thisTeam], Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
+		playerObject =  PhotonNetwork.Instantiate("Player", teamSpawns[thisTeam], Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
 		//playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
 		//playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
 		//playerObject.GetComponent<Character> ().setTeamId (thisTeam);
@@ -127,6 +128,11 @@ public class GameController : MonoBehaviour {
 			minecarts[i] = GameObject.Find("Mine Cart" + i);
 		}
 	}
+
+	public void sendHitMarked(int shooterId) {
+		photonView.RPC("hitMarked", PhotonTargets.All, shooterId);
+	}
+
 	public void sendCartGoldRPC (int teamId, int amount) {
 		photonView.RPC("setCartGold", PhotonTargets.All, teamId, amount);
 	}
@@ -204,6 +210,7 @@ public class GameController : MonoBehaviour {
 	public void addPlayerKill(int userId, int deadManId) {
 		userTeam [userId].findPlayerByUserId (userId).addKill ();
 		if (userId == thisUserId) {
+			playerObject.GetComponentInChildren<PlayerGUI> ().killMarked ();
 			audioSource.PlayOneShot(eliminatedSound);
 			killNotification = "Killed " + userTeam [deadManId].findPlayerByUserId (deadManId).getUsername();
 			StartCoroutine(clearKillNotification());
@@ -218,6 +225,13 @@ public class GameController : MonoBehaviour {
 	[PunRPC]
 	public void addPlayerAssist(int userId) {
 		userTeam [userId].findPlayerByUserId (userId).addAssist ();
+	}
+
+	[PunRPC]
+	public void hitMarked(int shooterId) {
+		if (shooterId == thisUserId) {
+			playerObject.GetComponentInChildren<PlayerGUI> ().hitMarked ();
+		}
 	}
 
 	public Teams getUserTeam(int userId) {

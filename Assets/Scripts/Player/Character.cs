@@ -57,6 +57,7 @@ public class Character : MonoBehaviour {
 		if (!gameObject.GetComponent<PhotonView> ().isMine) {return;}
 		if (dHealth < 0) {
 			setDamagers (enemyId, dHealth);
+			gameController.sendHitMarked (enemyId);
 			PhotonNetwork.Instantiate ("BloodParticles", gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
 		} else if (dHealth > 0) {
 			removeDamagers (dHealth);
