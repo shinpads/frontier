@@ -172,7 +172,6 @@ public class Character : MonoBehaviour {
 				if (Input.GetKey (KeyCode.F)) {
 					int amount = Mathf.Min(goldCapacity - goldCarry, cart.getGold());
 					gameController.sendCartGoldRPC(cartId, -amount);
-					//photonView.RPC("setGoldCarryRPC", PhotonTargets.All, cartId, amount);
 					setGoldCarry(cartId, amount);
 					gui.setInteract ("");
 				}
@@ -182,7 +181,6 @@ public class Character : MonoBehaviour {
 				if (Input.GetKey (KeyCode.F)) {
 					gameController.sendPlayerGoldStolenRPC (userId, goldCarry);
 					gameController.sendCartGoldRPC(cartId, goldCarry);
-					//photonView.RPC("setGoldCarryRPC", PhotonTargets.All, cartId, -goldCarry);
 					setGoldCarry (cartId, -goldCarry);
 					gui.setInteract ("");
 				}
@@ -193,7 +191,6 @@ public class Character : MonoBehaviour {
 			if (gold.getTeamId () != teamId) {
 				gui.setInteract ("Press F to Pick Up Gold");
 				if (Input.GetKey (KeyCode.F)) {
-					//photonView.RPC ("setGoldCarryRPC", PhotonTargets.All, gold.getTeamId (), gold.getGoldCount ());
 					setGoldCarry(gold.getTeamId(), gold.pickUpGold(goldCarry, goldCapacity));
 					gui.setInteract ("");
 				}
@@ -238,10 +235,7 @@ public class Character : MonoBehaviour {
 			break;
 		}
 	}
-	[PunRPC]
-	void setGoldCarryRPC (int teamId, int amount) {
-		setGoldCarry(teamId, amount);
-	}
+
 	private IEnumerator fadeBlood(float startValue, float endValue, float time) {
 		float startTime = Time.time;
 		while (Time.time < startTime + time) {
