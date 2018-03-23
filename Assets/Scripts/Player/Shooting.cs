@@ -133,7 +133,6 @@ public class Shooting : MonoBehaviour {
 				direction.x = (direction.x * Mathf.Cos(theta)) - (direction.z * Mathf.Sin(theta));
 				direction.z = (direction.x * Mathf.Sin(theta)) + (direction.z * Mathf.Cos(theta));
 				direction.y += Random.Range(-0.05f, 0.05f);
-				Debug.Log(direction.y);
 				PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
 				theta += range/5f;
 			}
