@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour {
 		maxDamage = (int)data[3];
 		damage = maxDamage;
 		startSpot = gameObject.transform.position;
-		ignoreRayCastLayer = ~(1 << 13);
+		ignoreRayCastLayer = ~((1 << 13) | (1 << 2));
 		StartCoroutine(setTimeOutDestroy());
 	}
 
