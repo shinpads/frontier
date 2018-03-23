@@ -23,14 +23,14 @@ public class Target : MonoBehaviour {
 		photonView = gameObject.GetComponent<PhotonView> ();
 		targetAnimatorControl = gameObject.GetComponent<Animator> ();
 		audioSource = gameObject.GetComponent<AudioSource> ();
-		if(!PhotonNetwork.isMasterClient) { return; }
 		isDown = false;
 		timeUp = false;
 	}
 
 	void Update() {
+		if(!PhotonNetwork.isMasterClient) { return; }
 		if (isDown && timeUp) {
-			targetAnimatorControl.SetTrigger ("targetUp");
+			photonView.RPC ("targetUp", PhotonTargets.All);
 			isDown = false;
 			timeUp = false;
 		}
@@ -39,7 +39,7 @@ public class Target : MonoBehaviour {
 	public int hitTarget(GameObject circleHit) {
 		if (isDown) {return -1;}
 		photonView.RPC ("playTargetPing", PhotonTargets.All);
-		targetAnimatorControl.SetTrigger("targetDown");
+		photonView.RPC ("targetDown", PhotonTargets.All);
 		StartCoroutine (targetDownTime());
 		isDown = true;
 		int score = 0;
@@ -78,8 +78,14 @@ public class Target : MonoBehaviour {
 	}
 
 	[PunRPC]
-	public void playTargetPing() {
+	public void targetDown() {
 		audioSource.PlayOneShot (targetPing);
+		targetAnimatorControl.SetTrigger ("targetDown");
+	}
+
+	[PunRPC]
+	public void targetUp() {
+		targetAnimatorControl.SetTrigger ("targetUp");
 	}
 
 	[PunRPC]

@@ -10,7 +10,8 @@ public class Character : MonoBehaviour {
 	private int[,] characterStats = new int[,] { {200, 5, 5}, {75, 7, 4}, {100, 10, 300}, {150, 6, 2}, {125, 8, 1} };
 	private int characterHealth;
 	private int characterSpeed;
-	private int goldCapacity;
+	private int goldCapacity; 
+	private int[] goldBreakdown = new int[4];
 	private int goldCarry;
 	private int teamId;
 	private int maxHealth;
@@ -28,16 +29,17 @@ public class Character : MonoBehaviour {
 
 	void Start () {
 		photonView = gameObject.GetComponent<PhotonView>();
+		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		object[] data = photonView.instantiationData;
 		setClass((int)data[0]);
 		setUserId((int)data[1]);
 		setTeamId((int)data[2]);
 		maxHealth = characterHealth;
-		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		gui.setHealth (characterHealth);
 		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		goldCarry = 0;
-		gui.setGold (goldCarry, goldCapacity);
+		goldBreakdown [teamId] = -1;
+		gui.setGold (0, goldCapacity);
 		bloodCameraEffect = gameObject.GetComponent<PlayerController>().playerCamera.GetComponent<LensAberrations>();
 	}
 
@@ -99,6 +101,9 @@ public class Character : MonoBehaviour {
 	}
 
 	void getDead(int enemyId) {
+		if (goldCarry > 0) {
+			dropGold ();
+		}
 		PhotonNetwork.Destroy (gameObject);
 		HashSet<int> assistSet = new HashSet<int> ();
 		gameController.sendPlayerDeathRPC (userId);
@@ -110,6 +115,14 @@ public class Character : MonoBehaviour {
 		}
 		damagers.Clear ();
 		gameController.spawnPlayer ();
+	}
+
+	void dropGold() {
+		for (int i = 0; i < 4; i++) {
+			if (goldBreakdown[i] > 0) {
+				gameController.sendInstantiateGold ("goldPiece", gameObject.transform.position, Quaternion.identity, i, goldBreakdown [i]);
+			}
+		}
 	}
 
 	public float getSpeed() {
@@ -133,8 +146,13 @@ public class Character : MonoBehaviour {
 		photonView = gameObject.GetComponent<PhotonView> ();
 		photonView.RPC ("setCharacterMaterial", PhotonTargets.All, id);
 	}
-	public void setGoldCarry(int gold) {
-		goldCarry = gold;
+	public void setGoldCarry(int teamId, int gold) {
+		if (gold != -goldCarry) {
+			goldBreakdown [teamId] += gold;
+		} else {
+			goldBreakdown = new int[4];
+		}
+		goldCarry += gold;
 		gui.setGold (goldCarry, goldCapacity);
 	}
 
@@ -143,6 +161,7 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnTriggerStay (Collider col) {
+		if (!photonView.isMine) { return; }
 		if (col.gameObject.tag == "Mine Cart") {
 			Minecart cart = col.gameObject.GetComponentInParent<Minecart> ();
 			int cartId = cart.getTeamId();
@@ -151,7 +170,8 @@ public class Character : MonoBehaviour {
 				if (Input.GetKey (KeyCode.F)) {
 					int amount = Mathf.Min(goldCapacity - goldCarry, cart.getGold());
 					gameController.sendCartGoldRPC(cartId, -amount);
-					photonView.RPC("setGoldCarryRPC", PhotonTargets.All, amount);
+					//photonView.RPC("setGoldCarryRPC", PhotonTargets.All, cartId, amount);
+					setGoldCarry(cartId, amount);
 					gui.setInteract ("");
 				}
 			}
@@ -160,7 +180,19 @@ public class Character : MonoBehaviour {
 				if (Input.GetKey (KeyCode.F)) {
 					gameController.sendPlayerGoldStolenRPC (userId, goldCarry);
 					gameController.sendCartGoldRPC(cartId, goldCarry);
-					photonView.RPC("setGoldCarryRPC", PhotonTargets.All, -goldCarry);
+					//photonView.RPC("setGoldCarryRPC", PhotonTargets.All, cartId, -goldCarry);
+					setGoldCarry (cartId, -goldCarry);
+					gui.setInteract ("");
+				}
+			}
+		}
+		else if (col.gameObject.tag == "freeGold") {
+			DroppedGold gold = col.gameObject.GetComponent<DroppedGold> ();
+			if (gold.getTeamId () != teamId) {
+				gui.setInteract ("Press F to Pick Up Gold");
+				if (Input.GetKey (KeyCode.F)) {
+					//photonView.RPC ("setGoldCarryRPC", PhotonTargets.All, gold.getTeamId (), gold.getGoldCount ());
+					setGoldCarry(gold.getTeamId(), gold.pickUpGold(goldCarry, goldCapacity));
 					gui.setInteract ("");
 				}
 			}
@@ -168,10 +200,22 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnTriggerExit (Collider col) {
-		if (col.gameObject.tag == "Mine Cart") {
+		if (!photonView.isMine) { return; }
+		if (col.gameObject.tag == "Mine Cart" || col.gameObject.tag == "freeGold") {
 			gui.setInteract ("");
 		}
 	}
+
+	void OnTriggerEnter(Collider col) {
+		if (!photonView.isMine) { return; }
+		if (col.gameObject.tag == "freeGold") {
+			DroppedGold gold = col.gameObject.GetComponent<DroppedGold> ();
+			if (gold.getTeamId () == teamId) {
+				gold.returnGold ();
+			} 
+		}
+	}
+
 	[PunRPC]
 	void setCharacterMaterial(int id) {
 		renderer = gameObject.GetComponent<MeshRenderer> ();
@@ -193,8 +237,8 @@ public class Character : MonoBehaviour {
 		}
 	}
 	[PunRPC]
-	void setGoldCarryRPC (int amount) {
-		setGoldCarry(goldCarry + amount);
+	void setGoldCarryRPC (int teamId, int amount) {
+		setGoldCarry(teamId, amount);
 	}
 	private IEnumerator fadeBlood(float startValue, float endValue, float time) {
 		float startTime = Time.time;
