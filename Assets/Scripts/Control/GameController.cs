@@ -152,6 +152,34 @@ public class GameController : MonoBehaviour {
 		photonView.RPC ("addPlayerGoldStolen", PhotonTargets.All, userId, gold);
 	}
 
+	public void sendSetCartGold(int teamId, int gold) {
+		photonView.RPC ("setCartGold", PhotonTargets.All, teamId, gold);
+	}
+
+	public void sendDestroyGold(GameObject goldObject) {
+		photonView.RPC ("destroyGold", PhotonTargets.MasterClient, goldObject.GetPhotonView().viewID);
+	}
+
+	public void sendInstantiateGold(string name, Vector3 location, Quaternion rotation, int goldTeamId, int gold) {
+		photonView.RPC ("instantiateGold", PhotonTargets.MasterClient, name, location, rotation, goldTeamId, gold);
+	}
+
+	[PunRPC]
+	void instantiateGold(string name, Vector3 location, Quaternion rotation, int goldTeamId, int gold) {
+		PhotonNetwork.Instantiate (name, location, rotation, 0, new object[] {goldTeamId, gold});
+	}
+
+	[PunRPC]
+	void destroyGold(int goldInstanceId) {
+		GameObject[] allFreeGold = GameObject.FindGameObjectsWithTag ("freeGold");
+		foreach (GameObject freeGold in allFreeGold) {
+			if (freeGold.GetPhotonView().viewID == goldInstanceId) {
+				PhotonNetwork.Destroy (freeGold);
+				return;
+			}
+		}
+	}
+
 	[PunRPC]
 	public void startGame () {
 		GameObject.FindWithTag("MenuCamera").SetActive(false);
@@ -250,4 +278,6 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds(2f);
 		killNotification = "";
 	}
+
+	public int getThisTeam() { return thisTeam; }
 }
