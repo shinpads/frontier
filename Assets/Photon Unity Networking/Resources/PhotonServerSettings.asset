@@ -61,4 +61,9 @@ MonoBehaviour:
   - playTargetCentre
   - targetUp
   - hitMarked
+  - destroyObject
+  - instantiateObject
+  - destroyGold
+  - instantiateGold
+  - targetDown
   DisableAutoOpenWizard: 1

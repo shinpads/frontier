@@ -13,6 +13,7 @@ TagManager:
   - FxTemporaire
   - gun
   - equipment
+  - freeGold
   layers:
   - Default
   - TransparentFX

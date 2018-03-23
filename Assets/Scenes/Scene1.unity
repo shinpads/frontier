@@ -1054,6 +1054,11 @@ Prefab:
       propertyPath: m_Name
       value: Mine Cart1
       objectReference: {fileID: 0}
+    - target: {fileID: 114628218499187994, guid: 80c593444b5ce7f4ebe3feb14fee3c07,
+        type: 2}
+      propertyPath: teamid
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c593444b5ce7f4ebe3feb14fee3c07, type: 2}
   m_IsPrefabParent: 0
@@ -1689,10 +1694,12 @@ Prefab:
       propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
       value: 1
       objectReference: {fileID: 0}
+
     - target: {fileID: 1632357242879422, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+
   m_ParentPrefab: {fileID: 100100000, guid: f027587d17816b34c8439ff9be1aa7d6, type: 2}
   m_IsPrefabParent: 0
