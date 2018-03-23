@@ -92,6 +92,10 @@ public class Shooting : MonoBehaviour {
 			photonView.RPC("sendSwapGuns", PhotonTargets.All, 4);
 			currentGunIndex = 4;
 		}
+		else if (Input.GetKeyDown (KeyCode.Alpha6) && !currentGun.gameObject.Equals(gunObjects[5])) {
+			photonView.RPC("sendSwapGuns", PhotonTargets.All, 5);
+			currentGunIndex = 5;
+		}
 
 		if (canShoot && !isReloading && currentGun.getAmmo () != 0 && !stillScoped) {
 			if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
@@ -119,6 +123,7 @@ public class Shooting : MonoBehaviour {
 			}
 		}
 		armPivot.layer = 12;
+		gameObject.layer = 2;
 	}
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId) {
