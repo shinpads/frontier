@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour {
 	private int damage;
 	private Vector3 startSpot;
 	private float dropOff, dropOffStop;
+	LayerMask ignoreRayCastLayer;
 	[SerializeField] GameObject dirtImpactParticles;
 	private int maxDamage;
 	GameController gameController;
@@ -32,6 +33,7 @@ public class Bullet : MonoBehaviour {
 		maxDamage = (int)data[3];
 		damage = maxDamage;
 		startSpot = gameObject.transform.position;
+		ignoreRayCastLayer = ~((1 << 13) | (1 << 2));
 		StartCoroutine(setTimeOutDestroy());
 	}
 
@@ -48,23 +50,20 @@ public class Bullet : MonoBehaviour {
 		// check if there was a collision in the last 0.1 units
 		if (positionDifference > 0.1f) {
 			ray = new Ray(lastPosition, velocity.normalized);
-			if (Physics.Raycast(ray, out hit, positionDifference)) {
-				if (hit.collider.gameObject.name != "Bullet(Clone)") {
-					if (hit.collider.gameObject.tag == "Player") {
-						Debug.Log(Vector3.Distance (startSpot, hit.point));
-						damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
-						hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);
-					} else if (hit.collider.gameObject.tag == "TargetCircle") {
-						gameController.sendHitMarked (userPlayer.GetComponent<Character> ().getUserId ());
-						healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
-						if (healScore > 0) {
-							userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
-						}
-					} else {
-						PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.LookRotation(hit.normal), 0);
+			if (Physics.Raycast(ray, out hit, positionDifference, ignoreRayCastLayer)) {
+				if (hit.collider.gameObject.tag == "Player") {
+					damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
+					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);
+				} else if (hit.collider.gameObject.tag == "TargetCircle") {
+					gameController.sendHitMarked (userPlayer.GetComponent<Character> ().getUserId ());
+					healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
+					if (healScore > 0) {
+						userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
 					}
-					PhotonNetwork.Destroy(gameObject);
+				} else {
+					PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.LookRotation(hit.normal), 0);
 				}
+				PhotonNetwork.Destroy(gameObject);
 			}
 			lastPosition = currentPosition;
 		}

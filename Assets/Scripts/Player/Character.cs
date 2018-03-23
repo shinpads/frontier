@@ -16,6 +16,7 @@ public class Character : MonoBehaviour {
 	private int teamId;
 	private int maxHealth;
 	private int userId;
+	private bool dead = false;
 	private LinkedList<int[]> damagers = new LinkedList<int[]>();
 	private PlayerGUI gui;
 	private Global earth;
@@ -72,7 +73,8 @@ public class Character : MonoBehaviour {
 			characterHealth = 0;
 		}
 		gui.setHealth(characterHealth);
-		if (characterHealth == 0) {
+		if (characterHealth == 0 && !dead) {
+			dead = true;
 			getDead (enemyId);
 		}
 		bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
