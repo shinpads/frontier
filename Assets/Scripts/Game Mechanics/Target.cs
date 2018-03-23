@@ -38,7 +38,6 @@ public class Target : MonoBehaviour {
 
 	public int hitTarget(GameObject circleHit) {
 		if (isDown) {return -1;}
-		photonView.RPC ("playTargetPing", PhotonTargets.All);
 		photonView.RPC ("targetDown", PhotonTargets.All);
 		StartCoroutine (targetDownTime());
 		isDown = true;
