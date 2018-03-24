@@ -10,7 +10,7 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-  private bool canShoot = true;
+  	private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	private int currentGunIndex;
@@ -27,6 +27,7 @@ public class Shooting : MonoBehaviour {
 	private bool isReloading = false;
 	private bool isAds = false;
 	private bool stillScoped = false;
+	private bool outAndHeld = false;
 	private float coneLength;
 	private float coneRadius;
 	LayerMask ignoreRayCastLayer;
@@ -103,8 +104,15 @@ public class Shooting : MonoBehaviour {
 		}
 
 		if (currentGunIndex != -1 &&canShoot && !isReloading && !stillScoped) {
-			if (currentGun.getAmmo () == 0 && Input.GetButtonDown ("Fire1")) {
-				photonView.RPC ("sendDryFireSound", PhotonTargets.All);
+			if (currentGun.getAmmo () == 0) {
+				if (Input.GetButtonDown ("Fire1")) {
+					photonView.RPC ("sendDryFireSound", PhotonTargets.All);
+				} else if (currentGun.getIsAutomatic ()) {
+					if (Input.GetButton ("Fire1") && !outAndHeld) {
+						photonView.RPC ("sendDryFireSound", PhotonTargets.All);
+						outAndHeld = true;
+					}
+				}
 			} else if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
 				shootBullet ();
 			}
@@ -172,6 +180,9 @@ public class Shooting : MonoBehaviour {
 		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
 		isReloading = false;
 		canShoot = true;
+		if (currentGun.getIsAutomatic() && outAndHeld) {
+			outAndHeld = false;
+		}
 	}
 
     private IEnumerator delayedShooting(){
