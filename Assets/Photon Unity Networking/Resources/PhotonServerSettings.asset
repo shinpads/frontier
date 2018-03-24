@@ -66,4 +66,5 @@ MonoBehaviour:
   - destroyGold
   - instantiateGold
   - targetDown
+  - sendDryFireSound
   DisableAutoOpenWizard: 1

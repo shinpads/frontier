@@ -95,7 +95,7 @@ public class Shooting : MonoBehaviour {
 
 		if (canShoot && !isReloading && !stillScoped) {
 			if (currentGun.getAmmo () == 0 && Input.GetButtonDown ("Fire1")) {
-				audioSource.PlayOneShot (currentGun.getDryFireSound());
+				photonView.RPC ("sendDryFireSound", PhotonTargets.All);
 			} else if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
 				shootBullet ();
 			}
@@ -123,18 +123,24 @@ public class Shooting : MonoBehaviour {
 		armPivot.layer = 12;
 	}
 	[PunRPC]
-	private void shoot(Vector3 start, Vector3 end, int userId) {
+	private void shoot(Vector3 start, Vector3 end, int userId, bool ads) {
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
 		if(!PhotonNetwork.isMasterClient) { return; }
 		if (currentGun.getIsShotgun()) {
-			float range = Mathf.PI/24f;
+			float rangeFactor = 12f;
+			if (ads) {
+				rangeFactor = 24f;
+			}
+			float range = Mathf.PI/rangeFactor;
 			float theta = 0f;
 			for (int i = 0; i < 5; i++) {
 				Vector3 direction = Vector3.Normalize(end-start);
 				theta = Random.Range(-range/2f, range/2f);
-				direction.x = (direction.x * Mathf.Cos(theta)) - (direction.z * Mathf.Sin(theta));
-				direction.z = (direction.x * Mathf.Sin(theta)) + (direction.z * Mathf.Cos(theta));
-				direction.y += Random.Range(-0.05f, 0.05f);
+				direction.x = (direction.x * Mathf.Cos(theta)) - (direction.y * Mathf.Sin(theta));
+				direction.y = (direction.x * Mathf.Sin(theta)) + (direction.y * Mathf.Cos(theta));
+				theta = Random.Range(-range/2f, range/2f);
+				direction.x = (direction.x * Mathf.Cos(theta)) + (direction.z * Mathf.Sin(theta));
+				direction.z = -(direction.x * Mathf.Sin(theta)) + (direction.z * Mathf.Cos(theta));
 				PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
 				theta += range/5f;
 			}
@@ -182,7 +188,7 @@ public class Shooting : MonoBehaviour {
 		} else {
 			endpoint = ray.GetPoint (1000);
 		}
-		gameObject.GetComponent<PhotonView>().RPC("shoot", PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId());
+		gameObject.GetComponent<PhotonView>().RPC("shoot", PhotonTargets.All, currentGun.getJustTheTip().transform.position,endpoint, player.getUserId(), isAds);
 		currentGun.ammoShot ();
 		gui.setAmmoCounter (currentGun.getAmmo(), currentGun.getMagCapacity());
 		if (currentGun.getIsScoped() && isAds) {
@@ -232,6 +238,11 @@ public class Shooting : MonoBehaviour {
 			playerController.setSensitivity(1);
 			StartCoroutine(lerpGunZoom(playerCamera.fieldOfView, currentGun.adsFov, 0.1f));
 		}
+	}
+
+	[PunRPC]
+	private void sendDryFireSound() {
+		audioSource.PlayOneShot (currentGun.getDryFireSound());
 	}
 
   	private IEnumerator lerpGunPosition (Vector3 startPosition, Vector3 endPosition, float time) {
