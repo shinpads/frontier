@@ -6,6 +6,8 @@ public class Projectile : MonoBehaviour {
 	[SerializeField] AudioClip collisionSound;
 	AudioSource audioSource;
 	Rigidbody rigidbod;
+	[HideInInspector] public int userId;
+	bool collided = false;
 	void Start() {
 		audioSource = gameObject.GetComponent<AudioSource>();
 		rigidbod = gameObject.GetComponent<Rigidbody>();
@@ -15,12 +17,16 @@ public class Projectile : MonoBehaviour {
 		gameObject.GetComponent<Renderer>().enabled = false;
 		rigidbod.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 		audioSource.PlayOneShot(collisionSound);
-		PhotonNetwork.Instantiate("WFX_ExplosiveSmoke Big", gameObject.transform.position, Quaternion.identity, 0);
+		GameObject explosion = (GameObject) PhotonNetwork.Instantiate("dynamiteExplosion", gameObject.transform.position, Quaternion.identity, 0);
+		explosion.GetComponent<Explosion>().userId = userId;
 		StartCoroutine(destroyObject());
 	}
 
 	void OnCollisionEnter (Collision col) {
-		onImpact(col);
+		if (!collided) {
+			onImpact(col);
+			collided = true;
+		}
 	}
 
 	private IEnumerator destroyObject() {
