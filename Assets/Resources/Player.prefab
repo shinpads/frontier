@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 4898471294726674}
   - component: {fileID: 33504560030428228}
   - component: {fileID: 23585513853011838}
+  - component: {fileID: 114589867498553388}
   m_Layer: 0
   m_Name: Dynamite_1
   m_TagString: Untagged
@@ -4477,6 +4478,8 @@ MonoBehaviour:
   - {fileID: 1592693276566820}
   - {fileID: 1655420492931228}
   - {fileID: 1037075345931444}
+  equipmentObjects:
+  - {fileID: 1372378493155266}
   audioSource: {fileID: 82523526476792996}
 --- !u!114 &114587262097712008
 MonoBehaviour:
@@ -4511,6 +4514,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Fuck Ammo
+--- !u!114 &114589867498553388
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372378493155266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 452f755379dd7814a9748f355580294d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: Dynamite
+  throwVelocity: 1500
+  throwAnimation: dynamiteThrow
 --- !u!114 &114690696834088616
 MonoBehaviour:
   m_ObjectHideFlags: 1

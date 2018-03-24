@@ -10,16 +10,19 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-  	private bool canShoot = true;
+  private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	private int currentGunIndex;
+	private int currentEquipmentIndex;
 	[SerializeField] private GameObject armPivot;
 	[SerializeField] private GameObject gunContainer;
 	[SerializeField] private GameObject[] gunObjects;
+	[SerializeField] private GameObject[] equipmentObjects;
 	[SerializeField] private AudioSource audioSource;
 	private Animator armPivotAnimator;
 	private Gun currentGun;
+	private Equipment currentEquipment;
 	private PhotonView photonView;
 	private bool isReloading = false;
 	private bool isAds = false;
@@ -33,7 +36,9 @@ public class Shooting : MonoBehaviour {
 		coneLength = 15f;
 		coneRadius = 0.75f;
 		currentGun = gunObjects[0].GetComponent<Gun>();
+		currentEquipment = equipmentObjects[0].GetComponent<Equipment>();
 		currentGunIndex = 0;
+		currentEquipmentIndex = -1;
 		hip = new Vector3(0, 0, 0);
 		ads = new Vector3(-0.24f, 0.09f, -0.18f);
 		playerCamera = gameObject.GetComponent<PlayerController>().playerCamera;
@@ -59,12 +64,12 @@ public class Shooting : MonoBehaviour {
 		     StartCoroutine(reloadwait());
 		}
 
-		if (Input.GetAxis("Mouse ScrollWheel") < 0 && !currentGun.gameObject.Equals(gunObjects[gunObjects.Length-1])) {
+		if (Input.GetAxis("Mouse ScrollWheel") < 0 && currentGunIndex < gunObjects.Length-1) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex + 1));
 			currentGunIndex++;
 		}
 
-		else if (Input.GetAxis("Mouse ScrollWheel") > 0 && !currentGun.gameObject.Equals(gunObjects[0])) {
+		else if (Input.GetAxis("Mouse ScrollWheel") > 0 && currentGunIndex > 0) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex - 1));
 			currentGunIndex--;
 		}
@@ -92,13 +97,19 @@ public class Shooting : MonoBehaviour {
 			photonView.RPC("sendSwapGuns", PhotonTargets.All, 4);
 			currentGunIndex = 4;
 		}
+		else if (Input.GetKeyDown (KeyCode.Q) && currentEquipmentIndex != 0) {
+			photonView.RPC("sendSwapEquipment", PhotonTargets.All, 0);
+			currentEquipmentIndex = 0;
+		}
 
-		if (canShoot && !isReloading && !stillScoped) {
+		if (currentGunIndex != -1 &&canShoot && !isReloading && !stillScoped) {
 			if (currentGun.getAmmo () == 0 && Input.GetButtonDown ("Fire1")) {
 				audioSource.PlayOneShot (currentGun.getDryFireSound());
 			} else if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
 				shootBullet ();
 			}
+		} else if (currentEquipmentIndex != -1 && Input.GetButtonDown("Fire1")) {
+			StartCoroutine(throwEquipment());
 		}
 
 		if (Input.GetButtonDown("Fire2")) {
@@ -164,6 +175,10 @@ public class Shooting : MonoBehaviour {
 	private void sendSwapGuns (int newGunIndex) {
 		swapGuns(gunObjects[newGunIndex]);
 	}
+	[PunRPC]
+	private void sendSwapEquipment (int newEquipmentIndex) {
+		swapEquipment(equipmentObjects[newEquipmentIndex]);
+	}
 
 	private void shootBullet() {
 		StartCoroutine(delayedShooting());
@@ -189,13 +204,32 @@ public class Shooting : MonoBehaviour {
 			stillScoped = true;
 		}
 	}
-
+	private IEnumerator throwEquipment() {
+		armPivotAnimator.Play(currentEquipment.getThrowAnimationName());
+		yield return new WaitForSeconds(0.5f);
+		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), playerCamera.transform.position + playerCamera.transform.forward, Quaternion.Euler(0, 0, -20), 0);
+		equipment.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * currentEquipment.getThrowVelocity());
+		currentGunIndex = 0;
+		photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
+	}
 	private void swapGuns(GameObject newGun) {
+		currentEquipmentIndex = -1;
 		stillScoped = false;
 		currentGun.gameObject.SetActive (false);
+		currentEquipment.gameObject.SetActive(false);
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
+		adsToHip (true);
+	}
+	private void swapEquipment(GameObject newEquipment) {
+		currentGunIndex = -1;
+		stillScoped = false;
+		currentEquipment.gameObject.SetActive(false);
+		currentGun.gameObject.SetActive (false);
+		newEquipment.SetActive (true);
+		currentEquipment = newEquipment.GetComponent<Equipment>();
+		gui.setAmmoCounter (0, 0);
 		adsToHip (true);
 	}
 	private void adsToHip(bool direct) {
