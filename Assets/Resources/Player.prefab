@@ -2022,12 +2022,12 @@ MonoBehaviour:
   isAutomatic: 1
   isScoped: 0
   isShotgun: 0
-  bulletDamage: 11
+  bulletDamage: 19
   magCapacity: 30
   tipOfGun: {fileID: 1265695028888666}
   reloadWait: 1.5
   dropOff: 60
-  dropOffStop: 125
+  dropOffStop: 175
   shootingAnimationName: ppsh41Shoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.24, y: 0.06, z: -0.18}
@@ -2088,8 +2088,8 @@ MonoBehaviour:
   - {fileID: 114539432057266022}
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
@@ -2312,8 +2312,8 @@ MonoBehaviour:
   magCapacity: 8
   tipOfGun: {fileID: 1289837070614080}
   reloadWait: 2
-  dropOff: 100
-  dropOffStop: 500
+  dropOff: 20
+  dropOffStop: 80
   shootingAnimationName: m870Shoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.175, y: 0.033, z: -0.04}
@@ -2492,7 +2492,7 @@ MonoBehaviour:
   isAutomatic: 0
   isScoped: 0
   isShotgun: 0
-  bulletDamage: 30
+  bulletDamage: 40
   magCapacity: 12
   tipOfGun: {fileID: 1517458074318134}
   reloadWait: 2
@@ -2501,7 +2501,7 @@ MonoBehaviour:
   shootingAnimationName: enfieldShoot
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.247, y: 0.08, z: -0.18}
-  adsFov: 45
+  adsFov: 35
 --- !u!124 &124272864567274656
 Behaviour:
   m_ObjectHideFlags: 1
