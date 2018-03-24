@@ -16,6 +16,7 @@ public class Gun : MonoBehaviour {
 	[SerializeField] private float dropOff;
 	[SerializeField] private float dropOffStop;
 	[SerializeField] private string shootingAnimationName = "revolver";
+	[SerializeField] private AudioClip dryFire;
 	public Vector3 hip, ads;
 	public float adsFov;
 	private int ammo;
@@ -27,6 +28,7 @@ public class Gun : MonoBehaviour {
 
 	// Lazy ass getters
 	public AudioClip getGunShotSound() { return gunShotSound; }
+	public AudioClip getDryFireSound() { return dryFire; }
 	public float getBulletSpeed() { return bulletSpeed; }
 	public float getShotDelay() { return (float)1/rateOfFire; }
 	public bool getIsAutomatic() { return isAutomatic; }

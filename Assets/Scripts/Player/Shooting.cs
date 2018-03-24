@@ -93,8 +93,10 @@ public class Shooting : MonoBehaviour {
 			currentGunIndex = 4;
 		}
 
-		if (canShoot && !isReloading && currentGun.getAmmo () != 0 && !stillScoped) {
-			if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
+		if (canShoot && !isReloading && !stillScoped) {
+			if (currentGun.getAmmo () == 0 && Input.GetButtonDown ("Fire1")) {
+				audioSource.PlayOneShot (currentGun.getDryFireSound());
+			} else if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
 				shootBullet ();
 			}
 		}
