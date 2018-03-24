@@ -10,7 +10,7 @@ public class Character : MonoBehaviour {
 	private int[,] characterStats = new int[,] { {200, 5, 5}, {75, 7, 4}, {100, 10, 300}, {150, 6, 2}, {125, 8, 1} };
 	private int characterHealth;
 	private int characterSpeed;
-	private int goldCapacity; 
+	private int goldCapacity;
 	private int[] goldBreakdown = new int[4];
 	private int goldCarry;
 	private int teamId;
@@ -211,7 +211,7 @@ public class Character : MonoBehaviour {
 			DroppedGold gold = col.gameObject.GetComponent<DroppedGold> ();
 			if (gold.getTeamId () == teamId) {
 				gold.returnGold ();
-			} 
+			}
 		}
 	}
 

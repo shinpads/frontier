@@ -227,7 +227,7 @@ public class Shooting : MonoBehaviour {
 	private IEnumerator throwEquipment() {
 		armPivotAnimator.Play(currentEquipment.getThrowAnimationName());
 		yield return new WaitForSeconds(0.5f);
-		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), playerCamera.transform.position + playerCamera.transform.forward, Quaternion.Euler(0, 0, -20), 0);
+		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), playerCamera.transform.position + playerCamera.transform.forward, Quaternion.Euler(0, 0, -20), 0, new object[] {player.getUserId()});
 		equipment.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * currentEquipment.getThrowVelocity());
 		equipment.GetComponent<Projectile>().userId = player.getUserId();
 		currentGunIndex = 0;

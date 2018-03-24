@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Explosion : MonoBehaviour {
-	[HideInInspector] public int userId;
-	bool doDamage = true;
+	private int userId;
+
 	void Start() {
 		if (!PhotonNetwork.isMasterClient) { this.enabled = false; }
+		object[] data = GetComponent<PhotonView>().instantiationData;
+		userId = (int)data[0];
+		SphereCollider sc = gameObject.GetComponent<SphereCollider>();
+		Collider[] allOverlappingColliders = Physics.OverlapSphere(sc.transform.position, sc.radius);
+		HashSet<Collider> colliders = new HashSet<Collider>(allOverlappingColliders);
+		foreach (Collider col in colliders) {
+	 		if (col.gameObject.tag == "Player") {
+				col.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -25, userId);
+			}
+		}
 		StartCoroutine(destroyObject());
 	}
-	void OnTriggerEnter(Collider col) {
-		if (!doDamage) { return; }
-		if (col.gameObject.tag == "Player") {
-			col.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -50, userId);
-		}
-	}
-	private IEnumerator removeCollider() {
-		yield return new WaitForSeconds(0.05f);
-		doDamage = false;
-	}
 	private IEnumerator destroyObject () {
-			yield return new WaitForSeconds(5f);
+			yield return new WaitForSeconds(4f);
 			PhotonNetwork.Destroy(gameObject);
 	}
 }
