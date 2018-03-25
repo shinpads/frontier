@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour {
 	private int maxDamage;
 	GameController gameController;
 	void Start () {
-		if(!PhotonNetwork.isMasterClient) { enabled = false; }
+		if(!PhotonNetwork.isMasterClient) { enabled = false; return;}
 		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		object[] data = GetComponent<PhotonView>().instantiationData;
 		setUserId ((int)data[0]);
