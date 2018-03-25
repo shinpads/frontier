@@ -178,7 +178,6 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnTriggerStay (Collider col) {
-		if (!photonView.isMine) { return; }
 		if (col.gameObject.tag == "Mine Cart") {
 			Minecart cart = col.gameObject.GetComponentInParent<Minecart> ();
 			int cartId = cart.getTeamId();
@@ -214,14 +213,12 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnTriggerExit (Collider col) {
-		if (!photonView.isMine) { return; }
 		if (col.gameObject.tag == "Mine Cart" || col.gameObject.tag == "freeGold") {
 			gui.setInteract ("");
 		}
 	}
 
 	void OnTriggerEnter(Collider col) {
-		if (!photonView.isMine) { return; }
 		if (col.gameObject.tag == "freeGold") {
 			DroppedGold gold = col.gameObject.GetComponent<DroppedGold> ();
 			if (gold.getTeamId () == teamId) {
