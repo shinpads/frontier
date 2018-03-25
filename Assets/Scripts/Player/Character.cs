@@ -191,7 +191,7 @@ public class Character : MonoBehaviour {
 
 	void OnTriggerExit (Collider col) {
 		if (col.gameObject.tag == "Mine Cart" || col.gameObject.tag == "freeGold") {
-			gui.setInteract ("");
+			gameObject.GetComponentInChildren<PlayerGUI>().setInteract ("");
 		}
 	}
 
