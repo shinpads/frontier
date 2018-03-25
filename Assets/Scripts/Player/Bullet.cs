@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-	private const int LIFE_SPAN = 3;
+	private const float LIFE_SPAN = 0.073f;
 	private Vector3 currentPosition, lastPosition;
 	private float positionDifference;
 	private RaycastHit hit;

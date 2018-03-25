@@ -63,4 +63,6 @@ MonoBehaviour:
   - TaggedPlayer
   - targetDown
   - targetUp
+  - playCollisionSoundToAll
+  - throwEquipmentRPC
   DisableAutoOpenWizard: 1
