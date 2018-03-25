@@ -7,7 +7,7 @@ public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
-	private int[,] characterStats = new int[,] { {200, 5, 5}, {75, 7, 4}, {100, 10, 300}, {150, 6, 2}, {125, 8, 1} };
+	private int[,] characterStats = new int[,] { {200, 5, 5}, {75, 7, 4}, {100, 10, 2000}, {150, 6, 2}, {125, 8, 1} };
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
@@ -125,13 +125,13 @@ public class Character : MonoBehaviour {
 			if (goldBreakdown[i] > 0) {
 				switch (i) {
 				case 0:
-					dropSpot = gameObject.transform.forward;
+					dropSpot = gameObject.transform.forward*2;
 					break;
 				case 1:
-					dropSpot = -1*gameObject.transform.right;
+					dropSpot = gameObject.transform.right*-2;
 					break;
 				case 2:
-					dropSpot = gameObject.transform.right;
+					dropSpot = gameObject.transform.right*2;
 					break;
 				default:
 					dropSpot = gameObject.transform.position;
