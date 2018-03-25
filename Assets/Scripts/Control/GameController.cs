@@ -167,7 +167,7 @@ public class GameController : MonoBehaviour {
 	[PunRPC]
 	void instantiateGold(string name, Vector3 location, Quaternion rotation, int[] goldBreakdown) {
 		Vector3 dropSpot;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (goldBreakdown [i] > 0) {
 				switch (i) {
 				case 0:
