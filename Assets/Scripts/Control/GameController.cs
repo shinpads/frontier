@@ -103,6 +103,9 @@ public class GameController : MonoBehaviour {
 				if (PhotonNetwork.isMasterClient) {
 					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game") && allClassesPicked()) {
 						photonView.RPC("startGame", PhotonTargets.All);
+						foreach (GameObject cart in minecarts) {
+							cart.GetComponent<Minecart> ().startCarts ();
+						}
 					}
 				}
 			} else {
