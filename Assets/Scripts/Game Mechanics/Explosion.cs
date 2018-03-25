@@ -6,7 +6,7 @@ public class Explosion : MonoBehaviour {
 	private int userId;
 
 	void Start() {
-		if (!PhotonNetwork.isMasterClient) { this.enabled = false; }
+		if (!PhotonNetwork.isMasterClient) { this.enabled = false; return;}
 		object[] data = GetComponent<PhotonView>().instantiationData;
 		userId = (int)data[0];
 		SphereCollider sc = gameObject.GetComponent<SphereCollider>();

@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision col) {
-		if (!collided) {
+		if (!collided &&  PhotonNetwork.isMasterClient) {
 			collided = true;
 			onImpact(col);
 		}
