@@ -120,9 +120,24 @@ public class Character : MonoBehaviour {
 	}
 
 	void dropGold() {
-		for (int i = 0; i < 4; i++) {
+		Vector3 dropSpot;
+		for (int i = 0; i < 3; i++) {
 			if (goldBreakdown[i] > 0) {
-				gameController.sendInstantiateGold ("goldPiece", gameObject.transform.position, Quaternion.identity, i, goldBreakdown [i]);
+				switch (i) {
+				case 0:
+					dropSpot = gameObject.transform.forward;
+					break;
+				case 1:
+					dropSpot = -1*gameObject.transform.right;
+					break;
+				case 2:
+					dropSpot = gameObject.transform.right;
+					break;
+				default:
+					dropSpot = gameObject.transform.position;
+					break;
+				}
+				gameController.sendInstantiateGold ("goldPiece", dropSpot, Quaternion.identity, i, goldBreakdown [i]);
 			}
 		}
 	}
