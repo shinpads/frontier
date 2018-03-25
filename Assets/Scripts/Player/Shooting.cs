@@ -258,9 +258,9 @@ public class Shooting : MonoBehaviour {
 	}
 	private void adsToHip(bool direct) {
 		if (!direct) {
-			StartCoroutine (lerpGunPosition (gunContainer.transform.localPosition, currentGun.hip, 0.07f));
+			StartCoroutine (lerpGunPosition (currentGun.ads, currentGun.hip, 0.07f));
 		} else {
-			StartCoroutine (lerpGunPosition (gunContainer.transform.localPosition, currentGun.hip, 0f));
+			StartCoroutine (lerpGunPosition (currentGun.ads, currentGun.hip, 0f));
 		}
 		playerController.changeAdsState (false);
 		if (currentGun.getIsScoped()) {
@@ -278,7 +278,7 @@ public class Shooting : MonoBehaviour {
 		}
 	}
 	private void hipToAds() {
-    StartCoroutine(lerpGunPosition(gunContainer.transform.localPosition, currentGun.ads, 0.07f));
+    StartCoroutine(lerpGunPosition(currentGun.hip, currentGun.ads, 0.07f));
 		playerController.changeAdsState (true);
 		gui.setCrosshairEnabled(false);
 		if (currentGun.getIsScoped()) {
