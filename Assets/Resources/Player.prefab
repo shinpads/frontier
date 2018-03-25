@@ -4036,6 +4036,7 @@ MonoBehaviour:
   dropOffStop: 204.3
   shootingAnimationName: revolver
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
+  bulletLife: 0.1
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.24, y: 0.09, z: -0.18}
   adsFov: 60
@@ -4283,6 +4284,7 @@ MonoBehaviour:
   dropOffStop: 175
   shootingAnimationName: ppsh41Shoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
+  bulletLife: 0.07
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.24, y: 0.06, z: -0.18}
   adsFov: 55
@@ -4586,6 +4588,7 @@ MonoBehaviour:
   dropOffStop: 80
   shootingAnimationName: m870Shoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
+  bulletLife: 0.06
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.175, y: 0.033, z: -0.04}
   adsFov: 55
@@ -4696,6 +4699,7 @@ MonoBehaviour:
   dropOffStop: 600
   shootingAnimationName: m40a3Shoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
+  bulletLife: 3
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.23, y: 0, z: -0.18}
   adsFov: 5
@@ -4772,6 +4776,7 @@ MonoBehaviour:
   dropOffStop: 350
   shootingAnimationName: enfieldShoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
+  bulletLife: 1.2
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.247, y: 0.08, z: -0.18}
   adsFov: 35

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-	private const float LIFE_SPAN = 0.073f;
 	private Vector3 currentPosition, lastPosition;
 	private float positionDifference;
+	private float lifeTime;
 	private RaycastHit hit;
 	private Ray ray;
 	private Vector3 velocity;
@@ -32,6 +32,7 @@ public class Bullet : MonoBehaviour {
 		dropOffStop = (float)data [5];
 		maxDamage = (int)data[3];
 		damage = maxDamage;
+		lifeTime = (float)data [6];
 		startSpot = gameObject.transform.position;
 		ignoreRayCastLayer = ~((1 << 13) | (1 << 2));
 		StartCoroutine(setTimeOutDestroy());
@@ -69,7 +70,7 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 	private IEnumerator setTimeOutDestroy () {
-		yield return new WaitForSeconds(LIFE_SPAN);
+		yield return new WaitForSeconds(lifeTime);
 		PhotonNetwork.Destroy(gameObject);
 	}
 }

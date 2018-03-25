@@ -163,12 +163,12 @@ public class Shooting : MonoBehaviour {
 				theta = Random.Range(-range/2f, range/2f);
 				direction.y = (direction.y * Mathf.Cos(theta)) - (direction.z * Mathf.Sin(theta));
 				direction.z = (direction.y * Mathf.Sin(theta)) + (direction.z * Mathf.Cos(theta));
-				PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
+				PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop(), currentGun.getBulletLife()});
 				theta += range/5f;
 			}
 		} else {
 			Vector3 direction = Vector3.Normalize(end-start);
-			PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop()});
+			PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop(), currentGun.getBulletLife()});
 		}
 
 	}
