@@ -160,13 +160,32 @@ public class GameController : MonoBehaviour {
 		photonView.RPC ("destroyGold", PhotonTargets.MasterClient, goldObject.GetPhotonView().viewID);
 	}
 
-	public void sendInstantiateGold(string name, Vector3 location, Quaternion rotation, int goldTeamId, int gold) {
-		photonView.RPC ("instantiateGold", PhotonTargets.MasterClient, name, location, rotation, goldTeamId, gold);
+	public void sendInstantiateGold(string name, Vector3 location, Quaternion rotation, int[] goldBreakdown) {
+		photonView.RPC ("instantiateGold", PhotonTargets.MasterClient, name, location, rotation, goldBreakdown);
 	}
 
 	[PunRPC]
-	void instantiateGold(string name, Vector3 location, Quaternion rotation, int goldTeamId, int gold) {
-		PhotonNetwork.Instantiate (name, location, rotation, 0, new object[] {goldTeamId, gold});
+	void instantiateGold(string name, Vector3 location, Quaternion rotation, int[] goldBreakdown) {
+		Vector3 dropSpot;
+		for (int i = 0; i < 3; i++) {
+			if (goldBreakdown [i] > 0) {
+				switch (i) {
+				case 0:
+					dropSpot = gameObject.transform.forward * 2;
+					break;
+				case 1:
+					dropSpot = gameObject.transform.right * -2;
+					break;
+				case 2:
+					dropSpot = gameObject.transform.right * 2;
+					break;
+				default:
+					dropSpot = gameObject.transform.position;
+					break;
+				}
+				PhotonNetwork.Instantiate (name, location + dropSpot, rotation, 0, new object[] { i, goldBreakdown [i] });
+			}
+		}
 	}
 
 	[PunRPC]
