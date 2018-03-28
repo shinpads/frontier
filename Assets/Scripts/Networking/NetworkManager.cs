@@ -16,6 +16,8 @@ public class NetworkManager : MonoBehaviour {
 		PhotonNetwork.sendRate = 64;
 		PhotonNetwork.sendRateOnSerialize = 50;
 		Application.runInBackground = true;
+		QualitySettings.vSyncCount = 0;
+		Application.targetFrameRate = -1;
 		username = "";
 	}
   void Update () {
