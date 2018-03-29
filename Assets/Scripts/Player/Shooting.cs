@@ -20,6 +20,7 @@ public class Shooting : MonoBehaviour {
 	[SerializeField] private GameObject[] gunObjects;
 	[SerializeField] private GameObject[] equipmentObjects;
 	[SerializeField] private AudioSource audioSource;
+	[SerializeField] private GameObject muzzleFlash;
 	private Animator armPivotAnimator;
 	private Gun currentGun;
 	private Equipment currentEquipment;
@@ -144,6 +145,8 @@ public class Shooting : MonoBehaviour {
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId, bool ads) {
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
+		// create muzzle effect
+		Instantiate (muzzleFlash, currentGun.getJustTheTip().transform.position, Quaternion.LookRotation(end - start), playerCamera.transform);
 		if(!PhotonNetwork.isMasterClient) { return; }
 		if (currentGun.getIsShotgun()) {
 			float rangeFactor = 12f;

@@ -4512,6 +4512,8 @@ MonoBehaviour:
   equipmentObjects:
   - {fileID: 1372378493155266}
   audioSource: {fileID: 82523526476792996}
+  muzzleFlash: {fileID: 1121783578052174, guid: c2d5e1bd2759e4f4f9f0094fefe990e6,
+    type: 2}
 --- !u!114 &114587262097712008
 MonoBehaviour:
   m_ObjectHideFlags: 1
