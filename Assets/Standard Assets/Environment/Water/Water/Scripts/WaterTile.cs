@@ -13,6 +13,7 @@ namespace UnityStandardAssets.Water
         public void Start()
         {
             AcquireComponents();
+            GetComponent<MeshRenderer>().sharedMaterial.renderQueue=2800;
         }
 
 

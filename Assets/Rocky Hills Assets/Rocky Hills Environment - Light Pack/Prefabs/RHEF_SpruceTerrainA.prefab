@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4000013493088832}
   - component: {fileID: 33000014175711650}
   - component: {fileID: 23000010172597056}
-  - component: {fileID: 64000011294728252}
+  - component: {fileID: 136521085838839954}
   m_Layer: 0
   m_Name: RHEF_SpruceTerrainA
   m_TagString: Untagged
@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014143113872}
   m_LocalRotation: {x: 0.0000018099951, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 48.46163, y: 5.8031974, z: 63.305336}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,8 +84,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014143113872}
   m_Mesh: {fileID: 4300000, guid: 27901aaed5f6e6047bde1faff7c2bba8, type: 3}
---- !u!64 &64000011294728252
-MeshCollider:
+--- !u!136 &136521085838839954
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -93,8 +93,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300002, guid: b6e127cb00c9dda40b7cac23fea4d82d, type: 3}
+  m_Radius: 1.6
+  m_Height: 36.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 15.4, z: 0}
