@@ -53,6 +53,7 @@ public class Character : MonoBehaviour {
 		characterSpeed = characterStats [reference, SPEED_INDEX];
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
 		gameObject.GetComponent<PlayerController>().setSpeed(characterSpeed);
+		gameObject.GetComponent<MeshController>().setClass(reference);
 	}
 
 	[PunRPC]

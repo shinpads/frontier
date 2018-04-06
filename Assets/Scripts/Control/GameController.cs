@@ -85,19 +85,19 @@ public class GameController : MonoBehaviour {
 				// Class Selection
 
 						GUI.DrawTexture(new Rect(0, Screen.height - 100, Screen.width, Screen.height), pixel);
-					if (GUI.Button(new Rect(10, Screen.height - 90, 150, 80), "Tank")) {
+					if (GUI.Button(new Rect(10, Screen.height - 90, 150, 80), Global.CHARACTER_NAMES[0])) {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_TANK);
 					}
-					if (GUI.Button(new Rect(170, Screen.height - 90, 150, 80), "Scout")) {
+					if (GUI.Button(new Rect(170, Screen.height - 90, 150, 80), Global.CHARACTER_NAMES[1])) {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_SCOUT);
 					}
-					if (GUI.Button(new Rect(330, Screen.height - 90, 150, 80), "Thief")) {
+					if (GUI.Button(new Rect(330, Screen.height - 90, 150, 80), Global.CHARACTER_NAMES[2])) {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_THIEF);
 					}
-					if (GUI.Button(new Rect(490, Screen.height - 90, 150, 80), "Other")) {
+					if (GUI.Button(new Rect(490, Screen.height - 90, 150, 80), Global.CHARACTER_NAMES[3])) {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_OTHER);
 					}
-					if (GUI.Button(new Rect(650, Screen.height - 90, 150, 80), "Assualt")) {
+					if (GUI.Button(new Rect(650, Screen.height - 90, 150, 80), Global.CHARACTER_NAMES[4])) {
 						photonView.RPC("setClassType", PhotonTargets.AllBuffered, thisUserId, thisTeam, Global.CHARACTER_ASSUALT);
 					}
 				if (PhotonNetwork.isMasterClient) {
