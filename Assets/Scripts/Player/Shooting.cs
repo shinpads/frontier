@@ -10,7 +10,7 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-  private bool canShoot = true;
+  	private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	private int currentGunIndex;
@@ -61,14 +61,30 @@ public class Shooting : MonoBehaviour {
 		     StartCoroutine(reloadwait());
 		}
 
-		if (Input.GetAxis("Mouse ScrollWheel") < 0 && currentGunIndex < gunObjects.Length-1) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex + 1));
-			currentGunIndex++;
+		if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+			if (currentGunIndex < gunObjects.Length - 1 && currentGunIndex >= 0) {
+				currentGunIndex++;
+				photonView.RPC ("sendSwapGuns", PhotonTargets.All,currentGunIndex);
+			} else if (currentGunIndex == gunObjects.Length - 1) {
+				photonView.RPC ("sendSwapEquipment", PhotonTargets.All, 0);
+				currentEquipmentIndex = 0;
+			} else if (currentGunIndex == -1 && currentEquipmentIndex < equipmentObjects.Length - 1 && currentEquipmentIndex >= 0) {
+				currentEquipmentIndex++;
+				photonView.RPC ("sendSwapEquipment", PhotonTargets.All, currentGunIndex);
+			}
 		}
 
-		else if (Input.GetAxis("Mouse ScrollWheel") > 0 && currentGunIndex > 0) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex - 1));
-			currentGunIndex--;
+		else if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+			if (currentEquipmentIndex > 0) {
+				currentEquipmentIndex--;
+				photonView.RPC ("sendSwapEquipment", PhotonTargets.All, currentEquipmentIndex);
+			} else if (currentEquipmentIndex == 0) {
+				currentGunIndex = gunObjects.Length - 1;
+				photonView.RPC ("sendSwapGuns", PhotonTargets.All, currentGunIndex);
+			} else if (currentEquipmentIndex == -1 && currentGunIndex > 0) {
+				currentGunIndex--;
+				photonView.RPC ("sendSwapGuns", PhotonTargets.All, currentGunIndex);
+			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha1) && gunObjects.Length > 0 && currentGunIndex != 0 ) {
@@ -76,27 +92,19 @@ public class Shooting : MonoBehaviour {
 			currentGunIndex = 0;
 		}
 
-		else if (Input.GetKeyDown (KeyCode.Alpha2) && gunObjects.Length > 1 && currentGunIndex != 1 ) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 1);
-			currentGunIndex = 1;
+		else if (Input.GetKeyDown (KeyCode.Alpha2)) {
+			if (equipmentObjects.Length > 1 && equipmentObjects.Length > 0 && currentEquipmentIndex != 0) {
+				photonView.RPC ("sendSwapEquipment", PhotonTargets.All, 0);
+				currentEquipmentIndex = 0;
+			} else if (gunObjects.Length > 1 && gunObjects.Length > 0 && currentGunIndex != 1) {
+				photonView.RPC ("sendSwapGuns", PhotonTargets.All, 1);
+				currentGunIndex = 1;
+			}
 		}
 
-		else if (Input.GetKeyDown (KeyCode.Alpha3) && gunObjects.Length > 2 && currentGunIndex != 2 ) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 2);
-			currentGunIndex = 2;
-		}
-
-		else if (Input.GetKeyDown (KeyCode.Alpha4) && gunObjects.Length > 3 && currentGunIndex != 3 ) {
-			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 3);
-			currentGunIndex = 3;
-		}
-		else if (Input.GetKeyDown (KeyCode.Alpha5) && gunObjects.Length > 4 && currentGunIndex != 4 ) {
-			photonView.RPC("sendSwapGuns", PhotonTargets.All, 4);
-			currentGunIndex = 4;
-		}
-		else if (Input.GetKeyDown (KeyCode.Q) && equipmentObjects.Length > 0 && currentEquipmentIndex != 0) {
-			photonView.RPC("sendSwapEquipment", PhotonTargets.All, 0);
-			currentEquipmentIndex = 0;
+		else if (Input.GetKeyDown (KeyCode.Alpha3) && equipmentObjects.Length > 0 && currentEquipmentIndex != equipmentObjects.Length) {
+			photonView.RPC ("sendSwapEquipment", PhotonTargets.All, equipmentObjects.Length - 1);
+			currentEquipmentIndex = equipmentObjects.Length - 1;
 		}
 
 		if (currentGunIndex != -1 && canShoot && !isReloading && !stillScoped) {
@@ -127,6 +135,7 @@ public class Shooting : MonoBehaviour {
 			}
 		}
 	}
+
 	public void setContainer(GameObject activeContainer) {
 		photonView = gameObject.GetComponent<PhotonView>();
 		// get container, weapons and equipment
@@ -145,6 +154,7 @@ public class Shooting : MonoBehaviour {
 		photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex));
 		loaded = true;
 	}
+
 	private void setGunLayers () {
 		// ONLY FOR USERS OWN PLAYER
 		for (int i = 0; i < gunObjects.Length; i++) {
@@ -155,6 +165,7 @@ public class Shooting : MonoBehaviour {
 		}
 		armPivot.layer = 12;
 	}
+
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId, bool ads) {
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
@@ -188,6 +199,7 @@ public class Shooting : MonoBehaviour {
 		}
 
 	}
+
 	[PunRPC]
 	private void throwEquipmentRPC(Vector3 position, int userId, Vector3 forwards) {
 		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), position, Quaternion.Euler(0, 0, -20), 0, new object[] {userId});
@@ -208,14 +220,15 @@ public class Shooting : MonoBehaviour {
 
     private IEnumerator delayedShooting(){
     	canShoot = false;
-			yield return new WaitForSeconds(currentGun.getShotDelay());
-      canShoot = true;
+		yield return new WaitForSeconds(currentGun.getShotDelay());
+    	canShoot = true;
     }
 
 	[PunRPC]
 	private void sendSwapGuns (int newGunIndex) {
 		swapGuns(gunObjects[newGunIndex]);
 	}
+
 	[PunRPC]
 	private void sendSwapEquipment (int newEquipmentIndex) {
 		swapEquipment(equipmentObjects[newEquipmentIndex]);
@@ -245,6 +258,7 @@ public class Shooting : MonoBehaviour {
 			stillScoped = true;
 		}
 	}
+
 	private IEnumerator throwEquipment() {
 		armPivotAnimator.Play(currentEquipment.getThrowAnimationName());
 		yield return new WaitForSeconds(0.5f);
@@ -252,6 +266,7 @@ public class Shooting : MonoBehaviour {
 		currentGunIndex = 0;
 		photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
 	}
+
 	private void swapGuns(GameObject newGun) {
 		currentEquipmentIndex = -1;
 		stillScoped = false;
@@ -262,6 +277,7 @@ public class Shooting : MonoBehaviour {
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
 		adsToHip (true);
 	}
+
 	private void swapEquipment(GameObject newEquipment) {
 		currentGunIndex = -1;
 		stillScoped = false;
@@ -272,6 +288,7 @@ public class Shooting : MonoBehaviour {
 		gui.setAmmoCounter (0, 0);
 		adsToHip (true);
 	}
+
 	private void adsToHip(bool direct) {
 		if (!direct) {
 			StartCoroutine (lerpGunPosition (currentGun.ads, currentGun.hip, 0.07f));
@@ -293,6 +310,7 @@ public class Shooting : MonoBehaviour {
 			StartCoroutine(lerpGunZoom(playerCamera.fieldOfView, 60, 0.1f));
 		}
 	}
+
 	private void hipToAds() {
     StartCoroutine(lerpGunPosition(currentGun.hip, currentGun.ads, 0.07f));
 		playerController.changeAdsState (true);
@@ -313,20 +331,22 @@ public class Shooting : MonoBehaviour {
 		audioSource.PlayOneShot (currentGun.getDryFireSound());
 	}
 
-  	private IEnumerator lerpGunPosition (Vector3 startPosition, Vector3 endPosition, float time) {
-    float startTime = Time.time;
-    while (Time.time < startTime + time) {
-      gunContainer.transform.localPosition = Vector3.Lerp(startPosition, endPosition, (Time.time - startTime) / time);
-      yield return new WaitForEndOfFrame();
-    }
-    gunContainer.transform.localPosition = endPosition;
-  }
-  private IEnumerator lerpGunZoom (float startValue, float endValue, float time) {
-    float startTime = Time.time;
-    while (Time.time < startTime + time) {
-      playerCamera.fieldOfView = Mathf.Lerp(startValue, endValue, (Time.time - startTime) / time);
-      yield return new WaitForEndOfFrame();
-    }
-    playerCamera.fieldOfView = endValue;
-  }
+	private IEnumerator lerpGunPosition (Vector3 startPosition, Vector3 endPosition, float time) {
+	    float startTime = Time.time;
+	    while (Time.time < startTime + time) {
+			gunContainer.transform.localPosition = Vector3.Lerp(startPosition, endPosition, (Time.time - startTime) / time);
+			yield return new WaitForEndOfFrame();
+	    }
+	    gunContainer.transform.localPosition = endPosition;
+	}
+
+	private IEnumerator lerpGunZoom (float startValue, float endValue, float time) {
+		float startTime = Time.time;
+	    while (Time.time < startTime + time) {
+			playerCamera.fieldOfView = Mathf.Lerp(startValue, endValue, (Time.time - startTime) / time);
+			yield return new WaitForEndOfFrame();
+	    	}
+	    playerCamera.fieldOfView = endValue;
+	}
+
 }
