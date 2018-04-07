@@ -4451,7 +4451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1535057001800764
 GameObject:
   m_ObjectHideFlags: 1
@@ -17787,12 +17787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guns:
   - {fileID: 1818153513162406}
-  - {fileID: 1200376309952658}
-  - {fileID: 1296848235443472}
-  - {fileID: 1522477193740564}
-  - {fileID: 1782847887787824}
-  equipment:
-  - {fileID: 0}
+  equipment: []
   armPivot: {fileID: 1051977546003694}
 --- !u!114 &114069389732219056
 MonoBehaviour:
@@ -17845,8 +17840,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114098338964241984
@@ -18300,13 +18295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guns:
-  - {fileID: 1084830364548202}
   - {fileID: 1007874185001204}
-  - {fileID: 1592693276566820}
-  - {fileID: 1655420492931228}
-  - {fileID: 1037075345931444}
-  equipment:
-  - {fileID: 1372378493155266}
+  equipment: []
   armPivot: {fileID: 1575471919955330}
 --- !u!114 &114432520007721992
 MonoBehaviour:
@@ -18481,8 +18471,8 @@ MonoBehaviour:
   - {fileID: 114653404969345922}
   - {fileID: 4754675035577806}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114481806778110958
@@ -18666,11 +18656,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guns:
-  - {fileID: 1535019480978432}
-  - {fileID: 1318515540742370}
-  - {fileID: 1410100392576438}
   - {fileID: 1929352727151120}
-  - {fileID: 1583725869282474}
+  - {fileID: 1535019480978432}
   equipment:
   - {fileID: 1534750668787494}
   armPivot: {fileID: 1308943257243104}
@@ -18948,13 +18935,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guns:
-  - {fileID: 1462515550465008}
-  - {fileID: 1366496437630896}
   - {fileID: 1996156602356168}
-  - {fileID: 1301705664093396}
-  - {fileID: 1654382419062576}
-  equipment:
-  - {fileID: 1603783466363228}
+  equipment: []
   armPivot: {fileID: 1764320654308720}
 --- !u!114 &114758494479689180
 MonoBehaviour:
@@ -19228,13 +19210,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guns:
-  - {fileID: 1558039209758530}
-  - {fileID: 1129389636908618}
-  - {fileID: 1338100952830396}
-  - {fileID: 1298722076553076}
   - {fileID: 1642452548148896}
-  equipment:
-  - {fileID: 1629273789668276}
+  equipment: []
   armPivot: {fileID: 1976396011748500}
 --- !u!114 &114982359483780338
 MonoBehaviour:

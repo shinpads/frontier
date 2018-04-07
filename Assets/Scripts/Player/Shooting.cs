@@ -71,30 +71,30 @@ public class Shooting : MonoBehaviour {
 			currentGunIndex--;
 		}
 
-		if (Input.GetKeyDown (KeyCode.Alpha1) && currentGunIndex != 0 ) {
+		if (Input.GetKeyDown (KeyCode.Alpha1) && gunObjects.Length > 0 && currentGunIndex != 0 ) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
 			currentGunIndex = 0;
 		}
 
-		else if (Input.GetKeyDown (KeyCode.Alpha2) && currentGunIndex != 1 ) {
+		else if (Input.GetKeyDown (KeyCode.Alpha2) && gunObjects.Length > 1 && currentGunIndex != 1 ) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 1);
 			currentGunIndex = 1;
 		}
 
-		else if (Input.GetKeyDown (KeyCode.Alpha3) && currentGunIndex != 2 ) {
+		else if (Input.GetKeyDown (KeyCode.Alpha3) && gunObjects.Length > 2 && currentGunIndex != 2 ) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 2);
 			currentGunIndex = 2;
 		}
 
-		else if (Input.GetKeyDown (KeyCode.Alpha4) && currentGunIndex != 3 ) {
+		else if (Input.GetKeyDown (KeyCode.Alpha4) && gunObjects.Length > 3 && currentGunIndex != 3 ) {
 			photonView.RPC ("sendSwapGuns", PhotonTargets.All, 3);
 			currentGunIndex = 3;
 		}
-		else if (Input.GetKeyDown (KeyCode.Alpha5) && currentGunIndex != 4 ) {
+		else if (Input.GetKeyDown (KeyCode.Alpha5) && gunObjects.Length > 4 && currentGunIndex != 4 ) {
 			photonView.RPC("sendSwapGuns", PhotonTargets.All, 4);
 			currentGunIndex = 4;
 		}
-		else if (Input.GetKeyDown (KeyCode.Q) && currentEquipmentIndex != 0) {
+		else if (Input.GetKeyDown (KeyCode.Q) && equipmentObjects.Length > 0 && currentEquipmentIndex != 0) {
 			photonView.RPC("sendSwapEquipment", PhotonTargets.All, 0);
 			currentEquipmentIndex = 0;
 		}
@@ -142,6 +142,7 @@ public class Shooting : MonoBehaviour {
 		if (photonView.isMine) {
 			setGunLayers();
 		}
+		photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex));
 		loaded = true;
 	}
 	private void setGunLayers () {
