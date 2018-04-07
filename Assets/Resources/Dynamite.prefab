@@ -112,6 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924269db353f0bc42aa6aab645cb9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  createOnTimeOut: dynamiteExplosion
+  timeOutTime: 2
+  destroyTime: 3
   userId: 0
 --- !u!114 &114806225462478382
 MonoBehaviour:
