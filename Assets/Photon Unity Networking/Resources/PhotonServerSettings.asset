@@ -66,4 +66,5 @@ MonoBehaviour:
   - playCollisionSoundToAll
   - throwEquipmentRPC
   - setMeshEnabled
+  - cockEquipmentRPC
   DisableAutoOpenWizard: 1

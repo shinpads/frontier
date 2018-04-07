@@ -65,7 +65,7 @@ public class Shooting : MonoBehaviour {
 			if (currentGunIndex < gunObjects.Length - 1 && currentGunIndex >= 0) {
 				currentGunIndex++;
 				photonView.RPC ("sendSwapGuns", PhotonTargets.All,currentGunIndex);
-			} else if (currentGunIndex == gunObjects.Length - 1) {
+			} else if (currentGunIndex == gunObjects.Length - 1 && currentGunIndex != 0) {
 				photonView.RPC ("sendSwapEquipment", PhotonTargets.All, 0);
 				currentEquipmentIndex = 0;
 			} else if (currentGunIndex == -1 && currentEquipmentIndex < equipmentObjects.Length - 1 && currentEquipmentIndex >= 0) {
