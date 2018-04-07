@@ -93,7 +93,7 @@ public class Shooting : MonoBehaviour {
 		}
 
 		else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-			if (equipmentObjects.Length > 1 && equipmentObjects.Length > 0 && currentEquipmentIndex != 0) {
+			if  (equipmentObjects.Length > 1 && currentEquipmentIndex != 0) {
 				photonView.RPC ("sendSwapEquipment", PhotonTargets.All, 0);
 				currentEquipmentIndex = 0;
 			} else if (gunObjects.Length > 1 && gunObjects.Length > 0 && currentGunIndex != 1) {
