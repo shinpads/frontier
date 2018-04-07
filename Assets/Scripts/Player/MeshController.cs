@@ -25,6 +25,7 @@ public class MeshController : MonoBehaviour {
 		}
 		classMeshes[classType].SetActive(true);
 		containers[classType].SetActive(true);
+		this.classType = classType;
 		gameObject.GetComponent<Shooting>().setContainer();
 	}
 }
