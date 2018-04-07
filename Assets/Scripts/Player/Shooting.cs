@@ -10,15 +10,15 @@ public class Shooting : MonoBehaviour {
 	private Ray ray;
 	private Vector3 endpoint;
 	private float distance;
-  	private bool canShoot = true;
+  private bool canShoot = true;
 	private Vector3 ads, hip;
 	private PlayerGUI gui;
 	private int currentGunIndex;
 	private int currentEquipmentIndex;
-	[SerializeField] private GameObject armPivot;
-	[SerializeField] private GameObject gunContainer;
-	[SerializeField] private GameObject[] gunObjects;
-	[SerializeField] private GameObject[] equipmentObjects;
+	private GameObject armPivot;
+	private GameObject gunContainer;
+	private GameObject[] gunObjects;
+	private GameObject[] equipmentObjects;
 	[SerializeField] private AudioSource audioSource;
 	[SerializeField] private GameObject muzzleFlash;
 	private Animator armPivotAnimator;
@@ -31,14 +31,13 @@ public class Shooting : MonoBehaviour {
 	private bool outAndHeld = false;
 	private float coneLength;
 	private float coneRadius;
+	private bool loaded = false;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
 	void Start () {
 		coneLength = 15f;
 		coneRadius = 0.75f;
-		currentGun = gunObjects[0].GetComponent<Gun>();
-		currentEquipment = equipmentObjects[0].GetComponent<Equipment>();
 		currentGunIndex = 0;
 		currentEquipmentIndex = -1;
 		hip = new Vector3(0, 0, 0);
@@ -47,20 +46,16 @@ public class Shooting : MonoBehaviour {
 		endpoint = new Vector3(0,0,0);
 		distance = 0;
 		photonView = gameObject.GetComponent<PhotonView>();
-		armPivotAnimator = armPivot.GetComponent<Animator>();
 		player = gameObject.GetComponent<Character> ();
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		// all layers except 2nd which is Ignore Raycast
 		ignoreRayCastLayer = ~(1 << 2);
-		gui.setAmmoCounter (currentGun.getMagCapacity(), currentGun.getMagCapacity());
 		playerController = gameObject.GetComponent<PlayerController>();
-		if (photonView.isMine) {
-			setGunLayers();
-		}
 	}
 
 	void Update () {
-		if (!photonView.isMine) { return; }
+		photonView = gameObject.GetComponent<PhotonView>();
+		if (!photonView.isMine || !loaded) { return; }
 
 		if (Input.GetKeyDown (KeyCode.R) && currentGun.getAmmo() != currentGun.getMagCapacity() && !isReloading) {
 		     StartCoroutine(reloadwait());
@@ -104,7 +99,7 @@ public class Shooting : MonoBehaviour {
 			currentEquipmentIndex = 0;
 		}
 
-		if (currentGunIndex != -1 &&canShoot && !isReloading && !stillScoped) {
+		if (currentGunIndex != -1 && canShoot && !isReloading && !stillScoped) {
 			if (currentGun.getAmmo () == 0) {
 				if (Input.GetButtonDown ("Fire1")) {
 					photonView.RPC ("sendDryFireSound", PhotonTargets.All);
@@ -131,6 +126,23 @@ public class Shooting : MonoBehaviour {
 				stillScoped = false;
 			}
 		}
+	}
+	public void setContainer(GameObject activeContainer) {
+		photonView = gameObject.GetComponent<PhotonView>();
+		// get container, weapons and equipment
+		gunContainer = activeContainer;
+		ItemContainer itemContainer = gunContainer.GetComponent<ItemContainer>();
+		armPivot = itemContainer.armPivot;
+		gunObjects = itemContainer.guns;
+		equipmentObjects = itemContainer.equipment;
+		currentGun = gunObjects[0].GetComponent<Gun>();
+		gui.setAmmoCounter (currentGun.getMagCapacity(), currentGun.getMagCapacity());
+		armPivotAnimator = armPivot.GetComponent<Animator>();
+		// currentEquipment = equipmentObjects[0].GetComponent<Equipment>();
+		if (photonView.isMine) {
+			setGunLayers();
+		}
+		loaded = true;
 	}
 	private void setGunLayers () {
 		// ONLY FOR USERS OWN PLAYER
@@ -194,9 +206,9 @@ public class Shooting : MonoBehaviour {
 	}
 
     private IEnumerator delayedShooting(){
-        canShoot = false;
-		yield return new WaitForSeconds(currentGun.getShotDelay());
-        canShoot = true;
+    	canShoot = false;
+			yield return new WaitForSeconds(currentGun.getShotDelay());
+      canShoot = true;
     }
 
 	[PunRPC]
@@ -242,8 +254,8 @@ public class Shooting : MonoBehaviour {
 	private void swapGuns(GameObject newGun) {
 		currentEquipmentIndex = -1;
 		stillScoped = false;
-		currentGun.gameObject.SetActive (false);
-		currentEquipment.gameObject.SetActive(false);
+		if (currentGun != null) { currentGun.gameObject.SetActive (false); }
+		if (currentEquipment != null) { currentEquipment.gameObject.SetActive(false); }
 		newGun.SetActive (true);
 		currentGun = newGun.GetComponent<Gun>();
 		gui.setAmmoCounter (currentGun.getAmmo (), currentGun.getMagCapacity ());
@@ -252,8 +264,8 @@ public class Shooting : MonoBehaviour {
 	private void swapEquipment(GameObject newEquipment) {
 		currentGunIndex = -1;
 		stillScoped = false;
-		currentEquipment.gameObject.SetActive(false);
-		currentGun.gameObject.SetActive (false);
+		if (currentEquipment != null) { currentEquipment.gameObject.SetActive(false); }
+		if (currentGun != null) { currentGun.gameObject.SetActive (false); }
 		newEquipment.SetActive (true);
 		currentEquipment = newEquipment.GetComponent<Equipment>();
 		gui.setAmmoCounter (0, 0);
