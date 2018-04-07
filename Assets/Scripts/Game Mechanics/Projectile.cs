@@ -5,12 +5,16 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
 	Rigidbody rigidbod;
 	[HideInInspector] public int userId;
+	PhotonView photonView;
 	bool collided = false;
 	void Start() {
+		photonView = gameObject.GetComponent<PhotonView> ();
 		object[] data = GetComponent<PhotonView>().instantiationData;
 		userId = (int)data[0];
 		rigidbod = gameObject.GetComponent<Rigidbody>();
-		StartCoroutine (fuseTime());
+		if (photonView.isMine) {
+			StartCoroutine (fuseTime ());
+		}
 	}
 
 	void blowUp() {
