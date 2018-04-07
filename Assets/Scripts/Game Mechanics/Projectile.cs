@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour {
 	[SerializeField] string createOnTimeOut;
 	[SerializeField] float timeOutTime;
 	[SerializeField] float destroyTime;
+	[SerializeField] bool freezeOnGround;
 	[HideInInspector] public int userId;
 	PhotonView photonView;
 	bool collided = false;
