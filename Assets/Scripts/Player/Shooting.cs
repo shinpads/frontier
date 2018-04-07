@@ -127,10 +127,10 @@ public class Shooting : MonoBehaviour {
 			}
 		}
 	}
-	public void setContainer(GameObject activeContainer) {
+
+	public void setContainer () {
+		gunContainer = gameObject.GetComponent<MeshController>().getContainer();
 		photonView = gameObject.GetComponent<PhotonView>();
-		// get container, weapons and equipment
-		gunContainer = activeContainer;
 		ItemContainer itemContainer = gunContainer.GetComponent<ItemContainer>();
 		armPivot = itemContainer.armPivot;
 		gunObjects = itemContainer.guns;
@@ -141,10 +141,11 @@ public class Shooting : MonoBehaviour {
 		// currentEquipment = equipmentObjects[0].GetComponent<Equipment>();
 		if (photonView.isMine) {
 			setGunLayers();
+			photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex));
 		}
-		photonView.RPC ("sendSwapGuns", PhotonTargets.All, (currentGunIndex));
 		loaded = true;
 	}
+
 	private void setGunLayers () {
 		// ONLY FOR USERS OWN PLAYER
 		for (int i = 0; i < gunObjects.Length; i++) {
