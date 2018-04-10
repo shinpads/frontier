@@ -95,7 +95,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -112,6 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924269db353f0bc42aa6aab645cb9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  createOnTimeOut: dynamiteExplosion
+  timeOutTime: 2
+  destroyTime: 3
   userId: 0
 --- !u!114 &114806225462478382
 MonoBehaviour:
@@ -145,7 +148,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984880510688942}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbb623dd0c55e3348b483f8764c96a8f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.05

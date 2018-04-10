@@ -7,7 +7,7 @@ public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
-	private int[,] characterStats = new int[,] { {200, 6, 5}, {75, 8, 4}, {100, 11, 2000}, {150, 7, 2}, {125, 7, 1} };
+	private int[,] characterStats = new int[,] { {200, 14, 5}, {75, 14, 4}, {100, 14, 2000}, {150, 14, 2}, {125, 14, 1} };
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
@@ -53,6 +53,7 @@ public class Character : MonoBehaviour {
 		characterSpeed = characterStats [reference, SPEED_INDEX];
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
 		gameObject.GetComponent<PlayerController>().setSpeed(characterSpeed);
+		gameObject.GetComponent<MeshController>().setClass(reference);
 	}
 
 	[PunRPC]
@@ -62,6 +63,8 @@ public class Character : MonoBehaviour {
 			setDamagers (enemyId, dHealth);
 			gameController.sendHitMarked (enemyId);
 			PhotonNetwork.Instantiate ("BloodParticles", gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
+			bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
+			StartCoroutine(fadeBlood(bloodCameraEffect.vignette.intensity, 0f, 1.4f));
 		} else if (dHealth > 0) {
 			removeDamagers (dHealth);
 		}
@@ -77,8 +80,6 @@ public class Character : MonoBehaviour {
 			dead = true;
 			getDead (enemyId);
 		}
-		bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
-		StartCoroutine(fadeBlood(bloodCameraEffect.vignette.intensity, 0f, 1.4f));
 	}
 
 	void setDamagers(int enemyId, int damage) {

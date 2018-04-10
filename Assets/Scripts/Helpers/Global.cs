@@ -8,6 +8,6 @@ public class Global {
 	public const int CHARACTER_THIEF = 2;
 	public const int CHARACTER_OTHER = 3;
 	public const int CHARACTER_ASSUALT = 4;
-	public static string[] CHARACTER_NAMES = new string[] {"Tank", "Scout", "Thief", "Other", "Assualt"};
+	public static string[] CHARACTER_NAMES = new string[] {"Tank", "Sniper", "Thief", "Medic", "Assualt"};
 	public static string username = "";
 }
