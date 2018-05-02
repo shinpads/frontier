@@ -7,7 +7,7 @@ public class Character : MonoBehaviour {
 	private const int HEALTH_INDEX = 0;
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
-	private int[,] characterStats = new int[,] { {200, 14, 5}, {75, 14, 4}, {100, 14, 2000}, {150, 14, 2}, {125, 14, 1} };
+	private int[,] characterStats = new int[,] { {200, 9, 5}, {75, 9, 4}, {100, 9, 2000}, {150, 9, 2}, {125, 9, 1} };
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
