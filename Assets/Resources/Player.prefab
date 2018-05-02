@@ -13954,7 +13954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835cd69a9b09a984ea76fa7766d31ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunShotSound: {fileID: 8300000, guid: a33ef18240d1d3841908f96418632d91, type: 3}
+  gunShotSound: {fileID: 8300000, guid: e9b4961f5342720409c3454c27be661d, type: 3}
   bulletSpeed: 700
   rateOfFire: 4.3
   isAutomatic: 0
