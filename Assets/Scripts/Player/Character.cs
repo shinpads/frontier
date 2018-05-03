@@ -48,7 +48,7 @@ public class Character : MonoBehaviour {
 	}
 
 	[PunRPC]
-	public void setClass (int reference) {		
+	public void setClass (int reference) {
 		characterHealth = characterStats [reference, HEALTH_INDEX];
 		characterSpeed = characterStats [reference, SPEED_INDEX];
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
