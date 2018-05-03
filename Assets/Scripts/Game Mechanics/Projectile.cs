@@ -9,12 +9,14 @@ public class Projectile : MonoBehaviour {
 	[SerializeField] float destroyTime;
 	[SerializeField] bool freezeOnGround;
 	[HideInInspector] public int userId;
+	[HideInInspector] public int teamId;
 	PhotonView photonView;
 	bool collided = false;
 	void Start() {
 		photonView = gameObject.GetComponent<PhotonView> ();
 		object[] data = GetComponent<PhotonView>().instantiationData;
 		userId = (int)data[0];
+		teamId = (int)data[1];
 		rigidbod = gameObject.GetComponent<Rigidbody>();
 		if (photonView.isMine && timeOutTime > 0) {
 			StartCoroutine(timeOut ());
@@ -37,5 +39,11 @@ public class Projectile : MonoBehaviour {
 	private IEnumerator timeOut() {
 		yield return new WaitForSeconds (timeOutTime);
 		createObject();
+	}
+
+	private void OnCollisionEnter(Collision collision) {
+		if (freezeOnGround) {
+			rigidbod.constraints = RigidbodyConstraints.FreezeAll;
+		}
 	}
 }

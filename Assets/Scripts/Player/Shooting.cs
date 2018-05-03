@@ -200,8 +200,8 @@ public class Shooting : MonoBehaviour {
 	}
 
 	[PunRPC]
-	private void throwEquipmentRPC(Vector3 position, int userId, Vector3 forwards) {
-		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), position, Quaternion.Euler(0, 0, -20), 0, new object[] {userId});
+	private void throwEquipmentRPC(Vector3 position, int userId, Vector3 forwards, int teamId) {
+		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), position, Quaternion.Euler(0, 0, -20), 0, new object[] {userId, teamId});
 		equipment.GetComponent<Rigidbody>().AddForce(forwards * currentEquipment.getThrowVelocity());
 	}
 
@@ -261,7 +261,7 @@ public class Shooting : MonoBehaviour {
 	private IEnumerator throwEquipment() {
 		armPivotAnimator.Play(currentEquipment.getThrowAnimationName());
 		yield return new WaitForSeconds(0.5f);
-		photonView.RPC("throwEquipmentRPC", PhotonTargets.MasterClient, playerCamera.transform.position + playerCamera.transform.forward, player.getUserId(), playerCamera.transform.forward);
+		photonView.RPC("throwEquipmentRPC", PhotonTargets.MasterClient, playerCamera.transform.position + playerCamera.transform.forward, player.getUserId(), playerCamera.transform.forward, player.getTeamId());
 		currentGunIndex = 0;
 		photonView.RPC ("sendSwapGuns", PhotonTargets.All, 0);
 	}

@@ -11,9 +11,9 @@ public class Medkit : MonoBehaviour {
 
 	void Start () {
 		health = fullHealth;
-		//set players teamId
-		teamId = 0;
 		canHeal = true;
+		object[] data = GetComponent<PhotonView>().instantiationData;
+		teamId = (int)data[1];
 	}
 
 	void OnTriggerEnter(Collider col) {
@@ -54,5 +54,8 @@ public class Medkit : MonoBehaviour {
 		canHeal = false;
 		yield return new WaitForSeconds(1);
 		canHeal = true;
+	}
+	public void setTeamId(int _teamId) {
+		teamId = _teamId;
 	}
 }
