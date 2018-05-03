@@ -17,16 +17,13 @@ public class Medkit : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col) {
-		Debug.Log ("cow");
 		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId) { return; }
 		insidePlayers.Add(col.gameObject.GetComponent<Character>());
-		Debug.Log ("Added");
 	}
 
 	void OnTriggerStay(Collider col) {
 		if (!PhotonNetwork.isMasterClient || !canHeal || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId) { return; }
 		foreach (Character player in insidePlayers) {
-			Debug.Log ("Loop");
 			int appliedHealing = player.getMaxHealth () - player.getCurrentHealth ();
 			if (appliedHealing == 0) { continue; }
 			if (appliedHealing > healthPerSecond) {
@@ -46,7 +43,6 @@ public class Medkit : MonoBehaviour {
 
 	void OnTriggerExit(Collider col) {
 		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId) { return; }
-		Debug.Log ("Gone");
 		insidePlayers.Remove(col.gameObject.GetComponent<Character>());
 	}
 
