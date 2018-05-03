@@ -32,6 +32,7 @@ public class Medkit : MonoBehaviour {
 			if (appliedHealing > health) {
 				appliedHealing = health;
 			}
+			Debug.Log("sending rpc");
 			player.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, appliedHealing, -1);
 			health -= appliedHealing;
 			if (health <= 0) {

@@ -58,27 +58,32 @@ public class Character : MonoBehaviour {
 
 	[PunRPC]
 	void setHealth(int dHealth, int enemyId) {
-		if (!gameObject.GetComponent<PhotonView> ().isMine) {return;}
-		if (dHealth < 0) {
-			setDamagers (enemyId, dHealth);
-			gameController.sendHitMarked (enemyId);
-			PhotonNetwork.Instantiate ("BloodParticles", gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
-			bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
-			StartCoroutine(fadeBlood(bloodCameraEffect.vignette.intensity, 0f, 1.4f));
-		} else if (dHealth > 0) {
-			removeDamagers (dHealth);
+		if (gameObject.GetComponent<PhotonView> ().isMine) {
+			if (dHealth < 0) {
+				setDamagers (enemyId, dHealth);
+				gameController.sendHitMarked (enemyId);
+				PhotonNetwork.Instantiate ("BloodParticles", gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
+				bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
+				StartCoroutine(fadeBlood(bloodCameraEffect.vignette.intensity, 0f, 1.4f));
+			} else if (dHealth > 0) {
+				removeDamagers (dHealth);
+			}
 		}
-		characterHealth += dHealth;
-		if (characterHealth > maxHealth) {
-			characterHealth = maxHealth;
+		if (PhotonNetwork.isMasterClient || gameObject.GetComponent<PhotonView> ().isMine) {
+			characterHealth += dHealth;
+			if (characterHealth > maxHealth) {
+				characterHealth = maxHealth;
+			}
+			else if (characterHealth < 0) {
+				characterHealth = 0;
+			}
 		}
-		else if (characterHealth < 0) {
-			characterHealth = 0;
-		}
-		gui.setHealth(characterHealth);
-		if (characterHealth == 0 && !dead) {
-			dead = true;
-			getDead (enemyId);
+		if (gameObject.GetComponent<PhotonView> ().isMine) {
+			gui.setHealth(characterHealth);
+			if (characterHealth == 0 && !dead) {
+				dead = true;
+				getDead (enemyId);
+			}
 		}
 	}
 
