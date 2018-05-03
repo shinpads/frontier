@@ -17,6 +17,7 @@ public class Medkit : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col) {
+		Debug.Log("entered with teamId: " + teamId.toString());
 		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId) { return; }
 		insidePlayers.Add(col.gameObject.GetComponent<Character>());
 	}
@@ -54,8 +55,5 @@ public class Medkit : MonoBehaviour {
 		canHeal = false;
 		yield return new WaitForSeconds(1);
 		canHeal = true;
-	}
-	public void setTeamId(int _teamId) {
-		teamId = _teamId;
 	}
 }
