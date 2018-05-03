@@ -35,7 +35,6 @@ public class Character : MonoBehaviour {
 		gameObject.GetComponent<PhotonView>().RPC("setClass", PhotonTargets.All, (int)data[0]);
 		setUserId((int)data[1]);
 		gameObject.GetComponent<PhotonView>().RPC("setTeamId",PhotonTargets.All,(int)data[2]);
-		maxHealth = characterHealth;
 		gui.setHealth (characterHealth);
 		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		goldCarry = 0;
@@ -49,12 +48,13 @@ public class Character : MonoBehaviour {
 	}
 
 	[PunRPC]
-	public void setClass (int reference) {
+	public void setClass (int reference) {		
 		characterHealth = characterStats [reference, HEALTH_INDEX];
 		characterSpeed = characterStats [reference, SPEED_INDEX];
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
 		gameObject.GetComponent<PlayerController>().setSpeed(characterSpeed);
 		gameObject.GetComponent<MeshController>().setClass(reference);
+		maxHealth = characterHealth;
 	}
 
 	[PunRPC]

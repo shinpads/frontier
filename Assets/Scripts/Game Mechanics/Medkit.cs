@@ -24,6 +24,7 @@ public class Medkit : MonoBehaviour {
 	void OnTriggerStay(Collider col) {
 		if (!PhotonNetwork.isMasterClient || !canHeal || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId) { return; }
 		foreach (Character player in insidePlayers) {
+			Debug.Log("health: " + player.getCurrentHealth() + " " + player.getMaxHealth());
 			int appliedHealing = player.getMaxHealth () - player.getCurrentHealth ();
 			if (appliedHealing == 0) { continue; }
 			if (appliedHealing > healthPerSecond) {
