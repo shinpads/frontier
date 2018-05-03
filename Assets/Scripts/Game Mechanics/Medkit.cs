@@ -17,7 +17,6 @@ public class Medkit : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col) {
-		Debug.Log("entered with teamId: " + teamId.toString());
 		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId) { return; }
 		insidePlayers.Add(col.gameObject.GetComponent<Character>());
 	}
