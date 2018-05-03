@@ -136,6 +136,14 @@ public class Character : MonoBehaviour {
 		return userId;
 	}
 
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public int getCurrentHealth() {
+		return characterHealth;
+	}
+
 	public void setTeamId(int id){
 		teamId = id;
 		photonView = gameObject.GetComponent<PhotonView> ();
