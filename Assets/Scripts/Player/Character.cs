@@ -34,7 +34,7 @@ public class Character : MonoBehaviour {
 		object[] data = photonView.instantiationData;
 		setClass((int)data[0]);
 		setUserId((int)data[1]);
-		gameObject.GetComponent<PhotonView>().RPC("setTeamId",PhotonTargets.MasterClient,(int)data[2]);
+		gameObject.GetComponent<PhotonView>().RPC("setTeamId",PhotonTargets.All,(int)data[2]);
 		maxHealth = characterHealth;
 		gui.setHealth (characterHealth);
 		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
@@ -81,7 +81,7 @@ public class Character : MonoBehaviour {
 			getDead (enemyId);
 		}
 	}
-		
+
 	void setDamagers(int enemyId, int damage) {
 		int[] assistData = { enemyId, damage };
 		damagers.AddLast(assistData);
