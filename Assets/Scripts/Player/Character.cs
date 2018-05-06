@@ -8,6 +8,7 @@ public class Character : MonoBehaviour {
 	private const int SPEED_INDEX = 1;
 	private const int GOLD_CARRY_INDEX = 2;
 	private int[,] characterStats = new int[,] { {200, 9, 5}, {75, 9, 4}, {100, 9, 2000}, {150, 9, 2}, {125, 9, 1} };
+	private int characterRef;
 	private int characterHealth;
 	private int characterSpeed;
 	private int goldCapacity;
@@ -51,6 +52,7 @@ public class Character : MonoBehaviour {
 
 	[PunRPC]
 	public void setClass (int reference) {
+		characterRef = reference;
 		characterHealth = characterStats [reference, HEALTH_INDEX];
 		characterSpeed = characterStats [reference, SPEED_INDEX];
 		goldCapacity = characterStats [reference, GOLD_CARRY_INDEX];
@@ -128,7 +130,7 @@ public class Character : MonoBehaviour {
 		gameController.spawnPlayer ();
 	}
 
-	public float getSpeed() {
+	public int getSpeed() {
 		return characterSpeed;
 	}
 
@@ -205,6 +207,11 @@ public class Character : MonoBehaviour {
 					gui.setInteract ("");
 				}
 			}
+		} else if (col.gameObject.tag == "bearTrap") {
+			gui.setInteract ("Press F to open bear trap");
+			if (Input.GetKey (KeyCode.F)) {
+				col.gameObject.GetComponent<BearTrap>().trapOpened();
+			}
 		}
 	}
 
@@ -251,5 +258,13 @@ public class Character : MonoBehaviour {
 			yield return new WaitForEndOfFrame();
 		}
 		bloodCameraEffect.vignette.intensity = endValue;
+	}
+
+	public void setSpeed(int speed) {
+		characterSpeed = speed;
+	}
+
+	public void displayMessage(string message) {
+		gui.setInteract (message);
 	}
 }
