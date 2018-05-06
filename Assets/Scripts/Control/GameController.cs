@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField] GameObject playerPrefab;
 	private PhotonView photonView;
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
-	private Vector3[] teamSpawns =  { new Vector3(333f, 2.5f, -375f), new Vector3(-430f, 2.5f, -378f), new Vector3(-388f, 2.5f, 358f), new Vector3(326f, 2.5f, 449f) };
+	private Vector3[] teamSpawns =  { new Vector3(-501.6f, 2.5f, -436.34f), new Vector3(-156.1f, 2.5f, -55.6f), new Vector3(-497.8f, 2.5f, -102.3f), new Vector3(-149f, 2.5f, -430f) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
 	[Header("Sounds")]
 	[SerializeField]private AudioClip eliminatedSound;
