@@ -67,4 +67,6 @@ MonoBehaviour:
   - throwEquipmentRPC
   - setMeshEnabled
   - cockEquipmentRPC
+  - setClass
+  - setTeamId
   DisableAutoOpenWizard: 1
