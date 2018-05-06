@@ -233,14 +233,13 @@ public class Shooting : MonoBehaviour {
 	private void sendSwapEquipment (int newEquipmentIndex) {
 		swapEquipment(equipmentObjects[newEquipmentIndex]);
 	}
-
 	private void shootBullet() {
 		StartCoroutine(delayedShooting());
 		armPivotAnimator.Play(currentGun.getShootingAnimationName());
 		if (isAds || currentGun.getIsShotgun()) {
 			ray = new Ray (playerCamera.transform.position, playerCamera.transform.forward * 100);
 		} else {
-			float randomRadius = Random.Range (0f, coneRadius);
+			float randomRadius = Random.Range (0f, currentGun.getBulletSpray());
 			float randomAngle = Random.Range (0f, 2 * Mathf.PI);
 			Vector3 randomDirection = new Vector3 (randomRadius * Mathf.Cos (randomAngle), randomRadius * Mathf.Sin (randomAngle), coneLength);
 			ray = new Ray (playerCamera.transform.position, playerCamera.transform.TransformDirection(randomDirection.normalized));
