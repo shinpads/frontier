@@ -257,10 +257,6 @@ public class Character : MonoBehaviour {
 		bloodCameraEffect.vignette.intensity = endValue;
 	}
 
-	public void setSpeed(int speed) {
-		characterSpeed = speed;
-	}
-
 	public void displayMessage(string message) {
 		gui.setInteract (message);
 	}

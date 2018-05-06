@@ -6,8 +6,7 @@ public class BearTrap : MonoBehaviour {
 
 	private const int damagePerSecond = 10;
 	private const int upfrontDamage = 75;
-	int teamId, userId;
-	int speedOfPrey;
+	int teamId, userId, speedOfPrey;
 	bool canDamage, isSprung;
 	Character prey;
 
@@ -23,8 +22,8 @@ public class BearTrap : MonoBehaviour {
 		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();
-		speedOfPrey = prey.getSpeed();
-		prey.setSpeed (0);
+		speedOfPrey = prey.gameObject.GetComponent<PlayerController>().getSpeed();
+		prey.gameObject.GetComponent<PlayerController>().setSpeed(0);
 		prey.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, -upfrontDamage, userId);
 		prey.displayMessage ("Press F to release bear trap");
 		StartCoroutine (waitOneSecond ());
@@ -38,7 +37,7 @@ public class BearTrap : MonoBehaviour {
 
 	public void trapOpened() {
 		prey.displayMessage ("");
-		prey.setSpeed (speedOfPrey);
+		prey.gameObject.GetComponent<PlayerController>().setSpeed(speedOfPrey);
 		PhotonNetwork.Destroy (gameObject);
 	}
 
