@@ -7264,7 +7264,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1067363774063620}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.005998865, y: -0.02699995, z: 0.5479988}
+  m_LocalPosition: {x: 0.07, y: -0.02699995, z: 0.49}
   m_LocalScale: {x: 0.014000015, y: 0.014, z: 0.014000015}
   m_Children:
   - {fileID: 4753457467550840}
@@ -7347,7 +7347,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192647942562838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -289.2854, y: -0.31530762, z: -261.3822}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4550870425495800}
@@ -14107,6 +14107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: c7f8c7ae34a6167469ea6010ba2819eb, type: 3}
   bulletSpeed: 1000
+  bulletSpread: 0.75
   rateOfFire: 1.5
   isAutomatic: 0
   isScoped: 0
@@ -14136,6 +14137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: e9b4961f5342720409c3454c27be661d, type: 3}
   bulletSpeed: 700
+  bulletSpread: 0.2
   rateOfFire: 4.3
   isAutomatic: 0
   isScoped: 0
@@ -14165,6 +14167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: b78af8354d80787469cf3d97d3649a4a, type: 3}
   bulletSpeed: 700
+  bulletSpread: 0.9
   rateOfFire: 10
   isAutomatic: 1
   isScoped: 0
@@ -14234,6 +14237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
   bulletSpeed: 950
+  bulletSpread: 0.2
   rateOfFire: 3.5
   isAutomatic: 0
   isScoped: 0
@@ -14554,6 +14558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 01a97d6eb67cd134b9e5ad041b629e3a, type: 3}
   bulletSpeed: 1500
+  bulletSpread: 0.75
   rateOfFire: 0.7
   isAutomatic: 0
   isScoped: 1
@@ -14856,6 +14861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: f3fb67f7871b5bb4385570dcbb1aec93, type: 3}
   bulletSpeed: 950
+  bulletSpread: 0.9
   rateOfFire: 3
   isAutomatic: 0
   isScoped: 0

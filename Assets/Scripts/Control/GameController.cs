@@ -274,9 +274,9 @@ public class GameController : MonoBehaviour {
 			playerObject.GetComponentInChildren<PlayerGUI> ().killMarked ();
 			audioSource.PlayOneShot(eliminatedSound);
 			killNotification = "Killed " + userTeam [deadManId].findPlayerByUserId (deadManId).getUsername();
-			killFeedList.Add(new KillFeedEvent(userTeam [userId].findPlayerByUserId (userId).getUsername(), userTeam [deadManId].findPlayerByUserId (deadManId).getUsername(), " -> ", Time.time + 3f));
 			StartCoroutine(clearKillNotification());
 		}
+		killFeedList.Add(new KillFeedEvent(userTeam [userId].findPlayerByUserId (userId).getUsername(), userTeam [deadManId].findPlayerByUserId (deadManId).getUsername(), " -> ", Time.time + 3f));
 	}
 
 	[PunRPC]

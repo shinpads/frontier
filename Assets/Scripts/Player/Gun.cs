@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour {
 	[SerializeField] private AudioClip gunShotSound;
 	[SerializeField] private float bulletSpeed;
+	[SerializeField] private float bulletSpread;
 	[SerializeField] private float rateOfFire;
 	[SerializeField] private bool isAutomatic;
 	[SerializeField] private bool isScoped;
@@ -31,6 +32,7 @@ public class Gun : MonoBehaviour {
 	public AudioClip getGunShotSound() { return gunShotSound; }
 	public AudioClip getDryFireSound() { return dryFire; }
 	public float getBulletSpeed() { return bulletSpeed; }
+	public float getBulletSpray() { return bulletSpread; }
 	public float getShotDelay() { return (float)1/rateOfFire; }
 	public bool getIsAutomatic() { return isAutomatic; }
 	public int getBulletDamage() { return bulletDamage; }
