@@ -24,7 +24,9 @@ public class GameController : MonoBehaviour {
 	Texture2D pixel;
 	Color pixelColor;
 	string killNotification = "";
+	ArrayList killFeedList = new ArrayList();
 	GUIStyle guiStyle;
+	GUIStyle killFeedStyle;
 	AudioSource audioSource;
 	void Start () {
 		photonView = gameObject.GetComponent<PhotonView>();
@@ -39,6 +41,10 @@ public class GameController : MonoBehaviour {
 		guiStyle.alignment = TextAnchor.MiddleCenter;
 		guiStyle.fontSize = 20;
 		guiStyle.normal.textColor = Color.white;
+		killFeedStyle = new GUIStyle();
+		killFeedStyle.alignment = TextAnchor.MiddleRight;
+		killFeedStyle.fontSize = 15;
+		killFeedStyle.normal.textColor = Color.white;
 		loadMineCartObjects();
 	}
 
@@ -115,6 +121,10 @@ public class GameController : MonoBehaviour {
 				}
 				if (killNotification != "") {
 					GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/4, 200, 50), killNotification, guiStyle);
+				}
+				for (int i = 0; i < killFeedList.Count; i++) {
+					KillFeedEvent kfe = (KillFeedEvent)killFeedList[i];
+					GUI.Label(new Rect(Screen.width - 200, 10 + (50 * i), 190, 40), kfe.ToString(), killFeedStyle);
 				}
 			}
 		}
@@ -207,6 +217,7 @@ public class GameController : MonoBehaviour {
 		GameObject.FindWithTag("MenuCamera").SetActive(false);
 		spawnPlayer();
 		gameStarted = true;
+		StartCoroutine(clearKillFeedEvents());
 	}
 	[PunRPC]
 	public void addToTeam (int userId, int team, string username) {
@@ -263,6 +274,7 @@ public class GameController : MonoBehaviour {
 			playerObject.GetComponentInChildren<PlayerGUI> ().killMarked ();
 			audioSource.PlayOneShot(eliminatedSound);
 			killNotification = "Killed " + userTeam [deadManId].findPlayerByUserId (deadManId).getUsername();
+			killFeedList.Add(new KillFeedEvent(userTeam [userId].findPlayerByUserId (userId).getUsername(), userTeam [deadManId].findPlayerByUserId (deadManId).getUsername(), " -> ", Time.time + 3f));
 			StartCoroutine(clearKillNotification());
 		}
 	}
@@ -300,6 +312,18 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds(2f);
 		killNotification = "";
 	}
-
+	private IEnumerator clearKillFeedEvents() {
+		ArrayList expired = new ArrayList();
+		foreach (KillFeedEvent kfe in killFeedList) {
+			if (kfe.eventEndTime < Time.time) {
+				expired.Add(kfe);
+			}
+		}
+		foreach (KillFeedEvent kfe in expired) {
+			killFeedList.Remove(kfe);
+		}
+		yield return new WaitForSeconds(2f);
+		StartCoroutine(clearKillFeedEvents());
+	}
 	public int getThisTeam() { return thisTeam; }
 }
