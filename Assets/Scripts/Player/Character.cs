@@ -32,11 +32,11 @@ public class Character : MonoBehaviour {
 		photonView = gameObject.GetComponent<PhotonView>();
 		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		object[] data = photonView.instantiationData;
-		if (PhotonNetwork.isMasterClient) {
+		setUserId((int)data[1]);
+		if (userId == PhotonNetwork.player.ID) {
 			gameObject.GetComponent<PhotonView> ().RPC ("setClass", PhotonTargets.All, (int)data [0]);
 			gameObject.GetComponent<PhotonView>().RPC("setTeamId",PhotonTargets.All,(int)data[2]);
 		}
-		setUserId((int)data[1]);
 		gui.setHealth (characterHealth);
 		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
 		goldCarry = 0;
