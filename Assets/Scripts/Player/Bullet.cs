@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour {
 		// check if there was a collision in the last 0.1 units
 		if (positionDifference > 0.1f) {
 			ray = new Ray(lastPosition, velocity.normalized);
-			if (Physics.Raycast(ray, out hit, positionDifference, ignoreRayCastLayer)) {
+			if (Physics.Raycast(ray, out hit, positionDifference, ignoreRayCastLayer, QueryTriggerInteraction.Ignore)) {
 				if (hit.collider.gameObject.tag == "Player" && hit.collider.gameObject.GetComponent<Character>().getUserId() != userId) {
 					damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
 					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);

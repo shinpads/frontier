@@ -139,6 +139,7 @@ public class Shooting : MonoBehaviour {
 	public void setContainer () {
 		gunContainer = gameObject.GetComponent<MeshController>().getContainer();
 		photonView = gameObject.GetComponent<PhotonView>();
+		gui = gameObject.GetComponentInChildren<PlayerGUI> ();
 		ItemContainer itemContainer = gunContainer.GetComponent<ItemContainer>();
 		armPivot = itemContainer.armPivot;
 		gunObjects = itemContainer.guns;
