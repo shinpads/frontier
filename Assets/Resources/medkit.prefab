@@ -166,7 +166,7 @@ MonoBehaviour:
   createOnTimeOut: 
   timeOutTime: -1
   destroyTime: -1
-  freezeOnGround: 1
+  freezeOnGround: 0
   userId: 0
   teamId: 0
 --- !u!135 &135254284710926942
