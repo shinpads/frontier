@@ -19,7 +19,7 @@ public class BearTrap : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider col) {
-		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId || isSprung) { return; }
+		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();
 		speedOfPrey = prey.getSpeed();
@@ -29,7 +29,7 @@ public class BearTrap : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider col) {
-		if (!PhotonNetwork.isMasterClient || !canDamage || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId) { return; }
+		if (!PhotonNetwork.isMasterClient || !canDamage || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId) { return; }
 		prey.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId);
 		StartCoroutine(waitOneSecond());
 	}
