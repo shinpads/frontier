@@ -207,11 +207,8 @@ public class Character : MonoBehaviour {
 					gui.setInteract ("");
 				}
 			}
-		} else if (col.gameObject.tag == "bearTrap") {
-			gui.setInteract ("Press F to open bear trap");
-			if (Input.GetKey (KeyCode.F)) {
-				col.gameObject.GetComponent<BearTrap>().trapOpened();
-			}
+		} else if (col.gameObject.tag == "bearTrap" && col.gameObject.GetComponent<BearTrap>().getTeamId() != teamId && Input.GetKey (KeyCode.F) ) {
+			col.gameObject.GetComponent<BearTrap>().trapOpened();
 		}
 	}
 

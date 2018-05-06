@@ -19,6 +19,7 @@ public class BearTrap : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider col) {
+		Debug.Log (col.gameObject.tag);
 		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();
@@ -50,4 +51,7 @@ public class BearTrap : MonoBehaviour {
 		yield return new WaitForSeconds(1);
 		canDamage = true;
 	}
+
+	public int getTeamId() { return teamId; }
+
 }
