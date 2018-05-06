@@ -6,7 +6,8 @@ public class BearTrap : MonoBehaviour {
 
 	private const int damagePerSecond = 10;
 	private const int upfrontDamage = 75;
-	int teamId, userId, speedOfPrey;
+	int teamId, userId;
+	float speedOfPrey;
 	bool canDamage, isSprung;
 	Character prey;
 
