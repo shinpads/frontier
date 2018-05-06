@@ -23,6 +23,7 @@ public class BearTrap : MonoBehaviour {
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();
 		speedOfPrey = prey.getSpeed();
+		prey.setSpeed (0);
 		prey.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, -upfrontDamage, userId);
 		prey.displayMessage ("Press F to release bear trap");
 		StartCoroutine (waitOneSecond ());
