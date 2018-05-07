@@ -1427,7 +1427,6 @@ GameObject:
   - component: {fileID: 114468658103210312}
   - component: {fileID: 23673037824313358}
   - component: {fileID: 114539432057266022}
-  - component: {fileID: 114358322502844580}
   - component: {fileID: 114545015765182280}
   - component: {fileID: 143515688956676344}
   - component: {fileID: 82523526476792996}
@@ -14047,8 +14046,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 3
-  instantiationId: 3
+  viewIdField: 0
+  instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114098338964241984
@@ -14364,46 +14363,6 @@ MonoBehaviour:
   - {fileID: 1386667066773034}
   - {fileID: 1822954902708010}
   - {fileID: 1281349729640680}
---- !u!114 &114358322502844580
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1192647942562838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631d06cff4ed0b3408e0a44cd98517cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 20647719872368652}
-  jumpSound: {fileID: 8300000, guid: 5c596ad20273f5341807facc3465a441, type: 3}
-  audioSource: {fileID: 82523526476792996}
-  characterController: {fileID: 0}
-  rotationY: {x: 0, y: 0, z: 0}
-  verticalMovement: {x: 0, y: 0, z: 0}
-  horizontalMovement: {x: 0, y: 0, z: 0}
-  rotationX: 0
-  characterVelocity: {x: 0, y: 0, z: 0}
-  characterSpeed: 0
-  currentSensitivity: 0
-  accelerationValue: 65
-  decelerationValue: -52.3
-  acceleration: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  isSprinting: 0
-  isAds: 0
-  isAirborne: 0
-  atCart: 0
-  canMove: 0
-  player: {fileID: 0}
-  gui: {fileID: 0}
-  gameController: {fileID: 0}
-  pixel: {fileID: 0}
-  pixelColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
 --- !u!114 &114420282581076858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14477,8 +14436,8 @@ MonoBehaviour:
   - {fileID: 114653404969345922}
   - {fileID: 4754675035577806}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 4
-  instantiationId: 4
+  viewIdField: 0
+  instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
