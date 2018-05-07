@@ -1432,6 +1432,7 @@ GameObject:
   - component: {fileID: 143515688956676344}
   - component: {fileID: 82523526476792996}
   - component: {fileID: 114574815406300212}
+  - component: {fileID: 114880980243066470}
   - component: {fileID: 114863477474755956}
   - component: {fileID: 114350696392143250}
   m_Layer: 0
@@ -14046,8 +14047,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114098338964241984
@@ -14377,6 +14378,32 @@ MonoBehaviour:
   playerCamera: {fileID: 20647719872368652}
   jumpSound: {fileID: 8300000, guid: 5c596ad20273f5341807facc3465a441, type: 3}
   audioSource: {fileID: 82523526476792996}
+  characterController: {fileID: 0}
+  rotationY: {x: 0, y: 0, z: 0}
+  verticalMovement: {x: 0, y: 0, z: 0}
+  horizontalMovement: {x: 0, y: 0, z: 0}
+  rotationX: 0
+  characterVelocity: {x: 0, y: 0, z: 0}
+  characterSpeed: 0
+  currentSensitivity: 0
+  accelerationValue: 65
+  decelerationValue: -52.3
+  acceleration: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  isSprinting: 0
+  isAds: 0
+  isAirborne: 0
+  atCart: 0
+  canMove: 0
+  player: {fileID: 0}
+  gui: {fileID: 0}
+  gameController: {fileID: 0}
+  pixel: {fileID: 0}
+  pixelColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!114 &114420282581076858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14450,8 +14477,8 @@ MonoBehaviour:
   - {fileID: 114653404969345922}
   - {fileID: 4754675035577806}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
@@ -14559,7 +14586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thingsToDisable:
-  - {fileID: 114358322502844580}
+  - {fileID: 114880980243066470}
   - {fileID: 81960399019309370}
   - {fileID: 20647719872368652}
   - {fileID: 114863477474755956}
@@ -14871,6 +14898,20 @@ MonoBehaviour:
   mat3: {fileID: 2100000, guid: 6efe28cc09758a34eae40e128f27d39c, type: 2}
   bloodObject: {fileID: 1913480498854834, guid: 264a1c0272015e84ea39f8e24e93283b,
     type: 2}
+--- !u!114 &114880980243066470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1192647942562838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f586152ca9c6b74f85bb12097c97b5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 20647719872368652}
+  jumpSound: {fileID: 8300000, guid: 5c596ad20273f5341807facc3465a441, type: 3}
+  audioSource: {fileID: 82523526476792996}
 --- !u!114 &114901104300622076
 MonoBehaviour:
   m_ObjectHideFlags: 1
