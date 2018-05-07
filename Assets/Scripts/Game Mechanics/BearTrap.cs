@@ -39,7 +39,7 @@ public class BearTrap : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider col) {
-		if (col.gameObject.Equals (prey) && prey != null) {
+		if (col.gameObject == prey && prey != null) {
 			destroy ();
 		}
 	}
