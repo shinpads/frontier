@@ -38,6 +38,12 @@ public class BearTrap : MonoBehaviour {
 		StartCoroutine(waitOneSecond());
 	}
 
+	void OnTriggerExit(Collider col) {
+		if (col.gameObject.Equals (prey) && prey != null) {
+			destroy ();
+		}
+	}
+
 	public void trapOpened() {
 		prey.displayMessage ("");
 		prey.gameObject.GetComponent<PlayerController> ().setAbilityToMove (true);
