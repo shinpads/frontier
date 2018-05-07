@@ -175,9 +175,9 @@ public class Shooting : MonoBehaviour {
 		Instantiate (muzzleFlash, currentGun.getJustTheTip().transform.position, Quaternion.LookRotation(end - start), playerCamera.transform);
 		if(!PhotonNetwork.isMasterClient) { return; }
 		if (currentGun.getIsShotgun()) {
-			float rangeFactor = 12f;
+			float rangeFactor = 20f;
 			if (ads) {
-				rangeFactor = 24f;
+				rangeFactor = 35f;
 			}
 			float range = Mathf.PI/rangeFactor;
 			float theta = 0f;
