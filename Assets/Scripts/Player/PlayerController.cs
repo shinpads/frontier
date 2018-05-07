@@ -154,8 +154,8 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKey (KeyCode.Tab)){
 			userTeam = gameController.getUserTeam (player.getUserId());
 			scoreboardData = userTeam.getTeamStats ();
-		    float screenWidth = Screen.width;
-		    float screenHeight = Screen.height;
+		  float screenWidth = Screen.width;
+		  float screenHeight = Screen.height;
 			int playerCount = 0;
 			string playerCell;
 			GUI.DrawTexture (new Rect (screenWidth/8 - screenWidth/100, screenHeight/4, 3*screenWidth/4 + screenWidth/100, screenHeight/2), pixel);
