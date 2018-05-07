@@ -34,11 +34,13 @@ public class BearTrap : MonoBehaviour {
 
 	void OnTriggerStay(Collider col) {
 		if (!PhotonNetwork.isMasterClient || !canDamage || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId) { return; }
-		if (prey.getCurrentHealth() < damagePerSecond) {
+		if (prey.getCurrentHealth () < damagePerSecond) {
+			prey.gameObject.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId);
 			destroy ();
+		} else {
+			prey.gameObject.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId);
+			StartCoroutine (waitOneSecond ());
 		}
-		prey.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId);
-		StartCoroutine(waitOneSecond());
 	}
 
 	public void trapOpened() {
