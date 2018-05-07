@@ -68,7 +68,7 @@ public class Character : MonoBehaviour {
 				setDamagers (enemyId, dHealth);
 				gameController.sendHitMarked (enemyId);
 				PhotonNetwork.Instantiate ("BloodParticles", gameObject.transform.position, Quaternion.Euler (gameObject.transform.forward), 0);
-				bloodCameraEffect.vignette.intensity = ((maxHealth - characterHealth) / (float)maxHealth) * 1.5f;
+				bloodCameraEffect.vignette.intensity = 1.5f;
 				StartCoroutine(fadeBlood(bloodCameraEffect.vignette.intensity, 0f, 1.4f));
 			} else if (dHealth > 0) {
 				removeDamagers (dHealth);
