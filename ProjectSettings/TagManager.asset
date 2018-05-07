@@ -14,6 +14,8 @@ TagManager:
   - gun
   - equipment
   - freeGold
+  - bearTrap
+  - Terrain
   layers:
   - Default
   - TransparentFX

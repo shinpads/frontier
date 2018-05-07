@@ -7,24 +7,26 @@ public class BearTrap : MonoBehaviour {
 	private const int damagePerSecond = 10;
 	private const int upfrontDamage = 75;
 	int teamId, userId;
-	float speedOfPrey;
 	bool canDamage, isSprung;
 	Character prey;
 
 	void Start () {
-		canDamage = isSprung = false;
+		canDamage = false;
+		isSprung = true;
 		object[] data = GetComponent<PhotonView>().instantiationData;
 		userId = (int)data[0];
 		teamId = (int)data[1];
 	}
 	
 	void OnTriggerEnter(Collider col) {
-		Debug.Log (col.gameObject.tag);
-		if (!PhotonNetwork.isMasterClient || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
+		if (!PhotonNetwork.isMasterClient) { return; }
+		if (col.gameObject.tag == "Terrain") {
+			isSprung = false;
+		}
+		if (col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();
-		speedOfPrey = prey.gameObject.GetComponent<PlayerController>().getSpeed();
-		prey.gameObject.GetComponent<PlayerController>().setSpeed(0);
+		prey.gameObject.GetComponent<PlayerController> ().setAbilityToMove (false);
 		prey.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, -upfrontDamage, userId);
 		prey.displayMessage ("Press F to release bear trap");
 		StartCoroutine (waitOneSecond ());
@@ -38,7 +40,7 @@ public class BearTrap : MonoBehaviour {
 
 	public void trapOpened() {
 		prey.displayMessage ("");
-		prey.gameObject.GetComponent<PlayerController>().setSpeed(speedOfPrey);
+		prey.gameObject.GetComponent<PlayerController> ().setAbilityToMove (true);
 		PhotonNetwork.Destroy (gameObject);
 	}
 

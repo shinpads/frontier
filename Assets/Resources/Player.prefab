@@ -521,7 +521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1067593723976180
 GameObject:
   m_ObjectHideFlags: 1
@@ -2779,7 +2779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1389290942949664
 GameObject:
   m_ObjectHideFlags: 1
@@ -6326,7 +6326,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4274591890396382}
   - component: {fileID: 33424185453144606}
-  - component: {fileID: 136091025312674196}
   - component: {fileID: 23409334984054032}
   - component: {fileID: 114021391359771430}
   m_Layer: 0
@@ -14323,21 +14322,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunShotSound: {fileID: 8300000, guid: 1e0c169c22edd074fb02e569739611d7, type: 3}
-  bulletSpeed: 950
-  bulletSpread: 0.2
+  bulletSpeed: 1050
+  bulletSpread: 0.1
   rateOfFire: 3.5
   isAutomatic: 0
   isScoped: 0
   isShotgun: 0
-  bulletDamage: 20
+  bulletDamage: 50
   magCapacity: 6
   tipOfGun: {fileID: 1275408575840034}
   reloadWait: 1
   dropOff: 75
-  dropOffStop: 400
+  dropOffStop: 700
   shootingAnimationName: revolver
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
-  bulletLife: 2
+  bulletLife: 3
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.227, y: 0.067, z: -0.18}
   adsFov: 60
@@ -14997,19 +14996,6 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136091025312674196
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1940705422733998}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136788930578368680
 CapsuleCollider:
