@@ -21,6 +21,7 @@ public class Shooting : MonoBehaviour {
 	private GameObject[] equipmentObjects;
 	[SerializeField] private AudioSource audioSource;
 	[SerializeField] private GameObject muzzleFlash;
+	[SerializeField] private GameObject bulletObject;
 	private Animator armPivotAnimator;
 	private Gun currentGun;
 	private Equipment currentEquipment;
@@ -168,6 +169,7 @@ public class Shooting : MonoBehaviour {
 
 	[PunRPC]
 	private void shoot(Vector3 start, Vector3 end, int userId, bool ads) {
+		PhotonView photonView = gameObject.GetComponent<PhotonView>();
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
 		// create muzzle effect
 		Instantiate (muzzleFlash, currentGun.getJustTheTip().transform.position, Quaternion.LookRotation(end - start), playerCamera.transform);
@@ -190,16 +192,28 @@ public class Shooting : MonoBehaviour {
 				theta = Random.Range(-range/2f, range/2f);
 				direction.y = (direction.y * Mathf.Cos(theta)) - (direction.z * Mathf.Sin(theta));
 				direction.z = (direction.y * Mathf.Sin(theta)) + (direction.z * Mathf.Cos(theta));
-				PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop(), currentGun.getBulletLife()});
+				photonView.RPC("createBullet", PhotonTargets.All, start ,Quaternion.LookRotation(direction), userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop(), currentGun.getBulletLife());
 				theta += range/5f;
 			}
 		} else {
 			Vector3 direction = Vector3.Normalize(end-start);
-			PhotonNetwork.Instantiate ("Bullet", start ,Quaternion.LookRotation(direction), 0, new object[] {userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop(), currentGun.getBulletLife()});
+			photonView.RPC("createBullet", PhotonTargets.All, start, Quaternion.LookRotation(direction), userId, direction*currentGun.getBulletSpeed(), photonView.viewID, currentGun.getBulletDamage(), currentGun.getDropOff(), currentGun.getDropOffStop(), currentGun.getBulletLife());
 		}
 
 	}
-
+	[PunRPC]
+	private void createBullet (Vector3 position, Quaternion direction, int userId, Vector3 velocity, int photonViewId, int damage, float dropOff, float dropOffEnd, float life) {
+		GameObject bulletInstance = (GameObject) GameObject.Instantiate(bulletObject, position, direction);
+		Bullet bullet = bulletInstance.GetComponent<Bullet>();
+		bullet.setUserId (userId);
+		bullet.velocity = velocity;
+		bullet.userPlayer = PhotonView.Find (photonViewId);
+		bullet.maxDamage = damage;
+		bullet.dropOff = dropOff;
+		bullet.dropOffStop = dropOffEnd;
+		bullet.lifeTime = life;
+		bullet.damage = bullet.maxDamage;
+	}
 	[PunRPC]
 	private void throwEquipmentRPC(Vector3 position, int userId, Vector3 forwards, int teamId) {
 		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), position, Quaternion.Euler(0, 0, -20), 0, new object[] {userId, teamId});

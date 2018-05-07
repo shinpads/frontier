@@ -5,34 +5,25 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 	private Vector3 currentPosition, lastPosition;
 	private float positionDifference;
-	private float lifeTime;
+	public float lifeTime;
 	private RaycastHit hit;
 	private Ray ray;
-	private Vector3 velocity;
-	private int userId;
-	private PhotonView userPlayer;
-	private int healScore;
-	private int damage;
-	private Vector3 startSpot;
-	private float dropOff, dropOffStop;
+	public Vector3 velocity;
+	public int userId;
+	public PhotonView userPlayer;
+	public int healScore;
+	public int damage;
+	public Vector3 startSpot;
+	public float dropOff, dropOffStop;
 	LayerMask ignoreRayCastLayer;
 	[SerializeField] GameObject dirtImpactParticles;
-	private int maxDamage;
+	public int maxDamage;
 	GameController gameController;
 	void Start () {
-		if(!PhotonNetwork.isMasterClient) { enabled = false; return;}
-		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();
-		object[] data = GetComponent<PhotonView>().instantiationData;
-		setUserId ((int)data[0]);
+		// if(!PhotonNetwork.isMasterClient) { enabled = false; return;}
+		gameController = GameObject.FindWithTag("Control").GetComponent<GameController>();;
 		currentPosition = gameObject.transform.position;
 		lastPosition = gameObject.transform.position;
-		userPlayer = PhotonView.Find ((int)data [2]);
-		velocity = (Vector3)data[1];
-		dropOff = (float)data [4];
-		dropOffStop = (float)data [5];
-		maxDamage = (int)data[3];
-		damage = maxDamage;
-		lifeTime = (float)data [6];
 		startSpot = gameObject.transform.position;
 		ignoreRayCastLayer = ~((1 << 13) | (1 << 2));
 		StartCoroutine(setTimeOutDestroy());
@@ -52,25 +43,27 @@ public class Bullet : MonoBehaviour {
 		if (positionDifference > 0.1f) {
 			ray = new Ray(lastPosition, velocity.normalized);
 			if (Physics.Raycast(ray, out hit, positionDifference, ignoreRayCastLayer, QueryTriggerInteraction.Ignore)) {
-				if (hit.collider.gameObject.tag == "Player" && hit.collider.gameObject.GetComponent<Character>().getUserId() != userId) {
-					damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
-					hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);
-				} else if (hit.collider.gameObject.tag == "TargetCircle") {
-					gameController.sendHitMarked (userId);
-					healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
-					if (healScore > 0) {
-						userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
+				if (PhotonNetwork.isMasterClient) {
+					if (hit.collider.gameObject.tag == "Player" && hit.collider.gameObject.GetComponent<Character>().getUserId() != userId) {
+						damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100) + 1);
+						hit.collider.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);
+					} else if (hit.collider.gameObject.tag == "TargetCircle") {
+						gameController.sendHitMarked (userId);
+						healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
+						if (healScore > 0) {
+							userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
+						}
+					} else {
+						PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.LookRotation(hit.normal), 0);
 					}
-				} else {
-					PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.LookRotation(hit.normal), 0);
 				}
-				PhotonNetwork.Destroy(gameObject);
+				GameObject.Destroy(gameObject);
 			}
 			lastPosition = currentPosition;
 		}
 	}
 	private IEnumerator setTimeOutDestroy () {
 		yield return new WaitForSeconds(lifeTime);
-		PhotonNetwork.Destroy(gameObject);
+		GameObject.Destroy(gameObject);
 	}
 }

@@ -69,4 +69,5 @@ MonoBehaviour:
   - cockEquipmentRPC
   - setClass
   - setTeamId
+  - createBullet
   DisableAutoOpenWizard: 1

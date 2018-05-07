@@ -14584,6 +14584,8 @@ MonoBehaviour:
   audioSource: {fileID: 82523526476792996}
   muzzleFlash: {fileID: 1121783578052174, guid: c2d5e1bd2759e4f4f9f0094fefe990e6,
     type: 2}
+  bulletObject: {fileID: 1890593835515380, guid: d22d2fa4b8a41d04382e9e471c2f038f,
+    type: 2}
 --- !u!114 &114587262097712008
 MonoBehaviour:
   m_ObjectHideFlags: 1
