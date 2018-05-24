@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984880510688942}
   m_LocalRotation: {x: -0.7071069, y: 0, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: -79.63518, y: 1.503, z: -16.32959}
+  m_LocalPosition: {x: 0.2, y: 1.503, z: -16.32959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,7 +59,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a7e7f4253f6ef7f4792d6ccf1120f847, type: 2}
+  - {fileID: 2100000, guid: 6039db1a584d782499d2585ab17fdb77, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,7 +85,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984880510688942}
-  m_Mesh: {fileID: 4300008, guid: 98fc9a80f1406504aa6c2ea1d8d50f06, type: 3}
+  m_Mesh: {fileID: 4300000, guid: d47b248708eab35418332cf0bdd5ea25, type: 3}
 --- !u!54 &54988195778561186
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -115,7 +115,9 @@ MonoBehaviour:
   createOnTimeOut: dynamiteExplosion
   timeOutTime: 2
   destroyTime: 3
+  freezeOnGround: 0
   userId: 0
+  teamId: 0
 --- !u!114 &114806225462478382
 MonoBehaviour:
   m_ObjectHideFlags: 1
