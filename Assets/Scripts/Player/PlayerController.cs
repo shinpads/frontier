@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
 	private float rotationX = 0;
 	private Vector3 characterVelocity;
 	private float characterSpeed;
-	private const float GRAVITY = 16f;
+	private const float GRAVITY = 19f;
 	private const float JUMP_AMOUNT = 6f;
 	private const float SENSITIVITY = 1.2f;
 	private const float ADS_SENSITIVITY = 0.7f;
@@ -65,7 +65,11 @@ public class PlayerController : MonoBehaviour {
 		//horizontalMovement = Input.GetAxisRaw("Horizontal");// * transform.right;
 		if (Input.GetKey(KeyCode.LeftShift) && !isAds) {
 			isSprinting = 1;
-			playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", true);
+			if (velocity.magnitude > 4) {
+				playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", true);
+			} else {
+				playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", false);
+			}
 		}	else {
 			isSprinting = 0;
 			playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", false);
@@ -204,7 +208,7 @@ public class PlayerController : MonoBehaviour {
 		StartCoroutine(recoilCoroutine);
 	}
 	private IEnumerator resetRecoil() {
-		float decreaseAmount = 0.02f;
+		float decreaseAmount = 0.025f;
 		while (recoilAmount > 0) {
 			if (recoilAmount < decreaseAmount) {
 				rotationX += recoilAmount;
