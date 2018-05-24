@@ -19,6 +19,7 @@ public class Gun : MonoBehaviour {
 	[SerializeField] private string shootingAnimationName = "revolver";
 	[SerializeField] private AudioClip dryFire;
 	[SerializeField] private float bulletLife;
+	[SerializeField] private float recoilPerShot;
 	public Vector3 hip, ads;
 	public float adsFov;
 	private int ammo;
@@ -46,6 +47,7 @@ public class Gun : MonoBehaviour {
 	public float getDropOffStop() { return dropOffStop; }
 	public bool getIsShotgun() { return isShotgun; }
 	public float getBulletLife() { return bulletLife; }
+	public float getRecoilPerShot() { return recoilPerShot; }
 	public void ammoShot() {
 		if (ammo > 0) {
 			ammo--;

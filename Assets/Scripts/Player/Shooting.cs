@@ -270,6 +270,7 @@ public class Shooting : MonoBehaviour {
 		if (currentGun.getIsScoped() && isAds) {
 			stillScoped = true;
 		}
+		gameObject.GetComponent<PlayerController>().setRecoil(currentGun.getRecoilPerShot());
 	}
 
 	private IEnumerator throwEquipment() {

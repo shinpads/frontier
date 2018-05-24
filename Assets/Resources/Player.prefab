@@ -14046,8 +14046,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114098338964241984
@@ -14207,6 +14207,7 @@ MonoBehaviour:
   shootingAnimationName: m870Shoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
   bulletLife: 0.1
+  recoilPerShot: 2
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.175, y: 0.033, z: -0.04}
   adsFov: 55
@@ -14237,6 +14238,7 @@ MonoBehaviour:
   shootingAnimationName: colt1911Shoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
   bulletLife: 2
+  recoilPerShot: 0.6
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.2665, y: 0.04, z: -0.2}
   adsFov: 55
@@ -14267,6 +14269,7 @@ MonoBehaviour:
   shootingAnimationName: ppsh41Shoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
   bulletLife: 2
+  recoilPerShot: 0.75
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.24, y: 0.06, z: -0.18}
   adsFov: 55
@@ -14337,6 +14340,7 @@ MonoBehaviour:
   shootingAnimationName: revolver
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
   bulletLife: 3
+  recoilPerShot: 2.5
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.227, y: 0.067, z: -0.18}
   adsFov: 60
@@ -14436,8 +14440,8 @@ MonoBehaviour:
   - {fileID: 114653404969345922}
   - {fileID: 4754675035577806}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
@@ -14646,6 +14650,7 @@ MonoBehaviour:
   shootingAnimationName: m40a3Shoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
   bulletLife: 3
+  recoilPerShot: 0.5
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.23, y: 0, z: -0.18}
   adsFov: 5
@@ -14977,6 +14982,7 @@ MonoBehaviour:
   shootingAnimationName: enfieldShoot
   dryFire: {fileID: 8300000, guid: 01f6c056b62ca694ea3783a97430bd26, type: 3}
   bulletLife: 2
+  recoilPerShot: 2
   hip: {x: 0, y: 0, z: 0}
   ads: {x: -0.247, y: 0.08, z: -0.18}
   adsFov: 35

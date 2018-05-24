@@ -14,17 +14,20 @@ public class PlayerController : MonoBehaviour {
 	private float rotationX = 0;
 	private Vector3 characterVelocity;
 	private float characterSpeed;
-	private const float GRAVITY = 12f;
+	private const float GRAVITY = 16f;
 	private const float JUMP_AMOUNT = 6f;
 	private const float SENSITIVITY = 1.2f;
 	private const float ADS_SENSITIVITY = 0.7f;
 	private const float SCOPED_SENSITIVITY = 0.1f;
 	private float currentSensitivity;
 	private const int RUN_SPEED = 2;
-	private float accelerationValue = 65f;
-	private float decelerationValue = -52.3f;
+	private float accelerationValue = 85f;
+	private float decelerationValue = -70.3f;
 	private Vector3 acceleration = new Vector3(0, 0 ,0);
 	private Vector3 velocity = new Vector3(0, 0 ,0);
+	private float recoilAmount = 0f;
+	private float recoilDecreaseAcceleration = 0.003f;
+	private IEnumerator recoilCoroutine;
 	private int isSprinting;
 	private bool isAds;
 	private bool isAirborne;
@@ -191,4 +194,27 @@ public class PlayerController : MonoBehaviour {
 	public void setAbilityToMove(bool ableToMove) {
   	canMove = ableToMove;
   }
+	public void setRecoil(float recoil) {
+		recoilAmount += recoil;
+		rotationX -= recoil;
+		if (recoilCoroutine != null) {
+			StopCoroutine(recoilCoroutine);
+		}
+		recoilCoroutine = resetRecoil();
+		StartCoroutine(recoilCoroutine);
+	}
+	private IEnumerator resetRecoil() {
+		float decreaseAmount = 0.02f;
+		while (recoilAmount > 0) {
+			if (recoilAmount < decreaseAmount) {
+				rotationX += recoilAmount;
+				recoilAmount = 0;
+			} else if (recoilAmount > 0) {
+				rotationX += decreaseAmount;
+				recoilAmount -= decreaseAmount;
+			}
+			yield return new WaitForSeconds(0.01f);
+			decreaseAmount += recoilDecreaseAcceleration;
+		}
+	}
 }
