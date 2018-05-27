@@ -70,4 +70,6 @@ MonoBehaviour:
   - setClass
   - setTeamId
   - createBullet
+  - trapOpen
+  - trapClose
   DisableAutoOpenWizard: 1

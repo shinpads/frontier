@@ -6,11 +6,15 @@ public class BearTrap : MonoBehaviour {
 
 	private const int damagePerSecond = 10;
 	private const int upfrontDamage = 75;
+	private Animator bearTrapAnimatorControl;
 	int teamId, userId;
 	bool canDamage, isSprung;
+	private PhotonView photonview;
 	Character prey;
 
 	void Start () {
+		bearTrapAnimatorControl = gameObject.GetComponentInChildren<Animator> ();
+		photonview = gameObject.GetComponent<PhotonView> ();
 		canDamage = false;
 		isSprung = true;
 		object[] data = GetComponent<PhotonView>().instantiationData;
@@ -21,9 +25,11 @@ public class BearTrap : MonoBehaviour {
 	void OnTriggerEnter(Collider col) {
 		if (!PhotonNetwork.isMasterClient) { return; }
 		if (col.gameObject.tag == "Terrain") {
+			photonview.RPC ("trapOpen", PhotonTargets.All);
 			isSprung = false;
 		}
 		if (col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
+		photonview.RPC ("trapClose", PhotonTargets.All);
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();
 		prey.gameObject.GetComponent<PlayerController> ().setAbilityToMove (false);
@@ -46,6 +52,7 @@ public class BearTrap : MonoBehaviour {
 	public void trapOpened() {
 		prey.displayMessage ("");
 		prey.gameObject.GetComponent<PlayerController> ().setAbilityToMove (true);
+		photonview.RPC ("trapOpen", PhotonTargets.All);
 		PhotonNetwork.Destroy (gameObject);
 	}
 
@@ -57,6 +64,16 @@ public class BearTrap : MonoBehaviour {
 		canDamage = false;
 		yield return new WaitForSeconds(1);
 		canDamage = true;
+	}
+
+	[PunRPC]
+	public void trapOpen() {
+		bearTrapAnimatorControl.SetTrigger ("Open");
+	}
+
+	[PunRPC]
+	public void trapClose() {
+		bearTrapAnimatorControl.SetTrigger ("Close");
 	}
 
 	public int getTeamId() { return teamId; }
