@@ -1423,7 +1423,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4128103019909916}
   - component: {fileID: 33121909134410216}
-  - component: {fileID: 136788930578368680}
   - component: {fileID: 114468658103210312}
   - component: {fileID: 23673037824313358}
   - component: {fileID: 114539432057266022}
@@ -1434,7 +1433,7 @@ GameObject:
   - component: {fileID: 114880980243066470}
   - component: {fileID: 114863477474755956}
   - component: {fileID: 114350696392143250}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -9865,7 +9864,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811969582917722}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.31, z: 0.08}
+  m_LocalPosition: {x: 0, y: 1.31, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4245370521547586}
@@ -15154,9 +15153,9 @@ MonoBehaviour:
     enabled: 1
     precision: 16
     colorWheels:
-      shadows: {r: 1, g: 0.8440317, b: 0.86862874, a: 1}
-      midtones: {r: 0.7297365, g: 0.7133246, b: 1, a: 1}
-      highlights: {r: 0.6648459, g: 0.6328764, b: 1, a: 1}
+      shadows: {r: 0.7636014, g: 0.8053703, b: 1, a: 1}
+      midtones: {r: 0.64378345, g: 0.64530605, b: 1, a: 1}
+      highlights: {r: 1, g: 0.5370024, b: 0.20844358, a: 1}
     basics:
       temperatureShift: 0
       tint: 0
@@ -15332,19 +15331,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136788930578368680
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1192647942562838}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.62
-  m_Height: 2.57
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.24, z: 0}
 --- !u!137 &137016149937375912
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -16626,7 +16612,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2.72
-  m_Radius: 0.62
+  m_Radius: 0.68
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08

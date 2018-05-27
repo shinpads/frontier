@@ -326,4 +326,10 @@ public class GameController : MonoBehaviour {
 		StartCoroutine(clearKillFeedEvents());
 	}
 	public int getThisTeam() { return thisTeam; }
+	void OnApplicationFocus(bool hasFocus) {
+			if (hasFocus && gameStarted) {
+				Screen.lockCursor = true;
+				Cursor.visible = false;
+			}
+	}
 }
