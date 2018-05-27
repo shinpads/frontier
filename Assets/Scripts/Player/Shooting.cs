@@ -162,6 +162,15 @@ public class Shooting : MonoBehaviour {
 			gunObjects[i].layer = 12;
 			foreach (Transform child in gunObjects[i].transform) {
 				child.gameObject.layer = 12;
+				foreach (Transform child2 in child.transform) {
+					child2.gameObject.layer = 12;
+				}
+			}
+		}
+		for (int i = 0; i < equipmentObjects.Length; i++) {
+			equipmentObjects[i].layer = 12;
+			foreach (Transform child in equipmentObjects[i].transform) {
+				child.gameObject.layer = 12;
 			}
 		}
 		armPivot.layer = 12;

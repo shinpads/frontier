@@ -1423,7 +1423,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4128103019909916}
   - component: {fileID: 33121909134410216}
-  - component: {fileID: 136788930578368680}
   - component: {fileID: 114468658103210312}
   - component: {fileID: 23673037824313358}
   - component: {fileID: 114539432057266022}
@@ -9800,7 +9799,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811969582917722}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.31, z: 0.08}
+  m_LocalPosition: {x: 0, y: 1.31, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4245370521547586}
@@ -14047,8 +14046,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114098338964241984
@@ -14441,8 +14440,8 @@ MonoBehaviour:
   - {fileID: 114653404969345922}
   - {fileID: 4754675035577806}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114524140568171154
@@ -15159,19 +15158,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136788930578368680
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1192647942562838}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.62
-  m_Height: 2.57
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.24, z: 0}
 --- !u!137 &137016149937375912
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -16453,7 +16439,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2.72
-  m_Radius: 0.62
+  m_Radius: 0.68
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
