@@ -14981,9 +14981,9 @@ MonoBehaviour:
     enabled: 1
     precision: 16
     colorWheels:
-      shadows: {r: 1, g: 0.8440317, b: 0.86862874, a: 1}
-      midtones: {r: 0.7297365, g: 0.7133246, b: 1, a: 1}
-      highlights: {r: 0.6648459, g: 0.6328764, b: 1, a: 1}
+      shadows: {r: 0.7636014, g: 0.8053703, b: 1, a: 1}
+      midtones: {r: 0.64378345, g: 0.64530605, b: 1, a: 1}
+      highlights: {r: 1, g: 0.5370024, b: 0.20844358, a: 1}
     basics:
       temperatureShift: 0
       tint: 0
