@@ -19,6 +19,7 @@ public class MeshController : MonoBehaviour {
 
 	[PunRPC]
 	private void setMeshEnabled(int classType) {
+		PhotonView photonView = gameObject.GetComponent<PhotonView>();
 		for (int i = 0; i < classMeshes.Length; i++) {
 			classMeshes[i].SetActive(false);
 			containers[i].SetActive(false);
@@ -27,5 +28,8 @@ public class MeshController : MonoBehaviour {
 		containers[classType].SetActive(true);
 		this.classType = classType;
 		gameObject.GetComponent<Shooting>().setContainer();
+		if (photonView.isMine) {
+			gameObject.GetComponent<PlayerController>().setArmPivot(containers[classType]);
+		}
 	}
 }

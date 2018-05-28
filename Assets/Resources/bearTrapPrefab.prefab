@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4773215897564420}
   - component: {fileID: 33562903840878062}
   - component: {fileID: 23969218849781574}
-  - component: {fileID: 95936955651907060}
   m_Layer: 0
   m_Name: Claw2
   m_TagString: Untagged
@@ -43,6 +42,7 @@ GameObject:
   - component: {fileID: 54019983280874336}
   - component: {fileID: 114510272519922644}
   - component: {fileID: 65432982656793300}
+  - component: {fileID: 95383724815551314}
   m_Layer: 0
   m_Name: bearTrapPrefab
   m_TagString: Untagged
@@ -77,7 +77,6 @@ GameObject:
   - component: {fileID: 4924274610795830}
   - component: {fileID: 33635271292440392}
   - component: {fileID: 23088630954485934}
-  - component: {fileID: 95849101822373182}
   m_Layer: 0
   m_Name: Claw1
   m_TagString: Untagged
@@ -290,30 +289,13 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.07, y: 0.08, z: -0.14}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &95849101822373182
+--- !u!95 &95383724815551314
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947553230493458}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9b2eb4ee5e189984093d723d342ab716, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95936955651907060
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1051970714121368}
+  m_GameObject: {fileID: 1389162070502396}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 9b2eb4ee5e189984093d723d342ab716, type: 2}

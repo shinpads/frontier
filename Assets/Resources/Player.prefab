@@ -4066,6 +4066,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4245370521547586}
   - component: {fileID: 20080667647970794}
+  - component: {fileID: 114929721788156668}
   m_Layer: 0
   m_Name: GunCamera
   m_TagString: Untagged
@@ -8311,8 +8312,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1578680932723900}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000010985881}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4550870425495800}
@@ -14574,8 +14575,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114098338964241984
@@ -15010,8 +15011,8 @@ MonoBehaviour:
   - {fileID: 114653404969345922}
   - {fileID: 4754675035577806}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114511651289386864
@@ -15540,6 +15541,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114929721788156668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1578680932723900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1d51f4ce5b40045b606b2c2fc84cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 1811969582917722}
+  maxAmount: 0.05
+  speed: 5
+  amount: 0.01
 --- !u!114 &114939434354762584
 MonoBehaviour:
   m_ObjectHideFlags: 1

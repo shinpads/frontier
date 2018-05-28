@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour {
 	private bool isSliping = false;
 	private bool gravityEnabled = true;
 	private Vector3 slipVelocity = new Vector3(0, 0, 0);
+	private GameObject weaponContainer;
 	Texture2D pixel;
 	Color pixelColor;
 
@@ -162,7 +163,6 @@ public class PlayerController : MonoBehaviour {
  		if (canMove) {
 			characterController.Move(movementVector);
 		}
-
 	}
 
 	public void setSensitivity(int state) {
@@ -239,15 +239,19 @@ public class PlayerController : MonoBehaviour {
 				rotationX += decreaseAmount;
 				recoilAmount -= decreaseAmount;
 			}
-			yield return new WaitForSeconds(0.01f);
+			yield return new WaitForSeconds(0.005f);
 			decreaseAmount += recoilDecreaseAcceleration;
 		}
 	}
+
 	void OnControllerColliderHit (ControllerColliderHit hit) {
 		groundNormal = hit.normal;
 	}
 	private IEnumerator enableGravity() {
 		yield return new WaitForSeconds(0.05f);
 		gravityEnabled = true;
+	}
+	public void setArmPivot(GameObject container) {
+		weaponContainer = container;
 	}
 }
