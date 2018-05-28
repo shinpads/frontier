@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour {
 	[SerializeField] float timeOutTime;
 	[SerializeField] float destroyTime;
 	[SerializeField] bool freezeOnGround;
+	[SerializeField] float spinAmount;
 	[HideInInspector] public int userId;
 	[HideInInspector] public int teamId;
 	PhotonView photonView;

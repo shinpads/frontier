@@ -225,7 +225,7 @@ public class Shooting : MonoBehaviour {
 	}
 	[PunRPC]
 	private void throwEquipmentRPC(Vector3 position, int userId, Vector3 forwards, int teamId) {
-		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), position, Quaternion.Euler(0, 0, -20), 0, new object[] {userId, teamId});
+		GameObject equipment = (GameObject)PhotonNetwork.Instantiate(currentEquipment.getProjectile(), position, Quaternion.Euler(0, 0, 0), 0, new object[] {userId, teamId});
 		equipment.GetComponent<Rigidbody>().AddForce(forwards * currentEquipment.getThrowVelocity());
 	}
 

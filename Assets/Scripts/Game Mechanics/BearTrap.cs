@@ -13,7 +13,7 @@ public class BearTrap : MonoBehaviour {
 	Character prey;
 
 	void Start () {
-		bearTrapAnimatorControl = gameObject.GetComponentInChildren<Animator> ();
+		bearTrapAnimatorControl = gameObject.GetComponent<Animator> ();
 		photonview = gameObject.GetComponent<PhotonView> ();
 		canDamage = false;
 		isSprung = true;
@@ -24,10 +24,11 @@ public class BearTrap : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col) {
 		if (!PhotonNetwork.isMasterClient) { return; }
-		if (col.gameObject.tag == "Terrain") {
-			photonview.RPC ("trapOpen", PhotonTargets.All);
-			isSprung = false;
-		}
+
+		// open it up when it hits the ground
+		photonview.RPC ("trapOpen", PhotonTargets.All);
+		isSprung = false;
+
 		if (col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
 		photonview.RPC ("trapClose", PhotonTargets.All);
 		isSprung = true;

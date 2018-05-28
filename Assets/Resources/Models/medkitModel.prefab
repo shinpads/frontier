@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33131844656764422}
   - component: {fileID: 135442980862445446}
   - component: {fileID: 23287111167070864}
+  - component: {fileID: 95428399608167694}
   m_Layer: 0
   m_Name: medkitModel
   m_TagString: Untagged
@@ -83,6 +84,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666462132176496}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &95428399608167694
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666462132176496}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf5924155d8975147a9afdddbc136b21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!135 &135442980862445446
 SphereCollider:
   m_ObjectHideFlags: 1
