@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviour {
 	private Character player;
 	private PlayerGUI gui;
 	private GameController gameController;
+	private Vector3 groundNormal;
+	private bool isSliping = false;
+	private bool gravityEnabled = true;
+	private Vector3 slipVelocity = new Vector3(0, 0, 0);
 	Texture2D pixel;
 	Color pixelColor;
 
@@ -59,6 +63,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update() {
+		isSliping = (Vector3.Angle(Vector3.up, groundNormal) >= 40f && (!isAirborne || characterController.isGrounded));
 		rotationY = new Vector3(0f, Input.GetAxisRaw("Mouse X"), 0f) * currentSensitivity;
 		rotationX -= Input.GetAxis ("Mouse Y") * currentSensitivity;
 		//verticalMovement = Input.GetAxisRaw("Vertical");// * transform.forward;
@@ -94,10 +99,15 @@ public class PlayerController : MonoBehaviour {
 		if (Mathf.Abs(velocity.z) > 0) {
 			acceleration.z += (Mathf.Abs(velocity.z) / velocity.z) * decelerationValue;
 		}
+		if (isSliping) {
+			//slipVelocity.x += (1f - groundNormal.y) * groundNormal.x * 50f;
+			//slipVelocity.z += (1f - groundNormal.y) * groundNormal.z * 50f;
+		} else {
+			slipVelocity = Vector3.zero;
+		}
 		// Debug.Log(velocity.x.ToString() + " " + velocity.z.ToString());
 		velocity.x += acceleration.x * Time.deltaTime;
 		velocity.z += acceleration.z * Time.deltaTime;
-
 		// max velocity
 		float maxSpeed = characterSpeed * (isAds ? ADS_SPEED_FACTOR : 1f) + (RUN_SPEED * isSprinting);
 		// maxSpeed *= (isAirborne ? 0.6f : 1f);
@@ -106,39 +116,51 @@ public class PlayerController : MonoBehaviour {
 			velocity /= speedToMaxSpeed;
 		}
 		// aligning velocity to direction
-		characterVelocity.x = (velocity.x * transform.forward).x + (velocity.z * transform.right).x;
-		characterVelocity.z = (velocity.x * transform.forward).z + (velocity.z * transform.right).z;
+		characterVelocity.x = (velocity.x * transform.forward).x + (velocity.z * transform.right).x + slipVelocity.x;
+		characterVelocity.z = (velocity.x * transform.forward).z + (velocity.z * transform.right).z + slipVelocity.z;
 
 		// ---------------------------------------------------------------------------------------------
 		// Clamp camera angle
  		rotationX = Mathf.Clamp (rotationX, -90.0f, 90.0f);
     	Camera.main.transform.localRotation = Quaternion.Euler (rotationX, 0, 0);
-
-		if (characterController.isGrounded) {
+		if (!characterController.isGrounded && !isAirborne) {
 			characterVelocity.y = 0;
+			isAirborne = true;
+			StartCoroutine(enableGravity());
+		}
+		if (characterController.isGrounded) {
 			if (isAirborne) {
-				//characterVelocity.x = 0;
-				//characterVelocity.z = 0;
-				// StartCoroutine(resetAcceleration());
-			}
-			isAirborne = false;
-		} else {
-			if (!isAirborne) {
-				isAirborne = true;
-				characterVelocity.y = 0;
+				isAirborne = false;
+				gravityEnabled = false;
 			}
 		}
 
-		if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded) {
+		if (Input.GetKeyDown(KeyCode.Space) && !isSliping && !isAirborne) {
 			characterVelocity.y = JUMP_AMOUNT;
 			isAirborne = true;
+			gravityEnabled = false;
+			StartCoroutine(enableGravity());
 			audioSource.PlayOneShot(jumpSound);
 		}
-		else {
+		else if ((!characterController.isGrounded || isSliping) && gravityEnabled) {
 			characterVelocity.y -= GRAVITY * Time.deltaTime;
+			if (Mathf.Abs(characterVelocity.y) < 0.05f) {
+				characterVelocity.y = -0.1f;
+			}
+		}
+		Vector3 movementVector = characterVelocity * Time.deltaTime;
+		if (isSliping) {
+			// Only contribute the part of the movement in the downwards direction of the slope
+			Vector3 projMovementOntoNormal = new Vector3(0, 0, 0);
+			float dot = (groundNormal.x * movementVector.x) + (groundNormal.z * movementVector.z) / ((groundNormal.x * groundNormal.x) + (groundNormal.z * groundNormal.z));
+			projMovementOntoNormal.x = Mathf.Min(groundNormal.x * dot, 0f);
+			projMovementOntoNormal.z = Mathf.Min(groundNormal.z * dot, 0f);
+			movementVector.x = groundNormal.x * 0.1f + projMovementOntoNormal.x;
+			movementVector.z = groundNormal.z * 0.1f + projMovementOntoNormal.z;
+			movementVector.y -= groundNormal.y * 0.1f;
 		}
  		if (canMove) {
-			characterController.Move(characterVelocity * Time.deltaTime);
+			characterController.Move(movementVector);
 		}
 
 	}
@@ -220,5 +242,12 @@ public class PlayerController : MonoBehaviour {
 			yield return new WaitForSeconds(0.01f);
 			decreaseAmount += recoilDecreaseAcceleration;
 		}
+	}
+	void OnControllerColliderHit (ControllerColliderHit hit) {
+		groundNormal = hit.normal;
+	}
+	private IEnumerator enableGravity() {
+		yield return new WaitForSeconds(0.05f);
+		gravityEnabled = true;
 	}
 }
