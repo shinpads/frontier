@@ -32,7 +32,7 @@ public class Medkit : MonoBehaviour {
 			if (appliedHealing > health) {
 				appliedHealing = health;
 			}
-			player.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, appliedHealing, -1);
+			player.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, appliedHealing, -1, Global.SOUND_TYPE.DEFAULT_DAMAGE);
 			health -= appliedHealing;
 			if (health <= 0) {
 				destroy ();

@@ -72,4 +72,5 @@ MonoBehaviour:
   - createBullet
   - trapOpen
   - trapClose
+  - playSoundRPC
   DisableAutoOpenWizard: 1

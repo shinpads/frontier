@@ -21,7 +21,7 @@ public class BearTrap : MonoBehaviour {
 		userId = (int)data[0];
 		teamId = (int)data[1];
 	}
-	
+
 	void OnTriggerEnter(Collider col) {
 		if (!PhotonNetwork.isMasterClient) { return; }
 		if (col.gameObject.tag == "Terrain") {
@@ -33,7 +33,7 @@ public class BearTrap : MonoBehaviour {
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();
 		prey.gameObject.GetComponent<PlayerController> ().setAbilityToMove (false);
-		prey.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, -upfrontDamage, userId);
+		prey.gameObject.GetComponent<PhotonView>().RPC ("setHealth", PhotonTargets.All, -upfrontDamage, userId, Global.SOUND_TYPE.DEFAULT_DAMAGE);
 		prey.displayMessage ("Press F to release bear trap");
 		StartCoroutine (waitOneSecond ());
 	}
@@ -41,10 +41,10 @@ public class BearTrap : MonoBehaviour {
 	void OnTriggerStay(Collider col) {
 		if (!PhotonNetwork.isMasterClient || !canDamage || col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId) { return; }
 		if (prey.getCurrentHealth () < damagePerSecond) {
-			prey.gameObject.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId);
+			prey.gameObject.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId, Global.SOUND_TYPE.DEFAULT_DAMAGE);
 			destroy ();
 		} else {
-			prey.gameObject.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId);
+			prey.gameObject.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, -damagePerSecond, userId, Global.SOUND_TYPE.DEFAULT_DAMAGE);
 			StartCoroutine (waitOneSecond ());
 		}
 	}

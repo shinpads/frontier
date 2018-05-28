@@ -10,4 +10,8 @@ public class Global {
 	public const int CHARACTER_ASSUALT = 4;
 	public static string[] CHARACTER_NAMES = new string[] {"Tank", "Sniper", "Thief", "Medic", "Assualt"};
 	public static string username = "";
+	public enum SOUND_TYPE {
+		DEFAULT_DAMAGE,
+		HEADSHOT
+	};
 }

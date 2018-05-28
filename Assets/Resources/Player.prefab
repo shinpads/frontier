@@ -1484,6 +1484,7 @@ GameObject:
   - component: {fileID: 114880980243066470}
   - component: {fileID: 114863477474755956}
   - component: {fileID: 114350696392143250}
+  - component: {fileID: 114038368453791452}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -14304,9 +14305,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 700
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -14314,16 +14315,40 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0
-      value: 0.9645233
-      inSlope: 0
-      outSlope: 0
+      time: 0.001
+      value: 1
+      inSlope: -4.562032
+      outSlope: -4.562032
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.051733166
+      value: 0.57675564
+      inSlope: -3.4373999
+      outSlope: -3.4373999
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.14071803
+      value: 0.1884447
+      inSlope: -1.8876791
+      outSlope: -1.8876791
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.4273723
+      value: 0.054733276
+      inSlope: -0.06556511
+      outSlope: -0.06556511
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7623214
+      value: 0.021356136
+      inSlope: 0.033713877
+      outSlope: 0.033713877
       tangentMode: 0
     - serializedVersion: 2
       time: 1
-      value: 0.0887146
-      inSlope: 0
-      outSlope: 0
+      value: 0.010940552
+      inSlope: -0.06266456
+      outSlope: -0.06266456
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -14512,6 +14537,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1.75
   playerObject: {fileID: 1192647942562838}
+  isHead: 1
+--- !u!114 &114038368453791452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1192647942562838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc148dafcdeb404084485603debc326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 82523526476792996}
+  headShotSound: {fileID: 8300000, guid: eb0d0fe58cb681b4d93c3bfa6b2177fb, type: 3}
+  defaultDamageSound: {fileID: 8300000, guid: 3987921cde73ce84fab67671bb46d112, type: 3}
 --- !u!114 &114070875150825392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14639,6 +14679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.5
   playerObject: {fileID: 1192647942562838}
+  isHead: 0
 --- !u!114 &114214391214681830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14725,6 +14766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.6
   playerObject: {fileID: 1192647942562838}
+  isHead: 0
 --- !u!114 &114254944726038796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14738,6 +14780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   playerObject: {fileID: 1192647942562838}
+  isHead: 0
 --- !u!114 &114279326674535280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14984,6 +15027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.6
   playerObject: {fileID: 1192647942562838}
+  isHead: 0
 --- !u!114 &114524140568171154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15125,6 +15169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.75
   playerObject: {fileID: 1192647942562838}
+  isHead: 0
 --- !u!114 &114574815406300212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15431,6 +15476,8 @@ MonoBehaviour:
   mat3: {fileID: 2100000, guid: 6efe28cc09758a34eae40e128f27d39c, type: 2}
   bloodObject: {fileID: 1913480498854834, guid: 264a1c0272015e84ea39f8e24e93283b,
     type: 2}
+  defaultDamageSound: {fileID: 0}
+  headShotSound: {fileID: 0}
 --- !u!114 &114880980243066470
 MonoBehaviour:
   m_ObjectHideFlags: 1

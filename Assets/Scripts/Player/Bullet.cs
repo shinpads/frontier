@@ -47,12 +47,12 @@ public class Bullet : MonoBehaviour {
 					if (hit.collider.gameObject.tag == "HitBox") {
 						HitBox hitbox =  hit.collider.gameObject.GetComponent<HitBox>();
 						damage = Mathf.RoundToInt (((maxDamage-1)*(100 - (Mathf.Clamp(Vector3.Distance (startSpot, hit.point),dropOff, dropOffStop) - dropOff) * (100/(dropOffStop - dropOff)))/100)*hitbox.getDamageMultipler() + 1);
-						hitbox.getPlayerObject().GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId);
+						hitbox.getPlayerObject().GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -damage, userId, hitbox.getIsHead() ? Global.SOUND_TYPE.HEADSHOT : Global.SOUND_TYPE.DEFAULT_DAMAGE);
 					} else if (hit.collider.gameObject.tag == "TargetCircle") {
 						gameController.sendHitMarked (userId);
 						healScore = hit.collider.gameObject.GetComponentInParent<Target> ().hitTarget (hit.collider.gameObject);
 						if (healScore > 0) {
-							userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1);
+							userPlayer.GetComponent<PhotonView> ().RPC ("setHealth", PhotonTargets.All, healScore, -1, Global.SOUND_TYPE.DEFAULT_DAMAGE);
 						}
 					} else {
 						PhotonNetwork.Instantiate ("WFX_BImpact Sand", ray.GetPoint(hit.distance), Quaternion.LookRotation(hit.normal), 0);

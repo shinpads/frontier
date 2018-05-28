@@ -24,6 +24,10 @@ public class Character : MonoBehaviour {
 	[SerializeField] private Material mat0, mat1, mat2, mat3;
 	[Header("Effects")]
 	[SerializeField] private GameObject bloodObject;
+	[Header("Sounds")]
+	[SerializeField] private AudioClip defaultDamageSound;
+	[SerializeField] private AudioClip headShotSound;
+	private AudioSource audioSource;
 	private GameController gameController;
 	private MeshRenderer renderer;
 	PhotonView photonView;
@@ -62,7 +66,7 @@ public class Character : MonoBehaviour {
 	}
 
 	[PunRPC]
-	void setHealth(int dHealth, int enemyId) {
+	void setHealth(int dHealth, int enemyId, Global.SOUND_TYPE soundType) {
 		if (gameObject.GetComponent<PhotonView> ().isMine) {
 			if (dHealth < 0) {
 				setDamagers (enemyId, dHealth);
@@ -90,6 +94,8 @@ public class Character : MonoBehaviour {
 				getDead (enemyId);
 			}
 		}
+		// PLAY SOUND HERE
+		gameObject.GetComponent<PlayerSounds>().playSound(soundType);
 	}
 
 	void setDamagers(int enemyId, int damage) {

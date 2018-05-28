@@ -14,7 +14,7 @@ public class Explosion : MonoBehaviour {
 		HashSet<Collider> colliders = new HashSet<Collider>(allOverlappingColliders);
 		foreach (Collider col in colliders) {
 	 		if (col.gameObject.tag == "Player") {
-				col.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -100, userId);
+				col.gameObject.GetComponent<PhotonView> ().RPC("setHealth", PhotonTargets.All, -100, userId, Global.SOUND_TYPE.DEFAULT_DAMAGE);
 			}
 		}
 		StartCoroutine(destroyObject());
