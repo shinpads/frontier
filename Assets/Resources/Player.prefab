@@ -14276,8 +14276,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 3
-  instantiationId: 3
+  viewIdField: 0
+  instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114098338964241984
@@ -14712,8 +14712,8 @@ MonoBehaviour:
   - {fileID: 114653404969345922}
   - {fileID: 4754675035577806}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 4
-  instantiationId: 4
+  viewIdField: 0
+  instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114511651289386864
@@ -15312,9 +15312,9 @@ MonoBehaviour:
     enabled: 1
     precision: 16
     colorWheels:
-      shadows: {r: 0.7636014, g: 0.8053703, b: 1, a: 1}
-      midtones: {r: 0.64378345, g: 0.64530605, b: 1, a: 1}
-      highlights: {r: 1, g: 0.5370024, b: 0.20844358, a: 1}
+      shadows: {r: 0.817661, g: 0.774123, b: 1, a: 1}
+      midtones: {r: 1, g: 0.7903946, b: 0.40318662, a: 1}
+      highlights: {r: 0.6102456, g: 1, b: 0.49713826, a: 1}
     basics:
       temperatureShift: 0
       tint: 0
