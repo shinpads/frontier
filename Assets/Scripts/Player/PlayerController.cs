@@ -155,11 +155,11 @@ public class PlayerController : MonoBehaviour {
 			// Only contribute the part of the movement in the downwards direction of the slope
 			Vector3 projMovementOntoNormal = new Vector3(0, 0, 0);
 			float dot = (groundNormal.x * movementVector.x) + (groundNormal.z * movementVector.z) / ((groundNormal.x * groundNormal.x) + (groundNormal.z * groundNormal.z));
-			projMovementOntoNormal.x = Mathf.Min(groundNormal.x * dot, 0f);
-			projMovementOntoNormal.z = Mathf.Min(groundNormal.z * dot, 0f);
-			movementVector.x = groundNormal.x * 0.1f + projMovementOntoNormal.x;
-			movementVector.z = groundNormal.z * 0.1f + projMovementOntoNormal.z;
-			movementVector.y -= groundNormal.y * 0.1f;
+			projMovementOntoNormal.x = Mathf.Max(groundNormal.x * dot, 0f);
+			projMovementOntoNormal.z = Mathf.Max(groundNormal.z * dot, 0f);
+			movementVector.x = (groundNormal.x * 0.05f) + (movementVector.x - projMovementOntoNormal.x);
+			movementVector.z = (groundNormal.z * 0.05f) + (movementVector.z - projMovementOntoNormal.z);
+			movementVector.y -= groundNormal.y * 0.05f;
 		}
  		if (canMove) {
 			characterController.Move(movementVector);
