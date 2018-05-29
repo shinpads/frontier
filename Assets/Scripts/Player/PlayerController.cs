@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 	private const float AIR_SPEED_FACTOR = 0.6f;
 	private const float ADS_SPEED_FACTOR = 0.5f;
 	public Camera playerCamera;
+	public GameObject gunCamera;
 	[SerializeField] private AudioClip jumpSound;
 	[SerializeField] private AudioSource audioSource;
 	private CharacterController characterController;
@@ -72,13 +73,13 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKey(KeyCode.LeftShift) && !isAds) {
 			isSprinting = 1;
 			if (velocity.magnitude > 4) {
-				playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", true);
+				//gunCamera.GetComponent<Animator>().SetBool("isSprinting", true);
 			} else {
-				playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", false);
+				//gunCamera.GetComponent<Animator>().SetBool("isSprinting", false);
 			}
 		}	else {
 			isSprinting = 0;
-			playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", false);
+			//gunCamera.GetComponent<Animator>().SetBool("isSprinting", false);
 			}
 
 		gameObject.transform.Rotate(rotationY);
