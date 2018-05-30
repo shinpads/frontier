@@ -18,6 +18,7 @@ public class Character : MonoBehaviour {
 	private int maxHealth;
 	private int userId;
 	private bool dead = false;
+	private List<GameObject> destroyOnDead = new List<GameObject>();
 	private LinkedList<int[]> damagers = new LinkedList<int[]>();
 	private PlayerGUI gui;
 	private Global earth;
@@ -94,7 +95,6 @@ public class Character : MonoBehaviour {
 				getDead (enemyId);
 			}
 		}
-		// PLAY SOUND HERE
 		gameObject.GetComponent<PlayerSounds>().playSound(soundType);
 	}
 
@@ -122,6 +122,13 @@ public class Character : MonoBehaviour {
 	void getDead(int enemyId) {
 		if (goldCarry > 0) {
 			gameController.sendInstantiateGold ("goldPiece", gameObject.transform.position, Quaternion.identity, goldBreakdown);
+		}
+		if (PhotonNetwork.isMasterClient) {
+			foreach (GameObject go in destroyOnDead) {
+				if (go != null) {
+					PhotonNetwork.Destroy(go);
+				}
+			}
 		}
 		PhotonNetwork.Destroy (gameObject);
 		HashSet<int> assistSet = new HashSet<int> ();
@@ -265,5 +272,8 @@ public class Character : MonoBehaviour {
 
 	public void displayMessage(string message) {
 		gui.setInteract (message);
+	}
+	public void addToDestroyOnDead(GameObject go) {
+		destroyOnDead.Add(go);
 	}
 }

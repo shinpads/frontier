@@ -85,8 +85,8 @@ GameObject:
   - component: {fileID: 54019983280874336}
   - component: {fileID: 114510272519922644}
   - component: {fileID: 95383724815551314}
-  - component: {fileID: 65518397372557988}
   - component: {fileID: 65897115040498528}
+  - component: {fileID: 65190360058544930}
   m_Layer: 0
   m_Name: bearTrapPrefab
   m_TagString: Untagged
@@ -205,7 +205,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1389162070502396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -294.9156, y: 0.847, z: -254.78421}
+  m_LocalPosition: {x: -505.73212, y: 0.95, z: -398.5498}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4767000410023786}
@@ -338,7 +338,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &65518397372557988
+--- !u!65 &65190360058544930
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -348,8 +348,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.98, y: 1.21, z: 2.01}
-  m_Center: {x: 0, y: 0.46, z: 0}
+  m_Size: {x: 1.43, y: 0.26, z: 1.61}
+  m_Center: {x: 0, y: -0.03, z: 0}
 --- !u!65 &65897115040498528
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -360,8 +360,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.45, y: 0.67, z: 1.57}
-  m_Center: {x: 0, y: 0.14, z: 0}
+  m_Size: {x: 2.23, y: 1.16, z: 2.23}
+  m_Center: {x: 0, y: 0.43, z: 0}
 --- !u!95 &95383724815551314
 Animator:
   serializedVersion: 3
@@ -401,8 +401,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4267137048741376}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114510272519922644
