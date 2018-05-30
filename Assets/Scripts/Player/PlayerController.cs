@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update() {
-		isSliping = (Vector3.Angle(Vector3.up, groundNormal) >= 40f && (!isAirborne || characterController.isGrounded));
+		isSliping = (Vector3.Angle(Vector3.up, groundNormal) >= 40f && Vector3.Angle(Vector3.up, groundNormal) < 90f && (!isAirborne || characterController.isGrounded));
 		rotationY = new Vector3(0f, Input.GetAxisRaw("Mouse X"), 0f) * currentSensitivity;
 		rotationX -= Input.GetAxis ("Mouse Y") * currentSensitivity;
 		//verticalMovement = Input.GetAxisRaw("Vertical");// * transform.forward;
