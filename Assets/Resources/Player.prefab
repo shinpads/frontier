@@ -15278,8 +15278,8 @@ MonoBehaviour:
   recoilPerShot: 2.5
   hasShootingAnimation: 1
   hip: {x: 0, y: 0, z: 0}
-  ads: {x: -0.225, y: 0.049, z: -0.14}
-  adsFov: 60
+  ads: {x: -0.225, y: 0.0497, z: -0.14}
+  adsFov: 50
 --- !u!114 &114755316551771694
 MonoBehaviour:
   m_ObjectHideFlags: 1

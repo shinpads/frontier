@@ -182,7 +182,7 @@ public class Shooting : MonoBehaviour {
 		audioSource.PlayOneShot (currentGun.getGunShotSound());
 		// create muzzle effect
 		Instantiate (muzzleFlash, currentGun.getJustTheTip().transform.position, Quaternion.LookRotation(end - start), playerCamera.transform);
-		if(!PhotonNetwork.isMasterClient) { return; }
+		if(!photonView.isMine) { return; }
 		if (currentGun.getIsShotgun()) {
 			float rangeFactor = 20f;
 			if (ads) {
@@ -213,6 +213,8 @@ public class Shooting : MonoBehaviour {
 	[PunRPC]
 	private void createBullet (Vector3 position, Quaternion direction, int userId, Vector3 velocity, int photonViewId, int damage, float dropOff, float dropOffEnd, float life) {
 		GameObject bulletInstance = (GameObject) GameObject.Instantiate(bulletObject, position, direction);
+		//if (!PhotonNetwork.isMasterClient) { return; }
+		//GameObject bulletInstance = (GameObject) PhotonNetwork.Instantiate("Bullet", position, direction, 0);
 		Bullet bullet = bulletInstance.GetComponent<Bullet>();
 		bullet.setUserId (userId);
 		bullet.velocity = velocity;
