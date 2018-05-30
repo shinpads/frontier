@@ -259,6 +259,7 @@ public class Shooting : MonoBehaviour {
 	private void shootBullet() {
 		StartCoroutine(delayedShooting());
 		armPivotAnimator.Play(currentGun.getShootingAnimationName());
+		currentGun.playShootingAnimation();
 		if (isAds || currentGun.getIsShotgun()) {
 			ray = new Ray (playerCamera.transform.position, playerCamera.transform.forward * 100);
 		} else {

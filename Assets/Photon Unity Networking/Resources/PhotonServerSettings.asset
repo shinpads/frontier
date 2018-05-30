@@ -73,4 +73,6 @@ MonoBehaviour:
   - trapOpen
   - trapClose
   - playSoundRPC
+  - trapReleased
+  - triggeredByTrap
   DisableAutoOpenWizard: 1

@@ -20,6 +20,7 @@ public class Gun : MonoBehaviour {
 	[SerializeField] private AudioClip dryFire;
 	[SerializeField] private float bulletLife;
 	[SerializeField] private float recoilPerShot;
+	[SerializeField] private bool hasShootingAnimation;
 	public Vector3 hip, ads;
 	public float adsFov;
 	private int ammo;
@@ -56,5 +57,10 @@ public class Gun : MonoBehaviour {
 
 	public void reload() {
 		ammo = magCapacity;
+	}
+	public void playShootingAnimation() {
+		if (hasShootingAnimation) {
+			gameObject.GetComponent<Animator>().SetTrigger("shoot");
+		}
 	}
 }
