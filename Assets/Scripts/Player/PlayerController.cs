@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 	private const float AIR_SPEED_FACTOR = 0.6f;
 	private const float ADS_SPEED_FACTOR = 0.5f;
 	public Camera playerCamera;
+	public GameObject gunCamera;
 	[SerializeField] private AudioClip jumpSound;
 	[SerializeField] private AudioSource audioSource;
 	private CharacterController characterController;
@@ -72,13 +73,13 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKey(KeyCode.LeftShift) && !isAds) {
 			isSprinting = 1;
 			if (velocity.magnitude > 4) {
-				playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", true);
+				//gunCamera.GetComponent<Animator>().SetBool("isSprinting", true);
 			} else {
-				playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", false);
+				//gunCamera.GetComponent<Animator>().SetBool("isSprinting", false);
 			}
 		}	else {
 			isSprinting = 0;
-			playerCamera.gameObject.GetComponent<Animator>().SetBool("isSprinting", false);
+			//gunCamera.GetComponent<Animator>().SetBool("isSprinting", false);
 			}
 
 		gameObject.transform.Rotate(rotationY);
@@ -154,11 +155,11 @@ public class PlayerController : MonoBehaviour {
 			// Only contribute the part of the movement in the downwards direction of the slope
 			Vector3 projMovementOntoNormal = new Vector3(0, 0, 0);
 			float dot = (groundNormal.x * movementVector.x) + (groundNormal.z * movementVector.z) / ((groundNormal.x * groundNormal.x) + (groundNormal.z * groundNormal.z));
-			projMovementOntoNormal.x = Mathf.Min(groundNormal.x * dot, 0f);
-			projMovementOntoNormal.z = Mathf.Min(groundNormal.z * dot, 0f);
-			movementVector.x = groundNormal.x * 0.1f + projMovementOntoNormal.x;
-			movementVector.z = groundNormal.z * 0.1f + projMovementOntoNormal.z;
-			movementVector.y -= groundNormal.y * 0.1f;
+			projMovementOntoNormal.x = Mathf.Max(groundNormal.x * dot, 0f);
+			projMovementOntoNormal.z = Mathf.Max(groundNormal.z * dot, 0f);
+			movementVector.x = (groundNormal.x * 0.05f) + (movementVector.x - projMovementOntoNormal.x);
+			movementVector.z = (groundNormal.z * 0.05f) + (movementVector.z - projMovementOntoNormal.z);
+			movementVector.y -= groundNormal.y * 0.05f;
 		}
  		if (canMove) {
 			characterController.Move(movementVector);

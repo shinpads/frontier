@@ -30,6 +30,10 @@ public class MeshController : MonoBehaviour {
 		gameObject.GetComponent<Shooting>().setContainer();
 		if (photonView.isMine) {
 			gameObject.GetComponent<PlayerController>().setArmPivot(containers[classType]);
+			SkinnedMeshRenderer[] meshes = classMeshes[classType].GetComponentsInChildren<SkinnedMeshRenderer>();//.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+			foreach (SkinnedMeshRenderer renderer in meshes) {
+				renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+			}
 		}
 	}
 }
