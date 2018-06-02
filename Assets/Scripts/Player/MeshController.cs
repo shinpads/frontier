@@ -10,7 +10,7 @@ public class MeshController : MonoBehaviour {
 	public void setClass(int refrence) {
 		PhotonView photonView = gameObject.GetComponent<PhotonView>();
 		classType = refrence;
-		photonView.RPC("setMeshEnabled", PhotonTargets.All, classType);
+		photonView.RPC("setMeshEnabled", PhotonTargets.AllBuffered, classType);
 	}
 
 	public GameObject getContainer () {

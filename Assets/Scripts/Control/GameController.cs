@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
 	bool classTypeSet = false;
 	bool connected = false;
 	bool gameStarted = false;
+	bool spectating = false;
 	int nextTeam = -1;
 	GameObject playerObject;
 	Texture2D pixel;
@@ -108,7 +109,7 @@ public class GameController : MonoBehaviour {
 					}
 				if (PhotonNetwork.isMasterClient) {
 					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game") && allClassesPicked()) {
-						photonView.RPC("startGame", PhotonTargets.All);
+						photonView.RPC("startGame", PhotonTargets.AllBuffered);
 						foreach (GameObject cart in minecarts) {
 							cart.GetComponent<Minecart> ().startCarts ();
 						}
@@ -126,12 +127,25 @@ public class GameController : MonoBehaviour {
 					KillFeedEvent kfe = (KillFeedEvent)killFeedList[i];
 					GUI.Label(new Rect(Screen.width - 200, 10 + (50 * i), 190, 40), kfe.ToString(), killFeedStyle);
 				}
+				if (spectating) {
+					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Spectate")) {
+						GameObject spectatingPlayer = GameObject.FindWithTag("Player");
+						//GameObject.FindWithTag("MenuCamera").SetActive(false);
+						spectatingPlayer.GetComponent<PlayerController>().playerCamera.enabled = true;
+						spectatingPlayer.GetComponent<PlayerController>().gunCamera.GetComponent<Camera>().enabled = true;
+					}
+				}
 			}
 		}
 	}
 
 	public void spawnPlayer() {
-		playerObject =  PhotonNetwork.Instantiate("Player", teamSpawns[thisTeam], Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
+		if (thisPlayer != null) {
+			playerObject =  PhotonNetwork.Instantiate("Player", teamSpawns[thisTeam], Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
+		} else {
+			spectating = true;
+			//GameObject.FindWithTag("MenuCamera").SetActive(true);
+		}
 		//playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
 		//playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
 		//playerObject.GetComponent<Character> ().setTeamId (thisTeam);
