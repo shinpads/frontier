@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour {
 	const int MAX_PLAYERS = 25;
 	[SerializeField] GameObject playerPrefab;
 	private PhotonView photonView;
+	private const int NUM_TEAMS = 3;
 	private Teams[] teams = { new Teams (0), new Teams (1), new Teams (2), new Teams (3) };
 	private Vector3[] teamSpawns =  { new Vector3(-501.6f, 2.5f, -436.34f), new Vector3(-156.1f, 2.5f, -55.6f), new Vector3(-497.8f, 2.5f, -102.3f), new Vector3(-149f, 2.5f, -430f) };
 	[SerializeField]private GameObject[] minecarts = new GameObject[4];
@@ -76,7 +77,7 @@ public class GameController : MonoBehaviour {
 			if (!gameStarted) {
 				// Teams
 				GUI.DrawTexture(new Rect(0, 0, 850, 220), pixel);
-				for (int curTeam = 0; curTeam < 4; curTeam ++) {
+				for (int curTeam = 0; curTeam < NUM_TEAMS; curTeam ++) {
 					GUI.Label(new Rect(10 + (210 * curTeam), 10, 200, 20), "TEAM " + (curTeam + 1).ToString());
 					int i = 0;
 					foreach (KeyValuePair<int, Player> entry in teams[curTeam].getPlayerDict()) {
@@ -117,7 +118,7 @@ public class GameController : MonoBehaviour {
 				}
 			} else {
 				GUI.DrawTexture(new Rect(0, Screen.height-40, 450, Screen.height), pixel);
-				for (int curTeam = 0; curTeam < 4; curTeam ++) {
+				for (int curTeam = 0; curTeam < NUM_TEAMS; curTeam ++) {
 					GUI.Label(new Rect(10 + (110 * curTeam), Screen.height - 30, 200, 20), "TEAM " + (curTeam + 1).ToString() + " $" + minecarts[curTeam].GetComponent<Minecart>().getGold());
 				}
 				if (killNotification != "") {
@@ -151,7 +152,7 @@ public class GameController : MonoBehaviour {
 		//playerObject.GetComponent<Character> ().setTeamId (thisTeam);
 	}
 	private void loadMineCartObjects () {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < NUM_TEAMS; i++) {
 			minecarts[i] = GameObject.Find("Mine Cart" + i);
 		}
 	}
@@ -256,7 +257,7 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 
-		nextTeam = (nextTeam+1)%4;
+		nextTeam = (nextTeam+1)%NUM_TEAMS;
 		photonView.RPC("addToTeam", PhotonTargets.AllBuffered, userId, nextTeam, username);
 
 	}
