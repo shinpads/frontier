@@ -355,6 +355,9 @@ public class GameController : MonoBehaviour {
 	void OnPhotonPlayerConnected(PhotonPlayer player) {
 		Debug.Log(player.NickName + "has connected.");
 	}
+	void OnDisconnectedFromPhoton() {
+		menuCamera.SetActive(true);
+	}
 	void OnApplicationFocus(bool hasFocus) {
 		if (hasFocus && gameStarted) {
 			Screen.lockCursor = true;

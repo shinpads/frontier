@@ -43,6 +43,7 @@ public class EscapeMenu : MonoBehaviour {
 	}
 	void disconnect() {
 		enabled = false;
+		PhotonNetwork.LeaveRoom();
 		PhotonNetwork.Disconnect();
 	}
 }

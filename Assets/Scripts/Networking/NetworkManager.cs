@@ -36,7 +36,7 @@ public class NetworkManager : MonoBehaviour {
   }
 	void OnJoinedRoom () {
 		Debug.Log("Joined Room");
-		if (!gameControlSpawned && PhotonNetwork.isMasterClient) {
+		if (PhotonNetwork.isMasterClient) {
 			PhotonNetwork.Instantiate("GameController", new Vector3(0, 0, 0), Quaternion.identity, 0);
 			gameControlSpawned = true;
 		}
