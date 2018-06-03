@@ -4,7 +4,7 @@ using System.Collections;
 using System.IO;
 
 public class DataEditor : MonoBehaviour {
-	private string gameDataProjectFilePath = "/data/config.json";
+	private string gameDataProjectFilePath = "/config.json";
 	GameSettings gameSettings;
 	void Start() {
 		LoadGameData();
