@@ -133,6 +133,7 @@ public class GameController : MonoBehaviour {
 						GameObject spectatingPlayer = GameObject.FindWithTag("Player");
 						//GameObject.FindWithTag("MenuCamera").SetActive(false);
 						spectatingPlayer.GetComponent<PlayerController>().playerCamera.enabled = true;
+						//spectatingPlayer.GetComponent<PlayerController>().playerCamera.GetComponent<AudioListener>().enabled = true;
 						spectatingPlayer.GetComponent<PlayerController>().gunCamera.GetComponent<Camera>().enabled = true;
 					}
 				}

@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviour {
 	private bool gameControlSpawned = false;
 	void Start () {
 		PhotonNetwork.sendRate = 64;
-		PhotonNetwork.sendRateOnSerialize = 50;
+		PhotonNetwork.sendRateOnSerialize = 64;
 		Application.runInBackground = true;
 		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = -1;
