@@ -357,6 +357,7 @@ public class GameController : MonoBehaviour {
 	}
 	void OnDisconnectedFromPhoton() {
 		menuCamera.SetActive(true);
+		Application.LoadLevel("MenuScene");
 	}
 	void OnApplicationFocus(bool hasFocus) {
 		if (hasFocus && gameStarted) {

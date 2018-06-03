@@ -48,7 +48,7 @@ public class BearTrap : MonoBehaviour {
 		//gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 		//isSprung = false;
 
-		if (col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() != teamId || isSprung) { return; }
+		if (col.gameObject.tag != "Player" || col.gameObject.GetComponent<Character>().getTeamId() == teamId || isSprung) { return; }
 		photonview.RPC ("trapClose", PhotonTargets.All);
 		isSprung = true;
 		prey = col.gameObject.GetComponent<Character> ();

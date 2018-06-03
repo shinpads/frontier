@@ -6,6 +6,9 @@ using System.IO;
 public class DataEditor : MonoBehaviour {
 	private string gameDataProjectFilePath = "/data/config.json";
 	GameSettings gameSettings;
+	void Start() {
+		LoadGameData();
+	}
 
 	private void LoadGameData() {
 			string filePath = Application.dataPath + gameDataProjectFilePath;
@@ -15,7 +18,10 @@ public class DataEditor : MonoBehaviour {
 					gameSettings = JsonUtility.FromJson<GameSettings> (dataAsJson);
 			} else {
 				gameSettings = new GameSettings();
+				File.WriteAllText (filePath,  JsonUtility.ToJson (gameSettings));
 			}
+			Global.gameSettings = gameSettings;
+			Global.username = gameSettings.username;
 	}
 
 	private void SaveGameData() {
