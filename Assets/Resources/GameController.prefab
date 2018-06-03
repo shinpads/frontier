@@ -570,6 +570,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escapeMenuCanvas: {fileID: 1938643090877238}
+  buttonContinue: {fileID: 114497581886531828}
+  buttonDisconnect: {fileID: 114694883629883534}
+  buttonOptions: {fileID: 114851230802979176}
 --- !u!114 &114201412152594204
 MonoBehaviour:
   m_ObjectHideFlags: 1
