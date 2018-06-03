@@ -341,10 +341,18 @@ public class GameController : MonoBehaviour {
 		StartCoroutine(clearKillFeedEvents());
 	}
 	public int getThisTeam() { return thisTeam; }
+	public GameObject getPlayerObject() {
+		return playerObject;
+	}
+	void OnPhotonPlayerDisconnected(PhotonPlayer player) {
+		if (playerObject != null) {
+			PhotonNetwork.Destroy(playerObject);
+		}
+	}
 	void OnApplicationFocus(bool hasFocus) {
-			if (hasFocus && gameStarted) {
-				Screen.lockCursor = true;
-				Cursor.visible = false;
-			}
+		if (hasFocus && gameStarted) {
+			Screen.lockCursor = true;
+			Cursor.visible = false;
+		}
 	}
 }

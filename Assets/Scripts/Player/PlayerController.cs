@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 	private bool isAirborne;
 	private bool atCart;
 	private bool canMove;
+	private bool freeze = false;
 	private Teams userTeam;
 	private Character player;
 	private PlayerGUI gui;
@@ -67,7 +68,9 @@ public class PlayerController : MonoBehaviour {
 	void Update() {
 		isSliping = (Vector3.Angle(Vector3.up, groundNormal) >= 40f && Vector3.Angle(Vector3.up, groundNormal) < 90f && (!isAirborne || characterController.isGrounded));
 		rotationY = new Vector3(0f, Input.GetAxisRaw("Mouse X"), 0f) * currentSensitivity;
-		rotationX -= Input.GetAxis ("Mouse Y") * currentSensitivity;
+		if (!freeze) {
+			rotationX -= Input.GetAxis ("Mouse Y") * currentSensitivity;
+		}
 		//verticalMovement = Input.GetAxisRaw("Vertical");// * transform.forward;
 		//horizontalMovement = Input.GetAxisRaw("Horizontal");// * transform.right;
 		if (Input.GetKey(KeyCode.LeftShift) && !isAds) {
@@ -81,8 +84,9 @@ public class PlayerController : MonoBehaviour {
 			isSprinting = 0;
 			//gunCamera.GetComponent<Animator>().SetBool("isSprinting", false);
 			}
-
-		gameObject.transform.Rotate(rotationY);
+		if (!freeze) {
+			gameObject.transform.Rotate(rotationY);
+		}
 
 		// CHARACTER MOVEMENT ------------------------------------------------------------------------
 
@@ -124,7 +128,7 @@ public class PlayerController : MonoBehaviour {
 		// ---------------------------------------------------------------------------------------------
 		// Clamp camera angle
  		rotationX = Mathf.Clamp (rotationX, -90.0f, 90.0f);
-    	Camera.main.transform.localRotation = Quaternion.Euler (rotationX, 0, 0);
+		Camera.main.transform.localRotation = Quaternion.Euler (rotationX, 0, 0);
 		if (!characterController.isGrounded && !isAirborne) {
 			characterVelocity.y = 0;
 			isAirborne = true;
@@ -221,6 +225,10 @@ public class PlayerController : MonoBehaviour {
 	public void setAbilityToMove(bool ableToMove) {
   	canMove = ableToMove;
   }
+	public void setFreeze (bool isFreeze) {
+		freeze = isFreeze;
+	}
+	public bool getFreeze () { return freeze; }
 	public void setRecoil(float recoil) {
 		recoilAmount += recoil;
 		rotationX -= recoil;

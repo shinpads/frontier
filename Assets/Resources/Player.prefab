@@ -15483,6 +15483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1811969582917722}
+  player: {fileID: 1192647942562838}
   maxAmount: 0.05
   speed: 5
   amount: 0.01

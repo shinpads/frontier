@@ -33,6 +33,7 @@ public class Shooting : MonoBehaviour {
 	private float coneLength;
 	private float coneRadius;
 	private bool loaded = false;
+	private bool freeze = false;
 	LayerMask ignoreRayCastLayer;
 	Character player;
 	PlayerController playerController;
@@ -107,22 +108,23 @@ public class Shooting : MonoBehaviour {
 			photonView.RPC ("sendSwapEquipment", PhotonTargets.All, equipmentObjects.Length - 1);
 			currentEquipmentIndex = equipmentObjects.Length - 1;
 		}
-
-		if (currentGunIndex != -1 && canShoot && !isReloading && !stillScoped) {
-			if (currentGun.getAmmo () == 0) {
-				if (Input.GetButtonDown ("Fire1")) {
-					photonView.RPC ("sendDryFireSound", PhotonTargets.All);
-				} else if (currentGun.getIsAutomatic ()) {
-					if (Input.GetButton ("Fire1") && !outAndHeld) {
+		if (!freeze) {
+			if (currentGunIndex != -1 && canShoot && !isReloading && !stillScoped) {
+				if (currentGun.getAmmo () == 0) {
+					if (Input.GetButtonDown ("Fire1")) {
 						photonView.RPC ("sendDryFireSound", PhotonTargets.All);
-						outAndHeld = true;
+					} else if (currentGun.getIsAutomatic ()) {
+						if (Input.GetButton ("Fire1") && !outAndHeld) {
+							photonView.RPC ("sendDryFireSound", PhotonTargets.All);
+							outAndHeld = true;
+						}
 					}
+				} else if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
+					shootBullet ();
 				}
-			} else if ((currentGun.getIsAutomatic () && Input.GetButton ("Fire1")) || (!currentGun.getIsAutomatic () && Input.GetButtonDown ("Fire1"))) {
-				shootBullet ();
+			} else if (currentEquipmentIndex != -1 && Input.GetButtonDown("Fire1")) {
+				StartCoroutine(throwEquipment());
 			}
-		} else if (currentEquipmentIndex != -1 && Input.GetButtonDown("Fire1")) {
-			StartCoroutine(throwEquipment());
 		}
 
 		if (Input.GetButtonDown("Fire2") && currentGunIndex != -1) {
@@ -355,6 +357,10 @@ public class Shooting : MonoBehaviour {
 	[PunRPC]
 	private void sendDryFireSound() {
 		audioSource.PlayOneShot (currentGun.getDryFireSound());
+	}
+
+	public void setFreeze(bool isFreeze) {
+		freeze = isFreeze;
 	}
 
 	private IEnumerator lerpGunPosition (Vector3 startPosition, Vector3 endPosition, float time) {
