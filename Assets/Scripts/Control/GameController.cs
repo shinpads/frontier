@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour {
 	GUIStyle guiStyle;
 	GUIStyle killFeedStyle;
 	AudioSource audioSource;
+	GameObject menuCamera;
 	void Start () {
 		photonView = gameObject.GetComponent<PhotonView>();
 		// GUI things
@@ -112,7 +113,9 @@ public class GameController : MonoBehaviour {
 					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Start Game") && allClassesPicked()) {
 						photonView.RPC("startGame", PhotonTargets.AllBuffered);
 						foreach (GameObject cart in minecarts) {
-							cart.GetComponent<Minecart> ().startCarts ();
+							if (cart != null) {
+								cart.GetComponent<Minecart> ().startCarts ();
+							}
 						}
 					}
 				}
@@ -131,9 +134,9 @@ public class GameController : MonoBehaviour {
 				if (spectating) {
 					if (GUI.Button(new Rect(Screen.width - 210, 10, 200, 40), "Spectate")) {
 						GameObject spectatingPlayer = GameObject.FindWithTag("Player");
-						//GameObject.FindWithTag("MenuCamera").SetActive(false);
+						menuCamera.SetActive(false);
 						spectatingPlayer.GetComponent<PlayerController>().playerCamera.enabled = true;
-						//spectatingPlayer.GetComponent<PlayerController>().playerCamera.GetComponent<AudioListener>().enabled = true;
+						spectatingPlayer.GetComponent<PlayerController>().playerCamera.gameObject.GetComponent<AudioListener>().enabled = true;
 						spectatingPlayer.GetComponent<PlayerController>().gunCamera.GetComponent<Camera>().enabled = true;
 					}
 				}
@@ -146,7 +149,7 @@ public class GameController : MonoBehaviour {
 			playerObject =  PhotonNetwork.Instantiate("Player", teamSpawns[thisTeam], Quaternion.identity, 0, new object[] {thisPlayer.getClassType(), thisPlayer.getUserId(), thisTeam});
 		} else {
 			spectating = true;
-			//GameObject.FindWithTag("MenuCamera").SetActive(true);
+			menuCamera.SetActive(true);
 		}
 		//playerObject.GetComponent<Character>().setClass(thisPlayer.getClassType());
 		//playerObject.GetComponent<Character> ().setUserId (thisPlayer.getUserId ());
@@ -230,7 +233,8 @@ public class GameController : MonoBehaviour {
 
 	[PunRPC]
 	public void startGame () {
-		GameObject.FindWithTag("MenuCamera").SetActive(false);
+		menuCamera = GameObject.FindWithTag("MenuCamera");
+		menuCamera.SetActive(false);
 		spawnPlayer();
 		gameStarted = true;
 		StartCoroutine(clearKillFeedEvents());
@@ -346,9 +350,10 @@ public class GameController : MonoBehaviour {
 		return playerObject;
 	}
 	void OnPhotonPlayerDisconnected(PhotonPlayer player) {
-		if (playerObject != null) {
-			PhotonNetwork.Destroy(playerObject);
-		}
+		Debug.Log(player.NickName + " has disconnected.");
+	}
+	void OnPhotonPlayerConnected(PhotonPlayer player) {
+		Debug.Log(player.NickName + "has connected.");
 	}
 	void OnApplicationFocus(bool hasFocus) {
 		if (hasFocus && gameStarted) {
