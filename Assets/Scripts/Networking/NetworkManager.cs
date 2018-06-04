@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviour {
 	private string username;
@@ -28,7 +29,8 @@ public class NetworkManager : MonoBehaviour {
   }*/
 	void OnJoinedRoom () {
 		Debug.Log("Joined Room");
-		Application.LoadLevel("Map1");
+		//Application.LoadLevel("Map1");
+		StartCoroutine(loadLevelAsync());
 	}
 	public void JoinServer () {
 		PhotonNetwork.AuthValues = new AuthenticationValues(Global.username);
@@ -59,5 +61,12 @@ public class NetworkManager : MonoBehaviour {
 
 	void OnApplicationQuit(){
 		Network.Disconnect(200);
+	}
+
+	private IEnumerator loadLevelAsync() {
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("map1");
+		while (!asyncLoad.isDone) {
+			yield return null;
+		}
 	}
 }

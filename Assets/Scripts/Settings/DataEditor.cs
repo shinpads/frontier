@@ -24,8 +24,8 @@ public class DataEditor : MonoBehaviour {
 			Global.username = gameSettings.username;
 	}
 
-	private void SaveGameData() {
-			string dataAsJson = JsonUtility.ToJson (gameSettings);
+	public void SaveGameData() {
+			string dataAsJson = JsonUtility.ToJson (Global.gameSettings);
 
 			string filePath = Application.dataPath + gameDataProjectFilePath;
 			File.WriteAllText (filePath, dataAsJson);
