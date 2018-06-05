@@ -17,9 +17,9 @@ public class PlayerController : MonoBehaviour {
 	private float characterSpeed;
 	private const float GRAVITY = 19f;
 	private const float JUMP_AMOUNT = 6f;
-	private const float SENSITIVITY = 1.2f;
-	private const float ADS_SENSITIVITY = 0.7f;
-	private const float SCOPED_SENSITIVITY = 0.1f;
+	private float SENSITIVITY = 1.2f;
+	private float ADS_SENSITIVITY = 0.7f;
+	private float SCOPED_SENSITIVITY = 0.1f;
 	private float currentSensitivity;
 	private const int RUN_SPEED = 2;
 	private float accelerationValue = 85f;
@@ -48,6 +48,9 @@ public class PlayerController : MonoBehaviour {
 	Color pixelColor;
 
 	void Start() {
+		SENSITIVITY = Global.gameSettings.sensitivity;
+		ADS_SENSITIVITY = Global.gameSettings.ads_sensitivity;
+		SCOPED_SENSITIVITY = Global.gameSettings.scoped_sensitivity;
 		characterController = GetComponent<CharacterController>();
 		Screen.lockCursor = true;
 		Cursor.visible = false;
