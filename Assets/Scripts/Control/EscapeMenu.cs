@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EscapeMenu : MonoBehaviour {
 	[SerializeField] GameObject escapeMenuCanvas;
+	[SerializeField] GameObject optionsSection;
+	[SerializeField] GameObject mainSection;
 	private bool enabled = false;
 	private GameObject playerObject;
 	[Header("UI Elements")]
@@ -14,6 +16,9 @@ public class EscapeMenu : MonoBehaviour {
 	void Start() {
 			buttonContinue.onClick.AddListener(returnFromMenu);
 			buttonDisconnect.onClick.AddListener(disconnect);
+			buttonOptions.onClick.AddListener(showOptions);
+			optionsSection.SetActive(false);
+			mainSection.SetActive(true);
 	}
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -45,5 +50,9 @@ public class EscapeMenu : MonoBehaviour {
 		enabled = false;
 		PhotonNetwork.LeaveRoom();
 		PhotonNetwork.Disconnect();
+	}
+	void showOptions() {
+		optionsSection.GetComponent<OptionsController>().loadOptions();
+		mainSection.SetActive(false);
 	}
 }

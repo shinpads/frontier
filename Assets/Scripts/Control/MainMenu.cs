@@ -6,10 +6,7 @@ public class MainMenu : MonoBehaviour {
 	[Header("Buttons")]
 	[SerializeField] Button buttonFindGame;
 	[SerializeField] Button buttonOptions;
-	[SerializeField] Button buttonOptionsSave;
-	[SerializeField] Button buttonOptionsBack;
-	[Header("Inputs")]
-	[SerializeField] InputField inputUsername;
+	[SerializeField] Button buttonExit;
 	[Header("Sections")]
 	[SerializeField] GameObject optionsSection;
 	[SerializeField] GameObject mainMenuSection;
@@ -19,8 +16,7 @@ public class MainMenu : MonoBehaviour {
 	void Start() {
 		buttonFindGame.onClick.AddListener(findGame);
 		buttonOptions.onClick.AddListener(goToOptions);
-		buttonOptionsSave.onClick.AddListener(optionsSave);
-		buttonOptionsBack.onClick.AddListener(optionsBack);
+		buttonExit.onClick.AddListener(exitGame);
 	}
 	private void findGame() {
 		loadingSpinner.SetActive(true);
@@ -29,21 +25,11 @@ public class MainMenu : MonoBehaviour {
 		gameObject.GetComponent<NetworkManager>().JoinServer();
 	}
 	private void goToOptions() {
-		optionsSection.SetActive(true);
+		optionsSection.GetComponent<OptionsController>().loadOptions();
 		mainMenuSection.SetActive(false);
-		inputUsername.text = Global.username;
 	}
-	private void optionsSave() {
-		//TODO save data to json file
-		string username = inputUsername.text;
-		Global.username = username;
-		Global.gameSettings.username = username;
-		gameObject.GetComponent<DataEditor>().SaveGameData();
-		mainMenuSection.SetActive(true);
-		optionsSection.SetActive(false);
-	}
-	private void optionsBack() {
-		 mainMenuSection.SetActive(true);
-		 optionsSection.SetActive(false);
+	private void exitGame() {
+		// only works in builds
+		Application.Quit();
 	}
 }
