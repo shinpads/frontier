@@ -40,7 +40,6 @@ public class OptionsController : MonoBehaviour {
 		sliderScopeSensitivity.value = Global.gameSettings.scoped_sensitivity;
 	}
 	private void optionsSave() {
-		//TODO save data to json file
 		string username = inputUsername.text;
 		Global.username = username;
 		Global.gameSettings.username = username;

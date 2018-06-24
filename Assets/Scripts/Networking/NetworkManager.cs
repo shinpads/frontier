@@ -10,6 +10,7 @@ public class NetworkManager : MonoBehaviour {
 	void Start () {
 		PhotonNetwork.sendRate = 64;
 		PhotonNetwork.sendRateOnSerialize = 64;
+		PhotonNetwork.automaticallySyncScene = true;
 		Application.runInBackground = true;
 		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = -1;
@@ -30,7 +31,8 @@ public class NetworkManager : MonoBehaviour {
 	void OnJoinedRoom () {
 		Debug.Log("Joined Room");
 		//Application.LoadLevel("Map1");
-		StartCoroutine(loadLevelAsync());
+		//StartCoroutine(loadLevelAsync());
+		PhotonNetwork.LoadLevel("map1");
 	}
 	public void JoinServer () {
 		PhotonNetwork.AuthValues = new AuthenticationValues(Global.username);
