@@ -307,13 +307,19 @@ public class Shooting : MonoBehaviour {
 	}
 
 	private void swapEquipment(GameObject newEquipment) {
-		currentGunIndex = -1;
+		if (newEquipment.GetComponent<Equipment>().getCreateRightAway()) {
+			if (PhotonNetwork.isMasterClient) {
+					PhotonNetwork.Instantiate(newEquipment.GetComponent<Equipment>().getProjectile(), gameObject.transform.position + gameObject.transform.forward * 4f, Quaternion.LookRotation(gameObject.transform.forward), 0);
+			}
+		} else {
+			currentGunIndex = -1;
+			if (currentEquipment != null) { currentEquipment.gameObject.SetActive(false); }
+			if (currentGun != null) { currentGun.gameObject.SetActive (false); }
+			newEquipment.SetActive (true);
+			currentEquipment = newEquipment.GetComponent<Equipment>();
+			gui.setAmmoCounter (0, 0);
+		}
 		stillScoped = false;
-		if (currentEquipment != null) { currentEquipment.gameObject.SetActive(false); }
-		if (currentGun != null) { currentGun.gameObject.SetActive (false); }
-		newEquipment.SetActive (true);
-		currentEquipment = newEquipment.GetComponent<Equipment>();
-		gui.setAmmoCounter (0, 0);
 		adsToHip (true);
 	}
 
