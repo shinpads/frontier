@@ -756,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf373a614b3b0c4c91bd6a3131400b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1144906421}
+  camera: {fileID: 1992588432}
   buttonFindGame: {fileID: 928956968}
   buttonOptions: {fileID: 2000203016}
   buttonExit: {fileID: 539504063}

@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour {
 		// camera position
 		cameraMenuPosition = camera.transform.position;
 		cameraLoadingPosition = cameraMenuPosition;
-		cameraLoadingPosition.x += 0.9f;
+		cameraLoadingPosition.x -= 450f;
 	}
 
 	private void findGame() {
